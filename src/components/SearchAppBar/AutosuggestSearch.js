@@ -95,7 +95,7 @@ const renderSuggestion = (suggestion, { query, isHighlighted }) => {
 
 const renderSuggestionsContainer = ({ containerProps, children, query }) => {
   return (
-    <Paper {...containerProps } square>
+    <Paper style={{maxHeight: 300, overflow: 'auto' }} {...containerProps } square>
       {children}
     </Paper>
   )
@@ -110,7 +110,7 @@ const renderInputComponent = (inputProps) => {
       </div>
       <InputBase
         { ...inputProps }
-        placeholder="Change location.."
+        placeholder="Change location..."
         onChange={inputProps.onChange}
         classes={{
           root: classes.inputRoot,
@@ -164,7 +164,7 @@ class AutosuggestSearch extends React.Component {
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
-      placeholder: 'Change location..',
+      placeholder: 'Change location...',
       value,
       onChange: this.onChange,
       classes
