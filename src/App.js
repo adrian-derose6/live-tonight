@@ -6,6 +6,7 @@ import MapDashboard from './components/MapDashboard';
 
 class App extends Component {
   constructor(props) {
+    super(props);
     this.state = { width: 0, height: 0 };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
