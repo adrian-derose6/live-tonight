@@ -15,8 +15,8 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import { emphasize, fade } from '@material-ui/core/styles/colorManipulator';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
+import { FormHelperText } from '@material-ui/core';
 
-// Imagine you have a list of languages that you'd like to autosuggest.
 const locations= [
   { label: 'Afghanistan' },
   { label: 'Aland Islands' },
@@ -54,7 +54,6 @@ const locations= [
   { label: 'Brunei Darussalam' },
 ];
   
-// Teach Autosuggest how to calculate suggestions for any given input value.
 const getSuggestions = value => {
   const inputValue = value.trim().toLowerCase();
   const inputLength = inputValue.length;
@@ -64,12 +63,8 @@ const getSuggestions = value => {
   );
 };
 
-// When suggestion is clicked, Autosuggest needs to populate the input
-// based on the clicked suggestion. Teach Autosuggest how to calculate the
-// input value for every given suggestion.
 const getSuggestionValue = suggestion => suggestion.label;
 
-// Use your imagination to render suggestions.
 const renderSuggestion = (suggestion, { query, isHighlighted }) => {
   const matches = match(suggestion.label, query);
   const parts = parse(suggestion.label, matches);
@@ -124,12 +119,6 @@ const renderInputComponent = (inputProps) => {
 class AutosuggestSearch extends React.Component {
   constructor(props) {
     super(props);
-
-    // Autosuggest is a controlled component.
-    // This means that you need to provide an input value
-    // and an onChange handler that updates this value (see below).
-    // Suggestions also need to be provided to the Autosuggest,
-    // and they are initially empty because the Autosuggest is closed.
     this.state = {
       value: '',
       suggestions: []
@@ -142,15 +131,12 @@ class AutosuggestSearch extends React.Component {
     });
   };
 
-  // Autosuggest will call this function every time you need to update suggestions.
-  // You already implemented this logic above, so just use it.
   onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
       suggestions: getSuggestions(value)
     });
   };
 
-  // Autosuggest will call this function every time you need to clear suggestions.
   onSuggestionsClearRequested = () => {
     this.setState({
       suggestions: []
@@ -162,7 +148,6 @@ class AutosuggestSearch extends React.Component {
     const { classes } = this.props;
     console.log(suggestions)
 
-    // Autosuggest will pass through all these props to the input.
     const inputProps = {
       placeholder: 'Change location...',
       value,
@@ -170,7 +155,6 @@ class AutosuggestSearch extends React.Component {
       classes
     };
 
-    // Finally, render it!
     return (
       <Autosuggest
         suggestions={suggestions}
@@ -204,14 +188,17 @@ const styles = theme => ({
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing.unit,
-      width: 'auto',
+      width: '100%',
     },
+    display: 'flex',
   },
   searchIcon: {
-    width: theme.spacing.unit * 9,
+    width: theme.spacing.unit * 1,
     height: '100%',
     position: 'absolute',
-    pointerEvents: 'none',
+    paddingLeft: '20px',
+    paddingRight: '10px',
+    pointerEvents: 'auto',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -224,7 +211,7 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit,
     paddingRight: theme.spacing.unit,
     paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 9,
+    paddingLeft: theme.spacing.unit * 5,
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
@@ -233,6 +220,7 @@ const styles = theme => ({
         width: 200,
       },
     },
+    fontSize: '14px'
   },
   container: {
     position: 'relative'

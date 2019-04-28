@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom';
 
 import { Provider } from 'react-redux';
 import logger from 'redux-logger';
-import { configureStore } from 'redux-starter-kit';
+import { configureStore, getDefaultMiddleware } from 'redux-starter-kit';
 
 import rootReducer from './rootReducer.js';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import './index.css';
 
 const store = configureStore({
     reducer: rootReducer,

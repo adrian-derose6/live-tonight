@@ -1,9 +1,12 @@
-const initialState = {};
+import { combineReducers } from 'redux';
 
-export default function rootReducer(state = initialState, action) {
-    switch (action.type) {
-        default: 
-            return state;
-    }
-}
+import shows from './reducers/shows.js';
+
+const rootReducer = combineReducers({
+    shows
+});
+
+export default rootReducer;
+
+
 
