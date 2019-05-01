@@ -23,6 +23,18 @@ const styles = theme => ({
     width: '100%',
     height: '100%',
   },
+  tile: {
+    '&:hover': {
+      cursor: 'pointer'
+    }
+  },
+  img: {
+    backgroundColor: 'black',
+    transition: 'all .2s ease-in-out',
+    '&:hover': {
+      opacity: 0.8
+    }
+  },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
   },
@@ -58,8 +70,8 @@ function ShowsGridList(props) {
     <div className={classes.root}>
       <GridList cellHeight={240} className={classes.gridList}>
         {tileData.map(tile => (
-          <GridListTile key={tile.img}>
-            <img src={tile.img} alt={tile.artists} />
+          <GridListTile className={classes.tile} key={tile.img}>
+            <img src={tile.img} alt={tile.artists} className={classes.img}/>
             <GridListTileBar
               title={<span style={{ fontFamily: "Sharp Sans No1 Semibold"}}>{tile.artist}</span>}
               subtitle={<span style={{ fontFamily: "Sharp Sans No1 Medium"}}>{tile.venue}</span>}
