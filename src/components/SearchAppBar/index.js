@@ -10,7 +10,7 @@ const styles = theme => ({
     width: '100%',
   },
   grow: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   menuButton: {
     marginLeft: -12,
