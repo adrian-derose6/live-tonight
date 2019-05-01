@@ -61,8 +61,8 @@ function ShowsGridList(props) {
           <GridListTile key={tile.img}>
             <img src={tile.img} alt={tile.artists} />
             <GridListTileBar
-              title={tile.artist}
-              subtitle={<span>{tile.venue}</span>}
+              title={<span style={{ fontFamily: "Sharp Sans No1 Semibold"}}>{tile.artist}</span>}
+              subtitle={<span style={{ fontFamily: "Sharp Sans No1 Medium"}}>{tile.venue}</span>}
             />
           </GridListTile>
         ))}

@@ -74,11 +74,11 @@ const renderSuggestion = (suggestion, { query, isHighlighted }) => {
       <div>
         {parts.map((part, index) =>
           part.highlight ? (
-            <span key={String(index)} style={{ fontWeight: 500 }}>
+            <span key={String(index)} style={{ fontFamily: "Sharp Sans No1 Semibold" }}>
               {part.text}
             </span>
           ) : (
-            <strong key={String(index)} style={{ fontWeight: 300 }}>
+            <strong key={String(index)} style={{ fontFamily: "Sharp Sans No1 Book" }}>
               {part.text}
             </strong>
           ),
@@ -179,7 +179,7 @@ class AutosuggestSearch extends React.Component {
 const styles = theme => ({
   search: {
     position: 'relative',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: 0,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
@@ -220,7 +220,8 @@ const styles = theme => ({
         width: 200,
       },
     },
-    fontSize: '14px'
+    fontSize: '14px',
+    fontFamily: "Sharp Sans No1 Book"
   },
   container: {
     position: 'relative'

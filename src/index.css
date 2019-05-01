@@ -1,3 +1,44 @@
+@import url(//db.onlinewebfonts.com/c/6a1891db0152c7835cc61d5e95578b29?family=Sharp+Sans+No1+Book);
+@import url(//db.onlinewebfonts.com/c/30bb285a0c5e40fc620a793eff494dfd?family=Sharp+Sans+No1+Medium);
+@import url(//db.onlinewebfonts.com/c/d746f11d11dd01067a58e13b965e23c7?family=Sharp+Sans+No1+Semibold);
+@import url(//db.onlinewebfonts.com/c/154ebfcef3ca74b92a56a5826ee85d74?family=Sharp+Sans+No1+Bold);
+
+@font-face {font-family: "Sharp Sans No1 Book";
+  src: url("//db.onlinewebfonts.com/t/6a1891db0152c7835cc61d5e95578b29.eot");
+  src: url("//db.onlinewebfonts.com/t/6a1891db0152c7835cc61d5e95578b29.eot?#iefix") format("embedded-opentype"),
+  url("//db.onlinewebfonts.com/t/6a1891db0152c7835cc61d5e95578b29.woff2") format("woff2"),
+  url("//db.onlinewebfonts.com/t/6a1891db0152c7835cc61d5e95578b29.woff") format("woff"),
+  url("//db.onlinewebfonts.com/t/6a1891db0152c7835cc61d5e95578b29.ttf") format("truetype"),
+  url("//db.onlinewebfonts.com/t/6a1891db0152c7835cc61d5e95578b29.svg#Sharp Sans No1 Book") format("svg");
+}
+
+@font-face {font-family: "Sharp Sans No1 Medium";
+  src: url("//db.onlinewebfonts.com/t/30bb285a0c5e40fc620a793eff494dfd.eot");
+  src: url("//db.onlinewebfonts.com/t/30bb285a0c5e40fc620a793eff494dfd.eot?#iefix") format("embedded-opentype"),
+  url("//db.onlinewebfonts.com/t/30bb285a0c5e40fc620a793eff494dfd.woff2") format("woff2"),
+  url("//db.onlinewebfonts.com/t/30bb285a0c5e40fc620a793eff494dfd.woff") format("woff"),
+  url("//db.onlinewebfonts.com/t/30bb285a0c5e40fc620a793eff494dfd.ttf") format("truetype"),
+  url("//db.onlinewebfonts.com/t/30bb285a0c5e40fc620a793eff494dfd.svg#Sharp Sans No1 Medium") format("svg");
+}
+
+@font-face {font-family: "Sharp Sans No1 Semibold";
+  src: url("//db.onlinewebfonts.com/t/d746f11d11dd01067a58e13b965e23c7.eot");
+  src: url("//db.onlinewebfonts.com/t/d746f11d11dd01067a58e13b965e23c7.eot?#iefix") format("embedded-opentype"),
+  url("//db.onlinewebfonts.com/t/d746f11d11dd01067a58e13b965e23c7.woff2") format("woff2"),
+  url("//db.onlinewebfonts.com/t/d746f11d11dd01067a58e13b965e23c7.woff") format("woff"),
+  url("//db.onlinewebfonts.com/t/d746f11d11dd01067a58e13b965e23c7.ttf") format("truetype"),
+  url("//db.onlinewebfonts.com/t/d746f11d11dd01067a58e13b965e23c7.svg#Sharp Sans No1 Semibold") format("svg");
+}
+
+@font-face {font-family: "Sharp Sans No1 Bold";
+  src: url("//db.onlinewebfonts.com/t/154ebfcef3ca74b92a56a5826ee85d74.eot");
+  src: url("//db.onlinewebfonts.com/t/154ebfcef3ca74b92a56a5826ee85d74.eot?#iefix") format("embedded-opentype"),
+  url("//db.onlinewebfonts.com/t/154ebfcef3ca74b92a56a5826ee85d74.woff2") format("woff2"),
+  url("//db.onlinewebfonts.com/t/154ebfcef3ca74b92a56a5826ee85d74.woff") format("woff"),
+  url("//db.onlinewebfonts.com/t/154ebfcef3ca74b92a56a5826ee85d74.ttf") format("truetype"),
+  url("//db.onlinewebfonts.com/t/154ebfcef3ca74b92a56a5826ee85d74.svg#Sharp Sans No1 Bold") format("svg");
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -7,6 +48,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
 
 code {
