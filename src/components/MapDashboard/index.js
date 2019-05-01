@@ -19,23 +19,23 @@ class MapDashboard extends Component {
                     alignItems="center"
                     className={classes.grid}
                 >
-                    <Grid item md={5} className={classes.mapContainer}>
+                    <Grid item md={5} className={classes.leftPanel}>
                         <Grid
                             container
                             zeroMinWidth
                             direction="column"
                             justify='flex-start'
-                            className={classes.indicesGrid}
+                            className={classes.leftGrid}
                         >
-                            <Grid item md={8} className={classes.showsContainer}>
+                            <Grid item md={7} className={classes.mapContainer}>
                                 
                             </Grid>
 
-                            <Grid item md={4} className={classes.playlistContainer}>
+                            <Grid item md={5} className={classes.playlistContainer}>
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item md={7} className={classes.indicesPanel}>
+                    <Grid item md={7} className={classes.rightPanel}>
                         <ShowsIndex />    
                     </Grid>
                 </Grid>
@@ -48,29 +48,27 @@ const styles = theme => ({
     root: {
        flexGrow: 1,
     },
-    mapContainer: {
-        height: '100%',
-        width: '100%'
-    },
     grid: {
         height: '100%',
         width: '100%',
     },
-    indicesPanel: {
+    leftPanel: {
+       height: '100%'
+    },
+    rightPanel: {
         height: '100%',
-        width: '100%',
         borderLeft: '1px solid gray'
     },
-    indicesGrid: {
+    leftGrid: {
         height: '100%',
-        width: '100%',
-        margin: 0,
-    },
-    showsContainer: {
         minWidth: '100%'
+    },
+    mapContainer: {
+        width: '100%'
     },
     playlistContainer: {
         minWidth: '100%',
+        height: '100%',
         border: '1px solid green'          
     }
 });
