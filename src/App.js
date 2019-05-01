@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import './App.css';
 import SearchAppBar from './components/SearchAppBar/index.js';
-import MapDashboard from './components/MapDashboard';
+import MapDashboard from './components/MapDashboard/index.js';
 
 class App extends Component {
   constructor(props) {
