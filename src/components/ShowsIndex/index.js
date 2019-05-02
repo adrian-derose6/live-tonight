@@ -58,7 +58,6 @@ const styles = theme => ({
         alignItems: 'center',
         paddingLeft: '25px',
         paddingRight: '25px',
-
     },
     listContainer: {
         minWidth: '100%',

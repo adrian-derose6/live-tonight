@@ -146,7 +146,6 @@ class AutosuggestSearch extends React.Component {
   render() {
     const { value, suggestions } = this.state;
     const { classes } = this.props;
-    console.log(suggestions)
 
     const inputProps = {
       placeholder: 'Change location...',

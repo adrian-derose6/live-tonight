@@ -29,10 +29,9 @@ const styles = theme => ({
     }
   },
   img: {
-    backgroundColor: 'black',
     transition: 'all .2s ease-in-out',
     '&:hover': {
-      opacity: 0.8
+      opacity: 0.9,
     }
   },
   icon: {
@@ -71,7 +70,7 @@ function ShowsGridList(props) {
       <GridList cellHeight={240} className={classes.gridList}>
         {tileData.map(tile => (
           <GridListTile className={classes.tile} key={tile.img}>
-            <img src={tile.img} alt={tile.artists} className={classes.img}/>
+            <img src={tile.img} alt={tile.artists} className={classes.img} />
             <GridListTileBar
               title={<span style={{ fontFamily: "Sharp Sans No1 Semibold"}}>{tile.artist}</span>}
               subtitle={<span style={{ fontFamily: "Sharp Sans No1 Medium"}}>{tile.venue}</span>}
