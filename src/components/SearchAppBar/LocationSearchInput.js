@@ -1,27 +1,20 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Autosuggest from 'react-autosuggest';
 import { withStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
-import Typography from '@material-ui/core/Typography';
-import NoSsr from '@material-ui/core/NoSsr';
-import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
-import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import SearchIcon from '@material-ui/icons/Search';
 import CancelIcon from '@material-ui/icons/Cancel';
-import { emphasize, fade } from '@material-ui/core/styles/colorManipulator';
-import match from 'autosuggest-highlight/match';
-import parse from 'autosuggest-highlight/parse';
-import { FormHelperText } from '@material-ui/core';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
-import './LocationSearchInput.css'
+import { setCurrentLocation } from '../../actions/location.js';
 
 class LocationSearchInput extends React.Component {
   constructor(props) {
@@ -37,7 +30,7 @@ class LocationSearchInput extends React.Component {
     this.setState({address});
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
-      .then(latLng => console.log('Success', latLng))
+      .then(latLng => this.props.setCurrentLocation(latLng))
       .catch(error => console.error('Error', error));
   }
 
@@ -91,7 +84,6 @@ class LocationSearchInput extends React.Component {
     );
   }
 }
-
 
 const styles = theme => ({
   search: {
@@ -156,9 +148,24 @@ const styles = theme => ({
     listStyleType: 'none',
     color: 'black'
   },
+  suggestion: {
+    borderBottom: '1px solid lightgray'
+  },
   divider: {
     height: theme.spacing.unit * 2,
   },
 })
 
-export default withStyles(styles)(LocationSearchInput);
+const mapDispatchToProps = dispatch => {
+  return {
+    setCurrentLocation: (location) => dispatch(setCurrentLocation(location))
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    currentLocation: state.location.currentLocation
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(LocationSearchInput));
