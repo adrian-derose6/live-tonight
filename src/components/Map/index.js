@@ -10,7 +10,7 @@ class ShowsMap extends Component {
       lat: 41.8781,
       lng: -87.6298
     },
-    zoom: 11
+    zoom: 13
   };
 
   render() {
