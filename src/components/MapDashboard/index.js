@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+
 import { connect } from 'react-redux';
 
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 
 import ShowsIndex from '../ShowsIndex/index.js';
+import ShowsMap from '../Map/index.js';
 import './styles.css';
 
 import { fetchShowsByCriteria } from '../../actions/shows.js';
@@ -35,11 +37,10 @@ class MapDashboard extends Component {
                             justify='flex-start'
                             className={classes.leftGrid}
                         >
-                            <Grid item md={7} className={classes.mapContainer}>
-                                
-                            </Grid>
-
-                            <Grid item md={5} className={classes.playlistContainer}>
+                            <Grid item md={12} className={classes.mapContainer}>
+                                <ShowsMap 
+                                    isMarkerShown
+                                />
                             </Grid>
                         </Grid>
                     </Grid>
@@ -73,11 +74,13 @@ const styles = theme => ({
         minWidth: '100%'
     },
     mapContainer: {
-        width: '100%'
+        minWidth: '100%'
     },
     playlistContainer: {
         minWidth: '100%',
-        height: '100%',          
+        height: '100%',
+        boxShadow: '-1px -1px 2px -1px rgba(135,119,135,1)',
+        zIndex: 2010         
     }
 });
 

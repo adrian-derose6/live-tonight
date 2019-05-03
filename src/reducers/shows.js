@@ -8,7 +8,7 @@ const initialState = {
 export default function shows(state = initialState, action) {
     switch (action.type) {
         case (FETCH_SHOWS_REQUEST):
-            return { ...state, isFetchingShows: true }
+            return { ...state, isFetchingShows: true };
         default: 
             return state;
     }
