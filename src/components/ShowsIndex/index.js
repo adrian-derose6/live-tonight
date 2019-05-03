@@ -18,8 +18,8 @@ const ShowsIndex = ({ classes }) => {
         >
             <Grid item md={1} className={classes.headerContainer}>
                 <div className={classes.headerInnerContainer}>
-                    <div><h3>Shows Tonight...</h3></div>
-                    <div><p>Check different night</p></div>
+                    <div><h3 style={{ fontFamily: "Sharp Sans No1 Semibold"}}>Shows Tonight in Chicago...</h3></div>
+                    <div><p style={{ fontFamily: "Sharp Sans No1 Medium"}}>Check different night</p></div>
                 </div>
                 <hr className="divider"/>
             </Grid>
@@ -58,7 +58,6 @@ const styles = theme => ({
         alignItems: 'center',
         paddingLeft: '25px',
         paddingRight: '25px',
-
     },
     listContainer: {
         minWidth: '100%',

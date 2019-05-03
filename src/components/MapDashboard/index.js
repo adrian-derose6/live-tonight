@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
+
+import { connect } from 'react-redux';
+
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 
 import ShowsIndex from '../ShowsIndex/index.js';
+import ShowsMap from '../Map/index.js';
 import './styles.css';
 
+import { fetchShowsByCriteria } from '../../actions/shows.js';
+
 class MapDashboard extends Component {
+    componentDidMount() {
+        this.props.fetchShowsByCriteria();
+    }
+
     render() {
         const { windowWidth, windowHeight } = this.props;
         const { classes } = this.props;
@@ -27,11 +37,10 @@ class MapDashboard extends Component {
                             justify='flex-start'
                             className={classes.leftGrid}
                         >
-                            <Grid item md={7} className={classes.mapContainer}>
-                                
-                            </Grid>
-
-                            <Grid item md={5} className={classes.playlistContainer}>
+                            <Grid item md={12} className={classes.mapContainer}>
+                                <ShowsMap 
+                                    isMarkerShown
+                                />
                             </Grid>
                         </Grid>
                     </Grid>
@@ -53,24 +62,42 @@ const styles = theme => ({
         width: '100%',
     },
     leftPanel: {
-       height: '100%'
+       height: '100%',
     },
     rightPanel: {
         height: '100%',
-        borderLeft: '1px solid gray'
+        boxShadow: '-1px 0px 2px -1px rgba(135,119,135,1)',
+        zIndex: 2000
     },
     leftGrid: {
         height: '100%',
         minWidth: '100%'
     },
     mapContainer: {
-        width: '100%'
+        minWidth: '100%'
     },
     playlistContainer: {
         minWidth: '100%',
         height: '100%',
-        border: '1px solid green'          
+        boxShadow: '-1px -1px 2px -1px rgba(135,119,135,1)',
+        zIndex: 2010         
     }
 });
 
-export default withStyles(styles)(MapDashboard);
+const mapStateToProps = (state) => {
+    return {
+      shows: state.shows
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchShowsByCriteria: (criteria) => dispatch(fetchShowsByCriteria(criteria))
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withStyles(styles)(MapDashboard));
+

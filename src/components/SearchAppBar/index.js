@@ -9,6 +9,9 @@ const styles = theme => ({
   root: {
     width: '100%',
   },
+  appBar: {
+    boxShadow: 'none'
+  },
   grow: {
     flexGrow: 1
   },
@@ -18,6 +21,8 @@ const styles = theme => ({
   },
   title: {
     display: 'none',
+    fontFamily: "Sharp Sans No1 Semibold",
+    fontWeight: 'bold',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
@@ -34,7 +39,7 @@ class SearchAppBar extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar className={classes.appBar} position="static">
           <Toolbar>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
               <MenuIcon />

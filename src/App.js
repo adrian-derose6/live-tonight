@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import './App.css';
 import SearchAppBar from './components/SearchAppBar/index.js';
 import MapDashboard from './components/MapDashboard/index.js';
+import { fetchShowsByCriteria } from './actions/shows';
 
 class App extends Component {
   constructor(props) {
@@ -36,4 +38,19 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    shows: state.shows
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchShowsByCriteria: (criteria) => dispatch(fetchShowsByCriteria(criteria))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+  )(App);
