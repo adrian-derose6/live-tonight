@@ -2,8 +2,8 @@ import { SET_CURRENT_LOCATION } from '../actions/location.js';
 
 const initialState = {
     currentLocation: {
-        long: 0,
-        lat: 0
+        lat: 41.8781,
+        lng: -87.6298
     }
 }
 
