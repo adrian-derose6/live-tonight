@@ -4,6 +4,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import AutosuggestSearch from './AutosuggestSearch.js';
+import LocationSearchInput from './LocationSearchInput.js';
 
 const styles = theme => ({
   root: {
@@ -48,7 +49,7 @@ class SearchAppBar extends Component {
             Live Tonight!
             </Typography>
             <div className={classes.grow} />
-            <AutosuggestSearch />
+            <LocationSearchInput />
           </Toolbar>
         </AppBar>
       </div>
