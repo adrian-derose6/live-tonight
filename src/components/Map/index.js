@@ -9,9 +9,6 @@ const MarkerComponent = ({ text }) => <div>{text}</div>;
 class ShowsMap extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      deviceLocation: {}
-    }
   }
 
   static defaultProps = {

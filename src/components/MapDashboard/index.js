@@ -29,7 +29,7 @@ class MapDashboard extends Component {
                     alignItems="center"
                     className={classes.grid}
                 >
-                    <Grid item md={5} className={classes.leftPanel}>
+                    <Grid item md={4} className={classes.leftPanel}>
                         <Grid
                             container
                             zeroMinWidth
@@ -44,7 +44,7 @@ class MapDashboard extends Component {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item md={7} className={classes.rightPanel}>
+                    <Grid item md={8} className={classes.rightPanel}>
                         <ShowsIndex />    
                     </Grid>
                 </Grid>
