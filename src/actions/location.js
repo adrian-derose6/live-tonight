@@ -1,8 +1,8 @@
-export const SET_CURRENT_LOCATION = 'SET_CURRENT_LOCATION';
+export const SET_SEARCH_LOCATION = 'SET_SEARCH_LOCATION';
 
-export function setCurrentLocation(currentLocation) {
+export function setSearchLocation(searchLocation) {
     return {
-        type: SET_CURRENT_LOCATION,
-        currentLocation
+        type: SET_SEARCH_LOCATION,
+        searchLocation
     }
 }

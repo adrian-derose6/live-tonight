@@ -11,7 +11,7 @@ const styles = theme => ({
     width: '100%',
   },
   appBar: {
-    boxShadow: 'none'
+    boxShadow: '0px 1px 2px -1px rgba(135,119,135,1)',
   },
   grow: {
     flexGrow: 1

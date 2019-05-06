@@ -14,7 +14,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
-import { setCurrentLocation } from '../../actions/location.js';
+import { setSearchLocation } from '../../actions/location.js';
 
 class LocationSearchInput extends React.Component {
   constructor(props) {
@@ -29,8 +29,27 @@ class LocationSearchInput extends React.Component {
   handleSelect = address => {
     this.setState({address});
     geocodeByAddress(address)
-      .then(results => getLatLng(results[0]))
-      .then(latLng => this.props.setCurrentLocation(latLng))
+      .then(results => {
+        console.log(results)
+        return {
+          name: results[0].formatted_address,
+          center: {
+            lat: results[0].geometry.location.lat(),
+            lng: results[0].geometry.location.lng()
+          },
+          viewport: {
+            ne: {
+              lat: results[0].geometry.viewport.getNorthEast().lat(),
+              lng: results[0].geometry.viewport.getNorthEast().lng()
+            },
+            sw: {
+              lat: results[0].geometry.viewport.getSouthWest().lat(),
+              lng: results[0].geometry.viewport.getSouthWest().lng()
+            }
+          }
+        }
+      })
+      .then(locationInfo => this.props.setSearchLocation(locationInfo))
       .catch(error => console.error('Error', error));
   }
 
@@ -158,13 +177,13 @@ const styles = theme => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    setCurrentLocation: (location) => dispatch(setCurrentLocation(location))
+    setSearchLocation: (location) => dispatch(setSearchLocation(location))
   }
 }
 
 const mapStateToProps = state => {
   return {
-    currentLocation: state.location.currentLocation
+    searchLocation: state.location.searchLocation
   }
 }
 

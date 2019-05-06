@@ -71,10 +71,10 @@ const styles = theme => ({
     },
     leftGrid: {
         height: '100%',
-        minWidth: '100%'
+        minWidth: '100%',
     },
     mapContainer: {
-        minWidth: '100%'
+        minWidth: '100%',
     },
     playlistContainer: {
         minWidth: '100%',

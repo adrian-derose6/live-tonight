@@ -25,6 +25,7 @@ class App extends Component {
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
+  
   render() {
     const { width, height } = this.state;
     return (
