@@ -12,16 +12,22 @@ const styles = theme => ({
         width: 35,
         height: 35,
         left: -35 / 2,
-        top: -35 / 2
+        top: -35 / 2,
+    },
+    marker: {
+        fill: '#3f51b5',
+        '&:hover': {
+            fill: 'blue',
+            cursor: 'pointer'
+        }
     }
 })
   
-function MapMarker(props) {
-    const { classes } = props;
-    const style = props.$hover ? {fill: 'blue'} : { fill: '#3f51b5'}
+function MapMarker({ classes, onClick, $hover }) {
+    
     return (
         <div className={classes.markerContainer}>
-            <Marker style={style} width={30} height={30} />
+            <Marker onClick={onClick} className={classes.marker} width={30} height={30} />
         </div>
     )
 }

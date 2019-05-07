@@ -1,4 +1,4 @@
-import { SET_SEARCH_LOCATION } from '../actions/location.js';
+import { SET_SEARCH_LOCATION, SET_SEARCH_CENTER } from '../actions/location.js';
 
 const initialState = {
     searchLocation: {
@@ -24,7 +24,15 @@ export default function location(state = initialState, action) {
     switch (action.type) {
         case SET_SEARCH_LOCATION: 
             return { ...state, searchLocation: action.searchLocation }
-        default: 
+        case SET_SEARCH_CENTER:
+            return { 
+                ...state, 
+                searchLocation: {
+                    ...state.searchLocation,
+                    center: action.centerLatLng
+                }
+            }
+        default:
             return state;
     }
 }

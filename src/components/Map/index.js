@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
 import { fitBounds } from 'google-map-react/utils';
 import { geolocated } from 'react-geolocated';
-import { setSearchLocation } from '../../actions/location.js';
+import { setSearchLocation, setSearchCenter } from '../../actions/location.js';
 import ResizeObserver from 'react-resize-observer';
 import MapMarker from './MapMarker.js';
+import DetailBubble from './ShowDetailBubble.js';
 
 const showLocations = [
   {
@@ -24,6 +25,7 @@ class ShowsMap extends Component {
 
     this.state = {
       deviceLocation: {},
+      detailBubbleAnchorEl: null
     }
   }
 
@@ -61,7 +63,7 @@ class ShowsMap extends Component {
       if (status === 'OK') {
         console.log(results)
         let postalCodeArea = results.filter((result) => {
-          return result.address_components.length === 4 && result.types.includes('postal_code')
+          return (result.address_components.length === 4 || result.address_components.length === 5) && result.types.includes('postal_code')
         })[0];
 
         let locationInfo = {
@@ -89,10 +91,24 @@ class ShowsMap extends Component {
     })
   }
 
+  handleDetailClose = () => {
+    this.setState({
+      detailBubbleAnchorEl: null
+    })
+  }
+  
+  handleMarkerClick = (event, lat, lng) => {
+    this.setState({
+      detailBubbleAnchorEl: event.currentTarget
+    })
+    this.props.setSearchCenter({ lat, lng })
+  }
+
   renderMap = () => {
+    const { detailBubbleAnchorEl } = this.state;
+    const detailOpen = Boolean(detailBubbleAnchorEl);
     const { viewport } = this.props.searchLocation;
-    const { center, zoom } = fitBounds(viewport, { width: 400, height: 600})
-    console.log(center, zoom)
+    const { zoom } = fitBounds(viewport, { width: 400, height: 600})
     return (
       <GoogleMapReact
         yesIWantToUseGoogleMapApiInternals
@@ -105,7 +121,18 @@ class ShowsMap extends Component {
       >
         {
           showLocations.map((location, index) => {
-            return <MapMarker key={index} lat={location.lat} lng={location.lng} />
+            const { lat, lng} = location;
+            return (
+              <div lat={lat} lng={lng} key={index}>
+                <MapMarker onClick={(event) => this.handleMarkerClick(event, lat, lng)}  />
+                <DetailBubble 
+                  id="event"
+                  open={detailOpen}
+                  anchorEl={detailBubbleAnchorEl}
+                  onClose={this.handleDetailClose}
+                />
+              </div>
+            )
           })
         }
       </GoogleMapReact>   
@@ -129,7 +156,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setSearchLocation: (location) => dispatch(setSearchLocation(location))
+    setSearchLocation: (location) => dispatch(setSearchLocation(location)),
+    setSearchCenter: (centerLatLng) => dispatch(setSearchCenter(centerLatLng))
   }
 }
 
@@ -139,7 +167,7 @@ export default connect(
 )(
   geolocated({
     positionOptions: {
-      enableHighAccuracy: false
+      enableHighAccuracy: true
     },
     geolocationProvider: navigator.geolocation
   })

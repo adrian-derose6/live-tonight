@@ -18,7 +18,7 @@ class MapDashboard extends Component {
 
     render() {
         const { windowWidth, windowHeight } = this.props;
-        const { classes } = this.props;
+        const { classes, locationName } = this.props;
         return (
             <div className={classes.root} style={{ height: windowHeight - 65 }}>
                 <Grid
@@ -45,7 +45,7 @@ class MapDashboard extends Component {
                         </Grid>
                     </Grid>
                     <Grid item md={8} className={classes.rightPanel}>
-                        <ShowsIndex />    
+                        <ShowsIndex location={locationName}/>    
                     </Grid>
                 </Grid>
             </div>
@@ -86,7 +86,8 @@ const styles = theme => ({
 
 const mapStateToProps = (state) => {
     return {
-      shows: state.shows
+      shows: state.shows,
+      locationName: state.location.searchLocation.name
     }
 }
 
