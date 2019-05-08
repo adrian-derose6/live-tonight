@@ -121,7 +121,7 @@ class ShowsMap extends Component {
       >
         {
           showLocations.map((location, index) => {
-            const { lat, lng} = location;
+            const { lat, lng } = location;
             return (
               <div lat={lat} lng={lng} key={index}>
                 <MapMarker onClick={(event) => this.handleMarkerClick(event, lat, lng)}  />

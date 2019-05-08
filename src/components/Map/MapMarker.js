@@ -27,7 +27,7 @@ function MapMarker({ classes, onClick, $hover }) {
     
     return (
         <div className={classes.markerContainer}>
-            <Marker onClick={onClick} className={classes.marker} width={30} height={30} />
+            <Marker onClick={onClick} className={classes.marker} width={30} height={30} /> 
         </div>
     )
 }

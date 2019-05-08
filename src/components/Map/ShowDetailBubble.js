@@ -6,6 +6,7 @@ const DetailBubble = ({ classes, open, anchorEl, onClose, id }) => {
     return(
         <Popover 
             id={id}
+            classes={{ paper: classes.container}}
             open={open}
             anchorEl={anchorEl}
             onClose={onClose}
@@ -24,7 +25,13 @@ const DetailBubble = ({ classes, open, anchorEl, onClose, id }) => {
 
 const styles = theme => ({
     container: {
-        
+        position: 'absolute',
+        left: 0,
+        top: 0, 
+        right: 0,
+        bottom: 0,
+        width: '200px',
+        height: '150px'
     }
 });
 
