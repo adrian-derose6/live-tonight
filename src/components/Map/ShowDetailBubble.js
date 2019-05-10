@@ -3,35 +3,27 @@ import { withStyles } from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
 
 const DetailBubble = ({ classes, open, anchorEl, onClose, id }) => {
-    return(
-        <Popover 
-            id={id}
-            classes={{ paper: classes.container}}
-            open={open}
-            anchorEl={anchorEl}
-            onClose={onClose}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'center'
-            }}
-            transformOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center'
-            }}
-        >
-        </Popover>
-    )
+    if (!open) {
+        return <div></div>
+    }
+    else {
+        return (
+            <div className={classes.container}>
+                <span onClick={onClose}>exit</span>
+            </div>
+        )
+    }
 }
 
 const styles = theme => ({
     container: {
         position: 'absolute',
-        left: 0,
-        top: 0, 
-        right: 0,
-        bottom: 0,
-        width: '200px',
-        height: '150px'
+        width: '186px',
+        height: '140px',
+        backgroundColor: 'white',
+        border: '1px solid gray',
+        borderRadius: '3px',
+        boxShadow: '1px 0px 2px -1px rgba(135,119,135,1)'
     }
 });
 

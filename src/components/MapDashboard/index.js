@@ -66,7 +66,7 @@ const styles = theme => ({
     },
     rightPanel: {
         height: '100%',
-        boxShadow: '-1px 0px 2px -1px rgba(135,119,135,1)',
+        boxShadow: '1px 0px 2px -1px rgba(135,119,135,1)',
         zIndex: 2000
     },
     leftGrid: {

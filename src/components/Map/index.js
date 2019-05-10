@@ -25,7 +25,7 @@ class ShowsMap extends Component {
 
     this.state = {
       deviceLocation: {},
-      detailBubbleAnchorEl: null
+      detailBubbleAnchorEl: null,
     }
   }
 
@@ -86,7 +86,7 @@ class ShowsMap extends Component {
         this.props.setSearchLocation(locationInfo);
       }
       else {
-        console.log('The geocoder failed to retreive geocode becuase of ', status)
+        console.log('The geocoder failed to retreive geocode because of ', status)
       }
     })
   }
@@ -100,14 +100,15 @@ class ShowsMap extends Component {
   handleMarkerClick = (event, lat, lng) => {
     this.setState({
       detailBubbleAnchorEl: event.currentTarget
-    })
+    });
+    
     this.props.setSearchCenter({ lat, lng })
   }
 
   renderMap = () => {
     const { detailBubbleAnchorEl } = this.state;
     const detailOpen = Boolean(detailBubbleAnchorEl);
-    const { viewport } = this.props.searchLocation;
+    const { viewport, center } = this.props.searchLocation;
     const { zoom } = fitBounds(viewport, { width: 400, height: 600})
     return (
       <GoogleMapReact
@@ -125,16 +126,19 @@ class ShowsMap extends Component {
             return (
               <div lat={lat} lng={lng} key={index}>
                 <MapMarker onClick={(event) => this.handleMarkerClick(event, lat, lng)}  />
-                <DetailBubble 
-                  id="event"
-                  open={detailOpen}
-                  anchorEl={detailBubbleAnchorEl}
-                  onClose={this.handleDetailClose}
-                />
               </div>
             )
           })
         }
+
+        <DetailBubble 
+          id="event"
+          open={detailOpen}
+          anchorEl={detailBubbleAnchorEl}
+          onClose={this.handleDetailClose}
+          lat={center.lat}
+          lng={center.lng}
+        />
       </GoogleMapReact>   
     )
   }
@@ -164,8 +168,7 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps, 
   mapDispatchToProps
-)(
-  geolocated({
+)(geolocated({
     positionOptions: {
       enableHighAccuracy: true
     },
