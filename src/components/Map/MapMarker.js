@@ -15,9 +15,9 @@ const styles = theme => ({
         top: -35 / 2,
     },
     marker: {
-        fill: '#3f51b5',
+        fill: "#2B1935",
         '&:hover': {
-            fill: 'blue',
+            fill: "#685065",
             cursor: 'pointer'
         }
     }

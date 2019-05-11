@@ -165,7 +165,7 @@ const styles = theme => ({
     margin: 0,
     padding: 0,
     listStyleType: 'none',
-    color: 'black'
+    color: "#2B1935"
   },
   suggestion: {
     borderBottom: '1px solid lightgray'
