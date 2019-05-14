@@ -35,7 +35,7 @@ const styles = theme => ({
         top: 15,
         right: '40%',
         left: '30%',
-        zIndex: 20,
+        zIndex: 2009,
         opacity: 0.85,
         
         fontFamily: "Sharp Sans No1 Semibold"
@@ -57,7 +57,7 @@ const styles = theme => ({
         top: 15,
         right: '40%',
         left: '30%',
-        zIndex: 2010,
+        zIndex: 2009,
         opacity: 0.91,
         fontFamily: "Sharp Sans No1 Semibold"
     },

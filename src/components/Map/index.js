@@ -92,9 +92,9 @@ class ShowsMap extends Component {
   renderMap = () => {
     const { detailBubbleAnchorEl } = this.state;
     const detailOpen = Boolean(detailBubbleAnchorEl);
-    const { viewport, center} = this.props.searchLocation;
+    const { viewport, center } = this.props.searchLocation;
     const { zoom } = fitBounds(viewport, { width: 400, height: 600});
-    
+
     return (
       <GoogleMapReact
         yesIWantToUseGoogleMapApiInternals
@@ -142,7 +142,8 @@ class ShowsMap extends Component {
 
 const mapStateToProps = state => {
   return {
-    searchLocation: state.location.searchLocation
+    searchLocation: state.location.searchLocation,
+    isLoading: state.location.isLoading
   }
 }
 
