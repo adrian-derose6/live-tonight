@@ -14,7 +14,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
-import { setCurrentLocation } from '../../actions/location.js';
+import { setSearchLocation } from '../../actions/location.js';
 
 class LocationSearchInput extends React.Component {
   constructor(props) {
@@ -27,11 +27,9 @@ class LocationSearchInput extends React.Component {
   }
 
   handleSelect = address => {
-    this.setState({address});
-    geocodeByAddress(address)
-      .then(results => getLatLng(results[0]))
-      .then(latLng => this.props.setCurrentLocation(latLng))
-      .catch(error => console.error('Error', error));
+    this.setState({ address });
+    
+    this.props.setSearchLocation({ address: address })
   }
 
   render() {
@@ -146,7 +144,7 @@ const styles = theme => ({
     margin: 0,
     padding: 0,
     listStyleType: 'none',
-    color: 'black'
+    color: "#2B1935"
   },
   suggestion: {
     borderBottom: '1px solid lightgray'
@@ -158,13 +156,13 @@ const styles = theme => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    setCurrentLocation: (location) => dispatch(setCurrentLocation(location))
+    setSearchLocation: (geocoderRequest) => dispatch(setSearchLocation(geocoderRequest))
   }
 }
 
 const mapStateToProps = state => {
   return {
-    currentLocation: state.location.currentLocation
+    searchLocation: state.location.searchLocation
   }
 }
 

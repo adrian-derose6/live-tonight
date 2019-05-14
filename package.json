@@ -19,6 +19,7 @@
     "react-google-places-suggest": "^3.7.1",
     "react-places-autocomplete": "^7.2.1",
     "react-redux": "^7.0.2",
+    "react-resize-observer": "^1.1.1",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
     "react-select": "^2.4.3",

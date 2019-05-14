@@ -11,7 +11,8 @@ const styles = theme => ({
     width: '100%',
   },
   appBar: {
-    boxShadow: 'none'
+    boxShadow: 'none',
+    backgroundColor: "#2B1935"
   },
   grow: {
     flexGrow: 1
@@ -22,8 +23,7 @@ const styles = theme => ({
   },
   title: {
     display: 'none',
-    fontFamily: "Sharp Sans No1 Semibold",
-    fontWeight: 'bold',
+    fontFamily: "Sharp Sans No1 Bold",
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },

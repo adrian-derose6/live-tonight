@@ -1,17 +1,60 @@
-import { SET_CURRENT_LOCATION } from '../actions/location.js';
+import { 
+    FETCH_GEOCODE_START, 
+    FETCH_GEOCODE_SUCCESS, 
+    FETCH_GEOCODE_FAILURE, 
+    SET_SEARCH_CENTER 
+} from '../actions/location.js';
 
 const initialState = {
-    currentLocation: {
-        lat: 41.8781,
-        lng: -87.6298
+    loading: false,
+    error: null,
+    searchLocation: {
+        name: 'Chicago',
+        center: { 
+            lat: 41.8781,
+            lng: -87.6298
+        },
+        viewport: {
+            ne: {
+                lat: 42.023131,
+                lng: -87.523661
+            },
+            sw: {
+                lat: 41.6443349,
+                lng: -87.94026689999998
+            }
+        }
     }
 }
 
 export default function location(state = initialState, action) {
     switch (action.type) {
-        case SET_CURRENT_LOCATION: 
-            return { ...state, currentLocation: action.currentLocation }
-        default: 
+        case FETCH_GEOCODE_START: 
+            return {
+                ...state, 
+                loading: true
+            }
+        case FETCH_GEOCODE_SUCCESS:
+            return {
+                loading: false,
+                error: null,
+                searchLocation: action.data
+            }
+        case FETCH_GEOCODE_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.error
+            }
+        case SET_SEARCH_CENTER:
+            return { 
+                ...state, 
+                searchLocation: {
+                    ...state.searchLocation,
+                    center: action.centerLatLng
+                }
+            }
+        default:
             return state;
     }
 }

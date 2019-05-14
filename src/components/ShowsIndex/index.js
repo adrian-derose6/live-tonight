@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { Grid, List, Divider, GridList } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -6,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import ShowsGridList from './ShowsGridList';
 import './ShowsIndex.css'
 
-const ShowsIndex = ({ classes }) => {
+const ShowsIndex = ({ classes, location }) => {
     return (
         <Grid
             container
@@ -18,8 +19,8 @@ const ShowsIndex = ({ classes }) => {
         >
             <Grid item md={1} className={classes.headerContainer}>
                 <div className={classes.headerInnerContainer}>
-                    <div><h3 style={{ fontFamily: "Sharp Sans No1 Semibold"}}>Shows Tonight in Chicago...</h3></div>
-                    <div><p style={{ fontFamily: "Sharp Sans No1 Medium"}}>Check different night</p></div>
+                    <div><h3 style={{ color: "#2B1935", fontFamily: "Sharp Sans No1 Bold"}}>Shows Tonight in {`${location}`}...</h3></div>
+                    <div><p style={{ color: "#2B1935", fontFamily: "Sharp Sans No1 Semibold"}}>Check different night</p></div>
                 </div>
                 <hr className="divider"/>
             </Grid>
@@ -32,7 +33,7 @@ const ShowsIndex = ({ classes }) => {
 }
 
 
-const styles = theme => ({
+const styles = (theme) => ({
     container: {
         height: '100%',
         width: '100%',
@@ -65,6 +66,7 @@ const styles = theme => ({
         paddingRight: '25px'
     }
 });
+
 
 export default withStyles(styles)(ShowsIndex);
 
