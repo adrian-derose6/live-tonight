@@ -1,6 +1,13 @@
-import { SET_SEARCH_LOCATION, SET_SEARCH_CENTER } from '../actions/location.js';
+import { 
+    FETCH_GEOCODE_START, 
+    FETCH_GEOCODE_SUCCESS, 
+    FETCH_GEOCODE_FAILURE, 
+    SET_SEARCH_CENTER 
+} from '../actions/location.js';
 
 const initialState = {
+    loading: false,
+    error: null,
     searchLocation: {
         name: 'Chicago',
         center: { 
@@ -22,8 +29,23 @@ const initialState = {
 
 export default function location(state = initialState, action) {
     switch (action.type) {
-        case SET_SEARCH_LOCATION: 
-            return { ...state, searchLocation: action.searchLocation }
+        case FETCH_GEOCODE_START: 
+            return {
+                ...state, 
+                loading: true
+            }
+        case FETCH_GEOCODE_SUCCESS:
+            return {
+                loading: false,
+                error: null,
+                searchLocation: action.data
+            }
+        case FETCH_GEOCODE_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.error
+            }
         case SET_SEARCH_CENTER:
             return { 
                 ...state, 

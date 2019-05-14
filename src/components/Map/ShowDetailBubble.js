@@ -1,8 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Popover from '@material-ui/core/Popover';
 import CloseIcon from '@material-ui/icons/Close';
-import { Z_BLOCK } from 'zlib';
 
 const DetailBubble = ({ classes, open, anchorEl, onClose, id }) => {
     if (!open) {

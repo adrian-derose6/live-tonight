@@ -27,30 +27,9 @@ class LocationSearchInput extends React.Component {
   }
 
   handleSelect = address => {
-    this.setState({address});
-    geocodeByAddress(address)
-      .then(results => {
-        console.log(results)
-        return {
-          name: results[0].formatted_address,
-          center: {
-            lat: results[0].geometry.location.lat(),
-            lng: results[0].geometry.location.lng()
-          },
-          viewport: {
-            ne: {
-              lat: results[0].geometry.viewport.getNorthEast().lat(),
-              lng: results[0].geometry.viewport.getNorthEast().lng()
-            },
-            sw: {
-              lat: results[0].geometry.viewport.getSouthWest().lat(),
-              lng: results[0].geometry.viewport.getSouthWest().lng()
-            }
-          }
-        }
-      })
-      .then(locationInfo => this.props.setSearchLocation(locationInfo))
-      .catch(error => console.error('Error', error));
+    this.setState({ address });
+    
+    this.props.setSearchLocation({ address: address })
   }
 
   render() {
@@ -177,7 +156,7 @@ const styles = theme => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    setSearchLocation: (location) => dispatch(setSearchLocation(location))
+    setSearchLocation: (geocoderRequest) => dispatch(setSearchLocation(geocoderRequest))
   }
 }
 

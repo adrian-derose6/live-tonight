@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import red from '@material-ui/core/colors/red';
-import blue from '@material-ui/core/colors/blue';
-import SvgIcon from '@material-ui/core/SvgIcon';
 import { ReactComponent as Marker } from './map-marker.svg';
 
 const styles = theme => ({

@@ -4,7 +4,6 @@ import GoogleMapReact from 'google-map-react';
 import { fitBounds } from 'google-map-react/utils';
 import { geolocated } from 'react-geolocated';
 import { setSearchLocation, setSearchCenter } from '../../actions/location.js';
-import ResizeObserver from 'react-resize-observer';
 import MapMarker from './MapMarker.js';
 import DetailBubble from './ShowDetailBubble.js';
 
@@ -24,7 +23,6 @@ class ShowsMap extends Component {
     super(props);
 
     this.state = {
-      deviceLocation: {},
       detailBubbleAnchorEl: null,
     }
   }
@@ -41,54 +39,8 @@ class ShowsMap extends Component {
     if (prevProps.coords !== this.props.coords) {
       const { latitude, longitude } = this.props.coords;
 
-      this.setState({
-        deviceLocation: {
-          lat: latitude,
-          lng: longitude
-        }
-      })
+      this.props.setSearchLocation({ location: { lat: latitude, lng: longitude }});
     }
-  }
-
-  handleApiLoaded = (map, maps) => {
-    const { lat, lng } = this.state.deviceLocation;
-    const geocoder = new maps.Geocoder();
-
-    geocoder.geocode({
-      location: {
-        lat,
-        lng
-      }
-    }, (results, status) => {
-      if (status === 'OK') {
-        console.log(results)
-        let postalCodeArea = results.filter((result) => {
-          return (result.address_components.length === 4 || result.address_components.length === 5) && result.types.includes('postal_code')
-        })[0];
-
-        let locationInfo = {
-          name: postalCodeArea.formatted_address,
-          center: {
-            lat: postalCodeArea.geometry.location.lat(),
-            lng: postalCodeArea.geometry.location.lng()
-          },
-          viewport: {
-            ne: {
-              lat: postalCodeArea.geometry.viewport.getNorthEast().lat(),
-              lng: postalCodeArea.geometry.viewport.getNorthEast().lng()
-            },
-            sw: {
-              lat: postalCodeArea.geometry.viewport.getSouthWest().lat(),
-              lng: postalCodeArea.geometry.viewport.getSouthWest().lng()
-            }
-          }
-        }
-        this.props.setSearchLocation(locationInfo);
-      }
-      else {
-        console.log('The geocoder failed to retreive geocode because of ', status)
-      }
-    })
   }
 
   handleDetailClose = () => {
@@ -118,7 +70,6 @@ class ShowsMap extends Component {
         defaultZoom={this.props.zoom}
         zoom={zoom + 1}
         center={this.props.searchLocation.center}
-        onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
       >
         {
           showLocations.map((location, index) => {
@@ -160,7 +111,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setSearchLocation: (location) => dispatch(setSearchLocation(location)),
+    setSearchLocation: (geocoderRequest) => dispatch(setSearchLocation(geocoderRequest)),
     setSearchCenter: (centerLatLng) => dispatch(setSearchCenter(centerLatLng))
   }
 }
