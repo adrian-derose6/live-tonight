@@ -24,7 +24,6 @@ const styles = theme => ({
   title: {
     display: 'none',
     fontFamily: "Sharp Sans No1 Bold",
-    fontWeight: 'bold',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },

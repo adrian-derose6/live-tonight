@@ -6,6 +6,7 @@ import { geolocated } from 'react-geolocated';
 import { setSearchLocation, setSearchCenter } from '../../actions/location.js';
 import MapMarker from './MapMarker.js';
 import DetailBubble from './ShowDetailBubble.js';
+import SearchButton from './SearchButton.js';
 
 const showLocations = [
   {
@@ -18,12 +19,29 @@ const showLocations = [
   }
 ]
 
+function createMapOptions(maps) {
+  const google = window.google;
+  return {
+    panControl: false,
+    mapTypeControl: false,
+    zoomControl: true,
+    zoomControlOptions: {
+      position: google.maps.ControlPosition.RIGHT_BOTTOM
+    },
+    fullscreenControl: false,
+    scrollwheel: false
+  }
+}
+
+
 class ShowsMap extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       detailBubbleAnchorEl: null,
+      currentCenter: null,
+      scrolledAway: false
     }
   }
 
@@ -46,7 +64,7 @@ class ShowsMap extends Component {
   handleDetailClose = () => {
     this.setState({
       detailBubbleAnchorEl: null
-    })
+    });
   }
   
   handleMarkerClick = (event, lat, lng) => {
@@ -54,14 +72,29 @@ class ShowsMap extends Component {
       detailBubbleAnchorEl: event.currentTarget
     });
     
-    this.props.setSearchCenter({ lat, lng })
+    this.props.setSearchCenter({ lat, lng });
+  }
+
+  handleButtonSearch = () => {
+    this.setState({ scrolledAway: false, currentCenter: null })
+  }
+
+  handleDrag = () => {
+    if (!this.state.scrolledAway) {
+      this.setState({ scrolledAway: true });
+    }
+  }
+
+  setCurrentCenter = (center) => {
+    this.setState({ currentCenter: center })
   }
 
   renderMap = () => {
     const { detailBubbleAnchorEl } = this.state;
     const detailOpen = Boolean(detailBubbleAnchorEl);
-    const { viewport, center } = this.props.searchLocation;
-    const { zoom } = fitBounds(viewport, { width: 400, height: 600})
+    const { viewport, center} = this.props.searchLocation;
+    const { zoom } = fitBounds(viewport, { width: 400, height: 600});
+    
     return (
       <GoogleMapReact
         yesIWantToUseGoogleMapApiInternals
@@ -69,7 +102,10 @@ class ShowsMap extends Component {
         defaultCenter={this.props.center}
         defaultZoom={this.props.zoom}
         zoom={zoom + 1}
-        center={this.props.searchLocation.center}
+        center={center}
+        onChange={({ center }) => this.setCurrentCenter(center)}
+        onDrag={({ center }) => this.handleDrag(center)}
+        options={createMapOptions}
       >
         {
           showLocations.map((location, index) => {
@@ -81,7 +117,6 @@ class ShowsMap extends Component {
             )
           })
         }
-
         <DetailBubble 
           id="event"
           open={detailOpen}
@@ -95,8 +130,10 @@ class ShowsMap extends Component {
   }
 
   render() {
+    console.log(this.state)
     return (
-      <div ref={map => this.map = map} style={{ width: '100%', height: '100%',}}>
+      <div style={{ width: '100%', height: '100%', position: 'relative'}}>
+        <SearchButton toSearch={this.state.scrolledAway} onClick={this.handleButtonSearch} />
         {this.renderMap()}
       </div>
     );

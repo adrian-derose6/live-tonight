@@ -39,11 +39,12 @@ export function setSearchLocation(geocoderRequest) {
         dispatch(fetchGeocodeStart());
 
         geocoder.geocode(geocoderRequest, (results, status) => {
+            console.log(results)
             if (status === 'OK') {
               let preciseLocation = (results.length > 1) ? results.filter((result) => {
                 return (result.address_components.length === 4 || result.address_components.length === 5) && result.types.includes('postal_code')
               }) : results;
-      
+
               let locationData = {
                 name: preciseLocation[0].formatted_address,
                 center: {
