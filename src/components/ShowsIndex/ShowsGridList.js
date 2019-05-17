@@ -13,14 +13,15 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     minWidth: '100%',
+    maxWidth: '100%',
     height: '100%',
     alignItems: 'flex-start',
     justifyContent: 'space-around',
-    overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
   },
   gridList: {
-    width: '100%',
+    maxWidth: '100%',
+    minWidth: '100%',
     height: '100%',
   },
   tile: {
@@ -62,20 +63,19 @@ const tileData = [
     }
 ]
 
-function ShowsGridList(props) {
-  const { classes } = props;
-
+function ShowsGridList({ classes, showsList }) {
+  console.log(showsList)
   return (
     <div className={classes.root}>
       <GridList cellHeight={240} className={classes.gridList}>
-        {tileData.map(tile => (
-          <GridListTile className={classes.tile} key={tile.img}>
-            <img src={tile.img} alt={tile.artists} className={classes.img} />
-            <GridListTileBar
-              title={<span style={{ fontFamily: "Sharp Sans No1 Semibold"}}>{tile.artist}</span>}
-              subtitle={<span style={{ fontFamily: "Sharp Sans No1 Medium"}}>{tile.venue}</span>}
-            />
-          </GridListTile>
+          { showsList.map(tile => (
+            <GridListTile className={classes.tile} key={tile.artistName || tile.eventName}>
+              <img src={tile.artistImg} alt={tile.artistName} className={classes.img} />
+              <GridListTileBar
+                title={<span style={{ fontFamily: "Sharp Sans No1 Semibold"}}>{tile.artistName || tile.eventName}</span>}
+                subtitle={<span style={{ fontFamily: "Sharp Sans No1 Medium"}}>{tile.venue}</span>}
+              />
+            </GridListTile>
         ))}
       </GridList>
     </div>
@@ -86,4 +86,4 @@ ShowsGridList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ShowsGridList)
+export default withStyles(styles)(ShowsGridList);

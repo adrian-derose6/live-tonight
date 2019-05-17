@@ -19,8 +19,9 @@ const showLocations = [
   }
 ]
 
-function createMapOptions(maps) {
+function createMapOptions() {
   const google = window.google;
+
   return {
     panControl: false,
     mapTypeControl: false,
@@ -71,7 +72,7 @@ class ShowsMap extends Component {
     this.setState({
       detailBubbleAnchorEl: event.currentTarget
     });
-    
+
     this.props.setSearchCenter({ lat, lng });
   }
 
@@ -130,7 +131,6 @@ class ShowsMap extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div style={{ width: '100%', height: '100%', position: 'relative'}}>
         <SearchButton toSearch={this.state.scrolledAway} onClick={this.handleButtonSearch} />
@@ -162,5 +162,4 @@ export default connect(
       enableHighAccuracy: true
     },
     geolocationProvider: navigator.geolocation
-  })
-(ShowsMap));
+  })(ShowsMap));

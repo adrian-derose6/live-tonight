@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { AppBar, Toolbar, IconButton, Typography, InputBase } from '@material-ui/core';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 
@@ -32,10 +31,7 @@ const styles = theme => ({
 
 
 class SearchAppBar extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+  
   render() {
     const { classes } = this.props;
     return (
