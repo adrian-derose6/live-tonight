@@ -1,17 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng,
-} from 'react-places-autocomplete';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import PlacesAutocomplete from 'react-places-autocomplete';
 import { withStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import SearchIcon from '@material-ui/icons/Search';
-import CancelIcon from '@material-ui/icons/Cancel';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
 import { setSearchLocation } from '../../actions/location.js';

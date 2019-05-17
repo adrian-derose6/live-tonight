@@ -12,13 +12,21 @@ import './styles.css';
 import { fetchShowsByCriteria } from '../../actions/shows.js';
 
 class MapDashboard extends Component {
-    componentDidMount() {
-        this.props.fetchShowsByCriteria();
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.searchLocation !== this.props.searchLocation) {
+            const showsSearchCriteria = {
+                geo: this.props.searchLocation.center
+            };
+
+            this.props.fetchShowsByCriteria(showsSearchCriteria);
+        }
     }
 
     render() {
-        const { windowWidth, windowHeight } = this.props;
-        const { classes, locationName } = this.props;
+        const { classes, searchLocation, windowHeight } = this.props;
+        console.log(this.props.searchShows)
+        
         return (
             <div className={classes.root} style={{ height: windowHeight - 65 }}>
                 <Grid
@@ -30,7 +38,7 @@ class MapDashboard extends Component {
                     className={classes.grid}
                 >
                     <Grid item md={8} className={classes.rightPanel}>
-                        <ShowsIndex location={locationName}/>    
+                        <ShowsIndex location={searchLocation.name} showsList={this.props.searchShows} />    
                     </Grid>
                     <Grid item md={4} className={classes.leftPanel}>
                         <Grid
@@ -86,8 +94,8 @@ const styles = theme => ({
 
 const mapStateToProps = (state) => {
     return {
-      shows: state.shows,
-      locationName: state.location.searchLocation.name
+      searchShows: state.shows.searchShows,
+      searchLocation: state.location.searchLocation
     }
 }
 

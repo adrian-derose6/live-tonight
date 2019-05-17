@@ -12,7 +12,7 @@ const DetailBubble = ({ classes, open, anchorEl, onClose, id }) => {
                 <div className={classes.eventCard}>
                     <div style={{ flex: 1 }}>
                         <div className={classes.imageContainer}>
-                            <img className={classes.eventImage} src="https://dk2600.files.wordpress.com/2016/12/mass-appeal-nas-it-aint-hard-to-tell.jpg?w=1000" />
+                            <img className={classes.eventImage} src="https://dk2600.files.wordpress.com/2016/12/mass-appeal-nas-it-aint-hard-to-tell.jpg?w=1000" alt="artist-img"/>
                         </div>
                     </div>
                     <div className={classes.eventInfo}>
