@@ -38,7 +38,8 @@ class ShowsIndex extends Component {
 
 const styles = (theme) => ({
     container: {
-        height: '100%',
+        maxHeight: '100%',
+        minHeight: '100%',
         width: '100%',
     },
     showsList: {
@@ -65,7 +66,8 @@ const styles = (theme) => ({
     listContainer: {
         minWidth: '100%',
         paddingLeft: '25px',
-        paddingRight: '25px'
+        paddingRight: '25px',
+        overflow: 'auto'
     }
 });
 

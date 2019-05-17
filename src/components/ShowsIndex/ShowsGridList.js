@@ -13,14 +13,15 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     minWidth: '100%',
+    maxWidth: '100%',
     height: '100%',
     alignItems: 'flex-start',
     justifyContent: 'space-around',
-    overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
   },
   gridList: {
-    width: '100%',
+    maxWidth: '100%',
+    minWidth: '100%',
     height: '100%',
   },
   tile: {
