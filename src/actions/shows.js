@@ -31,12 +31,9 @@ export function fetchShowsByCriteria(criteria = {}) {
         dispatch(fetchShowsStart());
         loadShowsJson(geo)
             .then(showsData => mapDataToState(showsData))
-            .then(stateData => dispatch(fetchShowsSuccess(stateData)))
-            /*.then(reducedData => Promise.all(reducedData.map(async (show) => {
-                let artistImg = (show.artistName) ? await loadArtistImage(show.artistName, accessToken) : null;
-                return { ...show, artistImg };
-            })))
-            .then(showsDataWithImg => dispatch(fetchShowsSuccess(showsDataWithImg)))  */
+            .then(stateData => verifySpotify(stateData, accessToken))
+            .then(stateDataWithSpotify => dispatch(fetchShowsSuccess(stateDataWithSpotify)))
+            .catch(err => dispatch(fetchShowsFailure(err)))
     }
 }
 
@@ -49,17 +46,20 @@ function loadShowsJson(latLng) {
     .then(res => res.json())
 }
 
-function mapDataToState(showsData) {
+async function mapDataToState(showsData) {
     const { events } = showsData;
-    return events.map((event, index) => {
+
+    return Promise.all(events.map(async (event, index) => {
         const { venue, performers, stats } = event;
+        
+
         return {
             eventName: venue.short_title,
             artistName: performers[0].name,
-            artistImg: performers[0].image,
+            artistImg: null,
             venue: venue.name,
             location: { lat: venue.location.lat, lng: venue.location.lon },
-            displayLocation: venue.display_location,
+            displayLocation:  venue.display_location,
             address: venue.address,
             city: venue.state,
             state: venue.city,
@@ -70,7 +70,7 @@ function mapDataToState(showsData) {
             price: stats.average_price,
             id: event.id
         }
-    })
+    }))
 }
 
 function loadSpotifyAccessToken() {
@@ -78,6 +78,15 @@ function loadSpotifyAccessToken() {
             .then(res => res.json())
             .then(accessTokenObj => accessTokenObj.access_token)
             .catch(err => console.log(err))
+}
+
+async function verifySpotify(events, accessToken) {
+    console.log('spotify verified')
+    return Promise.all(events.map(async (event) => {
+        const artistImg = await loadArtistImage(event.artistName, accessToken);
+        return { ...event, artistImg: artistImg}
+    }))
+    .then(events => events.filter(event => typeof event.artistImg === 'string'))
 }
 
 
@@ -93,7 +102,7 @@ function loadArtistImage(artistName, accessToken) {
             .then(res => res.json())
             .then(artistsData => {
                 const { items } = artistsData.artists;
-                console.log(artistName, items)
+                
                 if (items.length > 0) {
                     const artistMatched = items.filter((item) => {
                         return (item.name) ? item.name.toLowerCase() === artistName.toLowerCase() : null
