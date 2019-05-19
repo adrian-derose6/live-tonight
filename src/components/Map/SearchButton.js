@@ -37,7 +37,7 @@ const styles = theme => ({
         left: '30%',
         zIndex: 2009,
         opacity: 0.85,
-        
+        boxShadow: '0px 1px 3px -1px rgba(135,119,135,1)',
         fontFamily: "Sharp Sans No1 Semibold"
     },
     buttonSearch: {
@@ -59,6 +59,7 @@ const styles = theme => ({
         left: '30%',
         zIndex: 2009,
         opacity: 0.91,
+        boxShadow: '0px 1px 2px -1px rgba(135,119,135,1)',
         fontFamily: "Sharp Sans No1 Semibold"
     },
     icon: {

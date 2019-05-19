@@ -14,9 +14,12 @@ import { fetchShowsByCriteria } from '../../actions/shows.js';
 class MapDashboard extends Component {
 
     componentDidUpdate(prevProps) {
+        const currentDate = new Date();
+
         if (prevProps.searchLocation !== this.props.searchLocation) {
             const showsSearchCriteria = {
-                geo: this.props.searchLocation.center
+                geo: this.props.searchLocation.center,
+                date: currentDate
             };
 
             this.props.fetchShowsByCriteria(showsSearchCriteria);

@@ -24,12 +24,10 @@ export function fetchShowsFailure(error) {
 export function fetchShowsByCriteria(criteria = {}) {
 
     return async (dispatch) => {
-        const { geo } = criteria;
         const accessToken = await loadSpotifyAccessToken();
-        console.log(accessToken)
         
         dispatch(fetchShowsStart());
-        loadShowsJson(geo)
+        loadShowsJson(criteria)
             .then(showsData => mapDataToState(showsData))
             .then(stateData => verifySpotify(stateData, accessToken))
             .then(stateDataWithSpotify => dispatch(fetchShowsSuccess(stateDataWithSpotify)))
@@ -40,19 +38,18 @@ export function fetchShowsByCriteria(criteria = {}) {
 
 //Helper Functions
 
-function loadShowsJson(latLng) {
-    const { lat, lng } = latLng;
-    return fetch(`https://api.seatgeek.com/2/events?client_id=MTY2OTY2NDh8MTU1ODI3MDExMC4yMQ&lat=${lat}&lon=${lng}&range=12mi&sort=score.desc&type=concert&type=music_festival`)
+function loadShowsJson(criteria) {
+    const { geo, date } = criteria;
+    return fetch(`https://api.seatgeek.com/2/events?client_id=MTY2OTY2NDh8MTU1ODI3MDExMC4yMQ&lat=${geo.lat}&lon=${geo.lng}&range=12mi&sort=score.desc&type=concert&type=music_festival&datetime_utc.lt=2019-5-26&datetime_utc.gt=2019-5-24&per_page=50`)
     .then(res => res.json())
 }
 
 async function mapDataToState(showsData) {
     const { events } = showsData;
 
-    return Promise.all(events.map(async (event, index) => {
+    return events.map((event, index) => {
         const { venue, performers, stats } = event;
         
-
         return {
             eventName: venue.short_title,
             artistName: performers[0].name,
@@ -70,7 +67,7 @@ async function mapDataToState(showsData) {
             price: stats.average_price,
             id: event.id
         }
-    }))
+    })
 }
 
 function loadSpotifyAccessToken() {
@@ -88,7 +85,6 @@ async function verifySpotify(events, accessToken) {
     }))
     .then(events => events.filter(event => typeof event.artistImg === 'string'))
 }
-
 
 function loadArtistImage(artistName, accessToken) {
     return fetch(`https://api.spotify.com/v1/search?q=${artistName}&type=artist&market=US&limit=10&offset=0`, {
