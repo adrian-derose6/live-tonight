@@ -9,7 +9,7 @@ import './ShowsIndex.css'
 class ShowsIndex extends Component {
 
     render() {
-        const { classes, location, searchShows } = this.props;
+        const { classes, location} = this.props;
         return (
             <Grid
                 container
@@ -28,7 +28,7 @@ class ShowsIndex extends Component {
                 </Grid>
                 
                 <Grid item md={11} className={classes.listContainer}>
-                    <ShowsGridList showsList={searchShows} />
+                    <ShowsGridList />
                 </Grid>
             </Grid>
         );
@@ -71,14 +71,7 @@ const styles = (theme) => ({
     }
 });
 
-const mapStateToProps = (state) => {
-    return {
-      searchShows: state.shows.searchShows,
-      searchLocation: state.location.searchLocation
-    }
-}
 
-
-export default connect(mapStateToProps)(withStyles(styles)(ShowsIndex));
+export default withStyles(styles)(ShowsIndex);
 
 

@@ -25,7 +25,6 @@ class MapDashboard extends Component {
 
     render() {
         const { classes, searchLocation, windowHeight } = this.props;
-        console.log(this.props.searchShows)
         
         return (
             <div className={classes.root} style={{ height: windowHeight - 65 }}>
@@ -38,7 +37,7 @@ class MapDashboard extends Component {
                     className={classes.grid}
                 >
                     <Grid item md={8} className={classes.rightPanel}>
-                        <ShowsIndex location={searchLocation.name} showsList={this.props.searchShows} />    
+                        <ShowsIndex location={searchLocation.name} />    
                     </Grid>
                     <Grid item md={4} className={classes.leftPanel}>
                         <Grid

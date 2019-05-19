@@ -6,10 +6,10 @@ export function fetchShowsStart() {
 }
 
 export const FETCH_SHOWS_SUCCESS = 'FETCH_SHOWS_SUCCESS';
-export function fetchShowsSuccess(showsData) {
+export function fetchShowsSuccess(data) {
     return {
         type: FETCH_SHOWS_SUCCESS,
-        showsData
+        data
     }
 }
 
@@ -26,44 +26,51 @@ export function fetchShowsByCriteria(criteria = {}) {
     return async (dispatch) => {
         const { geo } = criteria;
         const accessToken = await loadSpotifyAccessToken();
-        
         console.log(accessToken)
+        
         dispatch(fetchShowsStart());
-        loadShowsJson(`https://api.songkick.com/api/3.0/events.json?apikey=OuFRwWs0gv753l2l&location=geo:${geo.lat},${geo.lng}`)
-            .then(showsData => reduceShowData(showsData.resultsPage))
-            .then(reducedData => Promise.all(reducedData.map(async (show) => {
+        loadShowsJson(geo)
+            .then(showsData => mapDataToState(showsData))
+            .then(stateData => dispatch(fetchShowsSuccess(stateData)))
+            /*.then(reducedData => Promise.all(reducedData.map(async (show) => {
                 let artistImg = (show.artistName) ? await loadArtistImage(show.artistName, accessToken) : null;
                 return { ...show, artistImg };
             })))
-            .then(showsDataWithImg => dispatch(fetchShowsSuccess(showsDataWithImg)))  
+            .then(showsDataWithImg => dispatch(fetchShowsSuccess(showsDataWithImg)))  */
     }
 }
 
 
 //Helper Functions
 
-function loadShowsJson(url) {
-    return fetch(url)
+function loadShowsJson(latLng) {
+    const { lat, lng } = latLng;
+    return fetch(`https://api.seatgeek.com/2/events?client_id=MTY2OTY2NDh8MTU1ODI3MDExMC4yMQ&lat=${lat}&lon=${lng}&range=12mi&sort=score.desc&type=concert&type=music_festival`)
     .then(res => res.json())
 }
 
-function reduceShowData(showsData) {
-    const { event } = showsData.results;
-
-    return event.map((show) => {
-        const artistName = (show.performance.length >= 1) ? show.performance[0].displayName : null;
+function mapDataToState(showsData) {
+    const { events } = showsData;
+    return events.map((event, index) => {
+        const { venue, performers, stats } = event;
         return {
-            eventName: show.displayName,
-            artistName: artistName,
-            artistImg: null,
-            venue: show.venue.displayName,
-            location: { lat: show.location.lat, lng: show.location.lng },
-            city: show.location.city,
-            date: show.start.date,
-            time: show.start.time,
-            price: null
+            eventName: venue.short_title,
+            artistName: performers[0].name,
+            artistImg: performers[0].image,
+            venue: venue.name,
+            location: { lat: venue.location.lat, lng: venue.location.lon },
+            displayLocation: venue.display_location,
+            address: venue.address,
+            city: venue.state,
+            state: venue.city,
+            postalCode: venue.postal_code,
+            date: null,
+            time: null,
+            datetime: event.datetime_utc,
+            price: stats.average_price,
+            id: event.id
         }
-    });
+    })
 }
 
 function loadSpotifyAccessToken() {

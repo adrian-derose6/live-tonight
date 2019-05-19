@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
@@ -63,13 +64,12 @@ const tileData = [
     }
 ]
 
-function ShowsGridList({ classes, showsList }) {
-  console.log(showsList)
+function ShowsGridList({ classes, searchShows }) {
   return (
     <div className={classes.root}>
       <GridList cellHeight={240} className={classes.gridList}>
-          { showsList.map(tile => (
-            <GridListTile className={classes.tile} key={tile.artistName || tile.eventName}>
+          { searchShows.map((tile, index) => (
+            <GridListTile className={classes.tile} key={index}>
               <img src={tile.artistImg} alt={tile.artistName} className={classes.img} />
               <GridListTileBar
                 title={<span style={{ fontFamily: "Sharp Sans No1 Semibold"}}>{tile.artistName || tile.eventName}</span>}
@@ -86,4 +86,10 @@ ShowsGridList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ShowsGridList);
+const mapStateToProps = (state) => {
+  return {
+    searchShows: state.shows.searchShows,
+  }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(ShowsGridList));
