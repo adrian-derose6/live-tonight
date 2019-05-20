@@ -41,8 +41,10 @@ class ShowsMap extends Component {
 
     this.state = {
       detailBubbleAnchorEl: null,
+      detailBubbleLatLng: null,
       currentCenter: null,
-      scrolledAway: false
+      scrolledAway: false,
+      currentZoom: null,
     }
   }
 
@@ -60,6 +62,43 @@ class ShowsMap extends Component {
 
       this.props.setSearchLocation({ location: { lat: latitude, lng: longitude }});
     }
+
+    if (prevProps.searchShows !== this.props.searchShows){
+      this.setBounds(this.props.searchShows);
+    }
+  }
+
+  setBounds(showsList) {
+    const google = window.google;
+    const bounds = new google.maps.LatLngBounds();
+
+    if (showsList.length > 0 && showsList.length !== 1) {
+      showsList.forEach(show => {
+        const { location } = show;
+        bounds.extend(new google.maps.LatLng(location.lat, location.lng));
+      })
+
+      const newBounds = {
+        ne: {
+            lat: bounds.getNorthEast().lat(),
+            lng: bounds.getNorthEast().lng()
+        },
+        sw: {
+            lat: bounds.getSouthWest().lat(),
+            lng: bounds.getSouthWest().lng()
+        }
+      };
+
+      const { zoom } = fitBounds(newBounds, { width: 400, height: 600});
+      
+      this.setState({
+        currentZoom: zoom,
+        currentCenter: this.props.searchLocation.center
+      })
+    }
+    else if (showsList.length <= 1) {
+      this.setState({ currentZoom: 13, currentCenter: this.props.searchLocation.center })
+    }
   }
 
   handleDetailClose = () => {
@@ -70,10 +109,10 @@ class ShowsMap extends Component {
   
   handleMarkerClick = (event, lat, lng) => {
     this.setState({
-      detailBubbleAnchorEl: event.currentTarget
+      detailBubbleAnchorEl: event.currentTarget,
+      currentCenter: { lat, lng },
+      detailBubbleLatLng: { lat, lng }
     });
-
-    this.props.setSearchCenter({ lat, lng });
   }
 
   handleButtonSearch = () => {
@@ -93,8 +132,7 @@ class ShowsMap extends Component {
   renderMap = () => {
     const { detailBubbleAnchorEl } = this.state;
     const detailOpen = Boolean(detailBubbleAnchorEl);
-    const { viewport, center } = this.props.searchLocation;
-    const { zoom } = fitBounds(viewport, { width: 400, height: 600});
+    const { currentCenter } = this.state;
 
     return (
       <GoogleMapReact
@@ -102,15 +140,15 @@ class ShowsMap extends Component {
         bootstrapURLKeys={{ key: 'AIzaSyC-mITYSots24MEoNzoPew533UKmVOga8Y' }}
         defaultCenter={this.props.center}
         defaultZoom={this.props.zoom}
-        zoom={zoom + 1}
-        center={center}
+        center={currentCenter}
+        zoom={this.state.currentZoom - 1}
         onChange={({ center }) => this.setCurrentCenter(center)}
-        onDrag={({ center }) => this.handleDrag(center)}
+        onDrag={() => this.handleDrag()}
         options={createMapOptions}
       >
         {
-          showLocations.map((location, index) => {
-            const { lat, lng } = location;
+          this.props.searchShows.map((event, index) => {
+            const { lat, lng } = event.location;
             return (
               <div lat={lat} lng={lng} key={index}>
                 <MapMarker onClick={(event) => this.handleMarkerClick(event, lat, lng)}  />
@@ -118,14 +156,18 @@ class ShowsMap extends Component {
             )
           })
         }
-        <DetailBubble 
-          id="event"
-          open={detailOpen}
-          anchorEl={detailBubbleAnchorEl}
-          onClose={this.handleDetailClose}
-          lat={center.lat}
-          lng={center.lng}
-        />
+        {
+          (this.state.detailBubbleLatLng) ? 
+            <DetailBubble 
+              id="event"
+              open={detailOpen}
+              anchorEl={detailBubbleAnchorEl}
+              onClose={this.handleDetailClose}
+              lat={this.state.detailBubbleLatLng.lat}
+              lng={this.state.detailBubbleLatLng.lng}
+            />
+            : null
+        }
       </GoogleMapReact>   
     )
   }
@@ -143,7 +185,8 @@ class ShowsMap extends Component {
 const mapStateToProps = state => {
   return {
     searchLocation: state.location.searchLocation,
-    isLoading: state.location.isLoading
+    isLoading: state.location.isLoading,
+    searchShows: state.shows.searchShows
   }
 }
 

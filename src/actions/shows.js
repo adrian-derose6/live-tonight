@@ -22,12 +22,11 @@ export function fetchShowsFailure(error) {
 }
 
 export function fetchShowsByCriteria(criteria = {}) {
-
     return async (dispatch) => {
         const accessToken = await loadSpotifyAccessToken();
         
         dispatch(fetchShowsStart());
-        loadShowsJson(criteria)
+        loadShows(criteria)
             .then(showsData => mapDataToState(showsData))
             .then(stateData => verifySpotify(stateData, accessToken))
             .then(stateDataWithSpotify => dispatch(fetchShowsSuccess(stateDataWithSpotify)))
@@ -38,18 +37,17 @@ export function fetchShowsByCriteria(criteria = {}) {
 
 //Helper Functions
 
-function loadShowsJson(criteria) {
-    const { geo, date } = criteria;
+function loadShows(criteria) {
+    const { geo, date } = criteria;  
     return fetch(`https://api.seatgeek.com/2/events?client_id=MTY2OTY2NDh8MTU1ODI3MDExMC4yMQ&lat=${geo.lat}&lon=${geo.lng}&range=12mi&sort=score.desc&type=concert&type=music_festival&datetime_utc.lt=2019-5-26&datetime_utc.gt=2019-5-24&per_page=50`)
     .then(res => res.json())
 }
 
-async function mapDataToState(showsData) {
+function mapDataToState(showsData) {
     const { events } = showsData;
-
+    
     return events.map((event, index) => {
         const { venue, performers, stats } = event;
-        
         return {
             eventName: venue.short_title,
             artistName: performers[0].name,
@@ -78,10 +76,9 @@ function loadSpotifyAccessToken() {
 }
 
 async function verifySpotify(events, accessToken) {
-    console.log('spotify verified')
     return Promise.all(events.map(async (event) => {
         const artistImg = await loadArtistImage(event.artistName, accessToken);
-        return { ...event, artistImg: artistImg}
+        return { ...event, artistImg }
     }))
     .then(events => events.filter(event => typeof event.artistImg === 'string'))
 }
