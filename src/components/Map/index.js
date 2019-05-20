@@ -38,10 +38,10 @@ function createMapOptions() {
 class ShowsMap extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       detailBubbleAnchorEl: null,
       detailBubbleLatLng: null,
+      detailBubbleInfo: {},
       currentCenter: null,
       scrolledAway: false,
       currentZoom: null,
@@ -107,12 +107,14 @@ class ShowsMap extends Component {
     });
   }
   
-  handleMarkerClick = (event, lat, lng) => {
+  handleMarkerClick = (event, show) => {
     this.setState({
       detailBubbleAnchorEl: event.currentTarget,
-      currentCenter: { lat, lng },
-      detailBubbleLatLng: { lat, lng }
+      currentCenter: { lat: show.location.lat, lng: show.location.lng },
+      detailBubbleLatLng: { lat: show.location.lat, lng: show.location.lng },
+      detailBubbleInfo: show
     });
+    
   }
 
   handleButtonSearch = () => {
@@ -133,7 +135,7 @@ class ShowsMap extends Component {
     const { detailBubbleAnchorEl } = this.state;
     const detailOpen = Boolean(detailBubbleAnchorEl);
     const { currentCenter } = this.state;
-
+    console.log(this.state)
     return (
       <GoogleMapReact
         yesIWantToUseGoogleMapApiInternals
@@ -147,11 +149,12 @@ class ShowsMap extends Component {
         options={createMapOptions}
       >
         {
-          this.props.searchShows.map((event, index) => {
-            const { lat, lng } = event.location;
+          this.props.searchShows.map((show, index) => {
+            const { lat, lng } = show.location;
+           
             return (
               <div lat={lat} lng={lng} key={index}>
-                <MapMarker onClick={(event) => this.handleMarkerClick(event, lat, lng)}  />
+                <MapMarker onClick={(event) => this.handleMarkerClick(event, show)}  />
               </div>
             )
           })
@@ -165,6 +168,7 @@ class ShowsMap extends Component {
               onClose={this.handleDetailClose}
               lat={this.state.detailBubbleLatLng.lat}
               lng={this.state.detailBubbleLatLng.lng}
+              detailBubbleInfo={this.state.detailBubbleInfo}
             />
             : null
         }

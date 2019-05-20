@@ -2,23 +2,24 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 
-const DetailBubble = ({ classes, open, anchorEl, onClose, id }) => {
+const DetailBubble = ({ classes, open, anchorEl, onClose, id, detailBubbleInfo }) => {
     if (!open) {
         return <div></div>
     }
     else {
+        const { artistName, venue, artistImg, address, city, state, postalCode } = detailBubbleInfo;
         return (
             <div className={classes.container}>
                 <div className={classes.eventCard}>
                     <div style={{ flex: 1 }}>
                         <div className={classes.imageContainer}>
-                            <img className={classes.eventImage} src="https://dk2600.files.wordpress.com/2016/12/mass-appeal-nas-it-aint-hard-to-tell.jpg?w=1000" alt="artist-img"/>
+                            <img className={classes.eventImage} src={artistImg} alt="artist-img"/>
                         </div>
                     </div>
                     <div className={classes.eventInfo}>
-                        <h2 style={{ fontFamily: "Sharp Sans No1 Bold", color: '#00234B', marginBottom: 2 }}>Nas</h2>
-                        <p style={{ fontFamily: "Sharp Sans No1 Semibold", color: 'rgb(135, 135, 145)', fontSize: '12px', marginBottom: 3, marginTop: 1 }}>House of Blues</p>
-                        <p style={{ fontFamily: "Sharp Sans No1 Semibold", color: '#00234B', fontSize: '12px', marginTop: 2}}>329 N Dearborn St,<br/>Chicago, IL 60654</p>
+                        <h2 style={{ fontFamily: "Sharp Sans No1 Bold", color: '#00234B', marginBottom: 2 }}>{artistName}</h2>
+                        <p style={{ fontFamily: "Sharp Sans No1 Semibold", color: 'rgb(135, 135, 145)', fontSize: '12px', marginBottom: 3, marginTop: 1 }}>{venue}</p>
+                        <p style={{ fontFamily: "Sharp Sans No1 Semibold", color: '#00234B', fontSize: '12px', marginTop: 2}}>{address},<br/>{city}, {state} {postalCode}</p>
                     </div>
                 </div>
                 <div className={classes.exitContainer}>
@@ -49,7 +50,7 @@ const styles = theme => ({
     eventCard: {
         height: '100%',
         width: 'max-content',
-        flex: 4,
+        flex: 6,
         display: 'flex',
         overflowX: 'scroll',
         overflowY: 'hidden',
