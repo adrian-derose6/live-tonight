@@ -1,10 +1,15 @@
+// React Packages 
 import React, { Component } from "react";
+
+// Material UI Packages
 import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 
+// Child Components
 import LocationSearchInput from './LocationSearchInput.js';
 
+// Material UI Styles 
 const styles = theme => ({
   root: {
     width: '100%',
@@ -30,8 +35,7 @@ const styles = theme => ({
 });
 
 
-class SearchAppBar extends Component {
-  
+class TopAppBar extends Component {
   render() {
     const { classes } = this.props;
     return (
@@ -41,11 +45,10 @@ class SearchAppBar extends Component {
             <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
               <MenuIcon />
             </IconButton>
-            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+            <Typography className={classes.title} variant="h5" color="inherit" noWrap>
             Live Tonight!
             </Typography>
             <div className={classes.grow} />
-            <LocationSearchInput />
           </Toolbar>
         </AppBar>
       </div>
@@ -53,4 +56,4 @@ class SearchAppBar extends Component {
   }
 }
 
-export default withStyles(styles)(SearchAppBar);
+export default withStyles(styles)(TopAppBar);

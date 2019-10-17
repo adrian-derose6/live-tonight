@@ -1,10 +1,14 @@
+// React and Redux packages
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import './App.css';
-import SearchAppBar from './components/SearchAppBar/index.js';
+// Child components
+import TopAppBar from './components/TopAppBar/index.js';
 import MapDashboard from './components/MapDashboard/index.js';
+
+// Redux actions
 import { fetchShowsByCriteria } from './actions/shows';
+
 
 class App extends Component {
   constructor(props) {
@@ -29,8 +33,8 @@ class App extends Component {
   render() {
     const { width, height } = this.state;
     return (
-      <div className="App">
-        <SearchAppBar />
+      <div style={{ height: '100%' }}>
+        <TopAppBar />
         <div>
           <MapDashboard windowHeight={height} windowWidth={width} />
         </div>
@@ -39,7 +43,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     shows: state.shows
   }
