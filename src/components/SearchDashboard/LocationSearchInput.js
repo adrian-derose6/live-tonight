@@ -61,7 +61,7 @@ class LocationSearchInput extends React.Component {
                 <SearchIcon />
               </div>
             </div>
-            <Paper style={{maxHeight: 300, overflow: 'auto' }} square className={classes.suggestionsContainerOpen}>
+            <Paper style={{ maxHeight: 300 }} square className={classes.suggestionsContainerOpen}>
               <div className={classes.suggestionsList}>
                 {suggestions.map(suggestion =>
                   <MenuItem { ...getSuggestionItemProps(suggestion, { className: classes.suggestion})} >
@@ -70,7 +70,7 @@ class LocationSearchInput extends React.Component {
                           {suggestion.description}
                         </span>
                       ) : (
-                        <strong style={{ fontFamily: "Sharp Sans No1 Book" }}>
+                        <strong style={{ fontFamily: "Sharp Sans No1 Medium" }}>
                           {suggestion.description}
                         </strong>
                       )
@@ -149,10 +149,11 @@ const styles = theme => ({
     margin: 0,
     padding: 0,
     listStyleType: 'none',
-    color: "#2B1935"
+    color: "#2B1935",
   },
   suggestion: {
-    borderBottom: '1px solid lightgray'
+    borderBottom: '1px solid lightgray',
+    
   },
   divider: {
     height: theme.spacing.unit * 2,

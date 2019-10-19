@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 // Child Components
 import ShowsIndex from '../ShowsIndex/index.js';
-import SearchMap from '../Map/index.js';
+import MapContainer from '../Map/index.js';
 import LocationSearchInput from './LocationSearchInput.js';
 
 // Styles
@@ -54,10 +54,12 @@ class SearchDashboard extends Component {
                         zeroMinWidth
                         style={{ height: '100%', width: '100%' }}
                     >
-                        <Grid item lg={5}>
-                            
+                        <Grid item md={5} xs={0}>
+                            <div className={classes.mapContainer}>
+                                <MapContainer />
+                            </div>
                         </Grid>
-                        <Grid item lg={7} className={classes.rightPanel}>
+                        <Grid item md={7} xs={12} className={classes.rightPanel}>
 
                         </Grid>
                     </Grid>
@@ -110,7 +112,9 @@ const styles = theme => ({
         boxShadow: '-2px 0px 3px 0px rgba(168,163,168,1)',
     },
     mapContainer: {
-        minWidth: '100%',
+        width: '100%', 
+        height: '100%',
+        position: 'relative'
     },
     playlistContainer: {
         minWidth: '100%',
