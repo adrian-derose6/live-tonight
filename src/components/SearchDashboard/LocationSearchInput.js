@@ -1,6 +1,11 @@
+// React and Redux Packages
 import React from 'react';
 import { connect } from 'react-redux';
+
+// react-places-autocomplete
 import PlacesAutocomplete from 'react-places-autocomplete';
+
+// Material-UI Packages
 import { withStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 import Paper from '@material-ui/core/Paper';
@@ -8,6 +13,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import SearchIcon from '@material-ui/icons/Search';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
+// Redux Actions
 import { setSearchLocation } from '../../actions/location.js';
 
 class LocationSearchInput extends React.Component {
@@ -29,10 +35,13 @@ class LocationSearchInput extends React.Component {
   render() {
     const { classes } = this.props;
     const inputProps = {
-      placeholder: 'Change location...',
+      placeholder: 'Change Location...',
       classes: {
         root: classes.inputRoot,
         input: classes.inputInput,
+      },
+      styles: {
+        color: "#2B1935"
       }
     };
 
@@ -45,12 +54,12 @@ class LocationSearchInput extends React.Component {
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
             <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
               <InputBase
                 {...getInputProps(inputProps)}
               />
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
             </div>
             <Paper style={{maxHeight: 300, overflow: 'auto' }} square className={classes.suggestionsContainerOpen}>
               <div className={classes.suggestionsList}>
@@ -77,14 +86,12 @@ class LocationSearchInput extends React.Component {
   }
 }
 
+// Custom Material-UI Styles 
 const styles = theme => ({
   search: {
     position: 'relative',
     borderRadius: 0,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
+    backgroundColor: fade(theme.palette.common.white, 0.25),
     marginLeft: 0,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
@@ -92,6 +99,8 @@ const styles = theme => ({
       width: '100%',
     },
     display: 'flex',
+    border:'2px #2B1935 solid',
+    color: "#2B1935",
   },
   searchIcon: {
     width: theme.spacing.unit * 1,
@@ -103,10 +112,11 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    color: "#2B1935"
   },
   inputRoot: {
-    color: 'inherit',
     width: '100%',
+    color: "#2B1935",
   },
   inputInput: {
     paddingTop: theme.spacing.unit,
@@ -122,7 +132,8 @@ const styles = theme => ({
       },
     },
     fontSize: '14px',
-    fontFamily: "Sharp Sans No1 Book"
+    fontFamily: "Sharp Sans No1 Semibold",
+    color: "#2B1935"
   },
   container: {
     position: 'relative'
@@ -131,7 +142,7 @@ const styles = theme => ({
     position: 'absolute',
     zIndex: 2010,
     marginTop: theme.spacing.unit,
-    right: 15,
+    left: 30,
     width: 400
   },
   suggestionsList: {

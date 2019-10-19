@@ -1,12 +1,22 @@
+// React & Redux Packages
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
+// 'google-map-react' Packages
 import GoogleMapReact from 'google-map-react';
 import { fitBounds } from 'google-map-react/utils';
+
+// 'react-geolocated' Packages
 import { geolocated } from 'react-geolocated';
-import { setSearchLocation, setSearchCenter } from '../../actions/location.js';
+
+// Child Components
 import MapMarker from './MapMarker.js';
 import DetailBubble from './ShowDetailBubble.js';
 import SearchButton from './SearchButton.js';
+
+// Redux Actions
+import { setSearchLocation, setSearchCenter } from '../../actions/location.js';
+
 
 const showLocations = [
   {
@@ -35,10 +45,9 @@ function createMapOptions() {
 }
 
 
-class ShowsMap extends Component {
+class SearchMap extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       detailBubbleAnchorEl: null,
       currentCenter: null,
@@ -63,16 +72,11 @@ class ShowsMap extends Component {
   }
 
   handleDetailClose = () => {
-    this.setState({
-      detailBubbleAnchorEl: null
-    });
+    this.setState({ detailBubbleAnchorEl: null });
   }
   
   handleMarkerClick = (event, lat, lng) => {
-    this.setState({
-      detailBubbleAnchorEl: event.currentTarget
-    });
-
+    this.setState({ detailBubbleAnchorEl: event.currentTarget });
     this.props.setSearchCenter({ lat, lng });
   }
 
@@ -162,4 +166,4 @@ export default connect(
       enableHighAccuracy: true
     },
     geolocationProvider: navigator.geolocation
-  })(ShowsMap));
+  })(SearchMap));
