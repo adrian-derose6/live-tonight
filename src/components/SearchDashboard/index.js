@@ -1,18 +1,24 @@
+// React & Redux Packages
 import React, { Component } from 'react';
-
 import { connect } from 'react-redux';
 
+// Material-UI Packages
 import Grid from '@material-ui/core/Grid';
+import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
+// Child Components
 import ShowsIndex from '../ShowsIndex/index.js';
 import ShowsMap from '../Map/index.js';
+import LocationSearchInput from './LocationSearchInput.js';
+
+// Styles
 import './styles.css';
 
+// Redux Actions
 import { fetchShowsByCriteria } from '../../actions/shows.js';
 
-class MapDashboard extends Component {
-
+class SearchDashboard extends Component {
     componentDidUpdate(prevProps) {
         if (prevProps.searchLocation !== this.props.searchLocation) {
             const showsSearchCriteria = {
@@ -25,45 +31,36 @@ class MapDashboard extends Component {
 
     render() {
         const { classes, searchLocation, windowHeight } = this.props;
-        console.log(this.props.searchShows)
-        
+
         return (
-            <div className={classes.root} style={{ height: windowHeight - 65 }}>
-                <Grid
-                    container
-                    zeroMinWidth
-                    direction="row"
-                    justify="flex-start"
-                    alignItems="center"
-                    className={classes.grid}
-                >
-                    <Grid item md={8} className={classes.rightPanel}>
-                        <ShowsIndex location={searchLocation.name} showsList={this.props.searchShows} />    
-                    </Grid>
-                    <Grid item md={4} className={classes.leftPanel}>
-                        <Grid
-                            container
-                            zeroMinWidth
-                            direction="column"
-                            justify='flex-start'
-                            className={classes.leftGrid}
-                        >
-                            <Grid item md={12} className={classes.mapContainer}>
-                                <ShowsMap 
-                                    isMarkerShown
-                                />
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Grid>
+            <div className={classes.root} >
+                <AppBar className={classes.criteriaBar} position='relative' >
+                    <Toolbar>
+                        <LocationSearchInput />
+                    </Toolbar>
+                </AppBar>
+                <div style={{ height: windowHeight - 134 }}>
+
+                </div>
             </div>
         );
     }
 }
 
+// Custom Material-UI Styles
 const styles = theme => ({
     root: {
        flexGrow: 1,
+       maxHeight: '100%'
+    },
+    criteriaBar: {
+        minWidth: '100%',
+        height: '55px',
+        backgroundColor: 'white',
+        boxShadow: 'none',
+        borderBottom: '1px lightgray solid',
+        justifyContent: 'center',
+        alignItems: 'flex-start'
     },
     grid: {
         height: '100%',
@@ -108,5 +105,5 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(withStyles(styles)(MapDashboard));
+)(withStyles(styles)(SearchDashboard));
 

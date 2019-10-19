@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 
 // Child components
 import TopAppBar from './components/TopAppBar/index.js';
-import MapDashboard from './components/MapDashboard/index.js';
+import SearchDashboard from './components/SearchDashboard/index.js';
 
-// Redux actions
+// Redux Actions
 import { fetchShowsByCriteria } from './actions/shows';
 
 
@@ -36,7 +36,7 @@ class App extends Component {
       <div style={{ height: '100%' }}>
         <TopAppBar />
         <div>
-          <MapDashboard windowHeight={height} windowWidth={width} />
+          <SearchDashboard windowHeight={height} windowWidth={width} />
         </div>
       </div>
     );
