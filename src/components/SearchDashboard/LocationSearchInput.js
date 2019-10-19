@@ -54,12 +54,12 @@ class LocationSearchInput extends React.Component {
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
             <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
               <InputBase
                 {...getInputProps(inputProps)}
               />
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
             </div>
             <Paper style={{maxHeight: 300, overflow: 'auto' }} square className={classes.suggestionsContainerOpen}>
               <div className={classes.suggestionsList}>
@@ -92,9 +92,6 @@ const styles = theme => ({
     position: 'relative',
     borderRadius: 0,
     backgroundColor: fade(theme.palette.common.white, 0.25),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.15),
-    },
     marginLeft: 0,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
@@ -119,7 +116,7 @@ const styles = theme => ({
   },
   inputRoot: {
     width: '100%',
-    color: "#2B1935"
+    color: "#2B1935",
   },
   inputInput: {
     paddingTop: theme.spacing.unit,
@@ -135,7 +132,7 @@ const styles = theme => ({
       },
     },
     fontSize: '14px',
-    fontFamily: "Sharp Sans No1 Book",
+    fontFamily: "Sharp Sans No1 Semibold",
     color: "#2B1935"
   },
   container: {

@@ -3,13 +3,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // Material-UI Packages
-import Grid from '@material-ui/core/Grid';
-import { AppBar, Toolbar, IconButton, Typography, Button } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, Button, Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 // Child Components
 import ShowsIndex from '../ShowsIndex/index.js';
-import ShowsMap from '../Map/index.js';
+import SearchMap from '../Map/index.js';
 import LocationSearchInput from './LocationSearchInput.js';
 
 // Styles
@@ -17,6 +16,7 @@ import './styles.css';
 
 // Redux Actions
 import { fetchShowsByCriteria } from '../../actions/shows.js';
+
 
 class SearchDashboard extends Component {
     componentDidUpdate(prevProps) {
@@ -35,13 +35,13 @@ class SearchDashboard extends Component {
         return (
             <div className={classes.root} >
                 <AppBar className={classes.criteriaBar} position='relative' >
-                    <Toolbar style={{ width: '100%', justifyContent: 'flex-start', alignItems: 'center'}}>
+                    <Toolbar style={{ maxWidth: '100%', justifyContent: 'flex-start', alignItems: 'center'}}>
                         <LocationSearchInput />
-                        <Button className={classes.criteriaButton} size="small" disableRipple disableFocusRipple style={{ marginLeft: 20 }}>
-                            Criteria
+                        <Button className={classes.criteriaButton} size="small" disableRipple disableFocusRipple style={{ marginLeft: 30 }}>
+                            Genre
                         </Button>
                         <Button className={classes.criteriaButton} size="small" disableRipple disableFocusRipple>
-                            Criteria 2
+                            Popularity
                         </Button>
                         <Button className={classes.criteriaButton} size="small" disableRipple disableFocusRipple>
                             Criteria 3
@@ -49,7 +49,18 @@ class SearchDashboard extends Component {
                     </Toolbar>
                 </AppBar>
                 <div style={{ height: windowHeight - 134 }}>
+                    <Grid
+                        container
+                        zeroMinWidth
+                        style={{ height: '100%', width: '100%' }}
+                    >
+                        <Grid item lg={5}>
+                            
+                        </Grid>
+                        <Grid item lg={7} className={classes.rightPanel}>
 
+                        </Grid>
+                    </Grid>
                 </div>
             </div>
         );
@@ -59,11 +70,10 @@ class SearchDashboard extends Component {
 // Custom Material-UI Styles
 const styles = theme => ({
     root: {
-       flexGrow: 1,
-       maxHeight: '100%'
+       flexGrow: 1
     },
     criteriaBar: {
-        minWidth: '100%',
+        maxWidth: '100%',
         height: '55px',
         backgroundColor: 'white',
         boxShadow: 'none',
@@ -74,6 +84,7 @@ const styles = theme => ({
     criteriaButton: {
         width: 109,
         border: '2px #2B1935 solid',
+        color: '#2B1935',
         marginRight: 15,
         borderRadius: 0,
         fontFamily: "Sharp Sans No1 Semibold",
@@ -81,6 +92,10 @@ const styles = theme => ({
         textAlign: 'center',
         justifyContent: 'center',
         alignItems: 'center',
+        '&:hover': {
+            color: 'white',
+            backgroundColor: '#2B1935'
+        }
     },
     grid: {
         height: '100%',
@@ -91,12 +106,8 @@ const styles = theme => ({
     },
     rightPanel: {
         height: '100%',
-        boxShadow: '1px 0px 2px -1px rgba(135,119,135,1)',
-        zIndex: 2000
-    },
-    leftGrid: {
-        height: '100%',
-        minWidth: '100%',
+        borderLeft: '1px lightgray solid',
+        boxShadow: '-2px 0px 3px 0px rgba(168,163,168,1)',
     },
     mapContainer: {
         minWidth: '100%',

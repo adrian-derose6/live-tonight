@@ -11,7 +11,7 @@ import LocationSearchInput from '../SearchDashboard/LocationSearchInput.js'
 // Material UI Custom Styles 
 const styles = theme => ({
   root: {
-    width: '100%',
+    width: '100%'
   },
   appBar: {
     boxShadow: 'none',

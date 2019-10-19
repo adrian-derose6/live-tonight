@@ -6,9 +6,6 @@ import { connect } from 'react-redux';
 import TopAppBar from './components/TopAppBar/index.js';
 import SearchDashboard from './components/SearchDashboard/index.js';
 
-// Redux Actions
-import { fetchShowsByCriteria } from './actions/shows';
-
 
 class App extends Component {
   constructor(props) {
@@ -43,19 +40,4 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    shows: state.shows
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchShowsByCriteria: (criteria) => dispatch(fetchShowsByCriteria(criteria))
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default App;
