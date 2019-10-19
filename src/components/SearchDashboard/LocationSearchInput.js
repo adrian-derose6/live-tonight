@@ -102,8 +102,8 @@ const styles = theme => ({
       width: '100%',
     },
     display: 'flex',
-    border: '1px gray solid',
-    color: "#2B1935"
+    border:'2px #2B1935 solid',
+    color: "#2B1935",
   },
   searchIcon: {
     width: theme.spacing.unit * 1,

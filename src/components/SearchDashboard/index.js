@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 // Material-UI Packages
 import Grid from '@material-ui/core/Grid';
-import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 // Child Components
@@ -35,8 +35,17 @@ class SearchDashboard extends Component {
         return (
             <div className={classes.root} >
                 <AppBar className={classes.criteriaBar} position='relative' >
-                    <Toolbar>
+                    <Toolbar style={{ width: '100%', justifyContent: 'flex-start', alignItems: 'center'}}>
                         <LocationSearchInput />
+                        <Button className={classes.criteriaButton} size="small" disableRipple disableFocusRipple style={{ marginLeft: 20 }}>
+                            Criteria
+                        </Button>
+                        <Button className={classes.criteriaButton} size="small" disableRipple disableFocusRipple>
+                            Criteria 2
+                        </Button>
+                        <Button className={classes.criteriaButton} size="small" disableRipple disableFocusRipple>
+                            Criteria 3
+                        </Button>
                     </Toolbar>
                 </AppBar>
                 <div style={{ height: windowHeight - 134 }}>
@@ -60,7 +69,18 @@ const styles = theme => ({
         boxShadow: 'none',
         borderBottom: '1px lightgray solid',
         justifyContent: 'center',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+    },
+    criteriaButton: {
+        width: 109,
+        border: '2px #2B1935 solid',
+        marginRight: 15,
+        borderRadius: 0,
+        fontFamily: "Sharp Sans No1 Semibold",
+        textTransform: 'none',
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     grid: {
         height: '100%',
