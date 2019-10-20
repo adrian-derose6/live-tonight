@@ -54,12 +54,12 @@ class SearchDashboard extends Component {
                         zeroMinWidth
                         style={{ height: '100%', width: '100%' }}
                     >
-                        <Grid item md={5} xs={0}>
+                        <Grid item md={5} >
                             <div className={classes.mapContainer}>
                                 <MapContainer />
                             </div>
                         </Grid>
-                        <Grid item md={7} xs={12} className={classes.rightPanel}>
+                        <Grid item md={7} className={classes.rightPanel}>
 
                         </Grid>
                     </Grid>
