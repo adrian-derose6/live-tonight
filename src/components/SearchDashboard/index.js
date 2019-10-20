@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 // Child Components
 import ShowsIndex from '../ShowsIndex/index.js';
-import MapContainer from '../Map/index.js';
+import SearchMap from '../Map/index.js';
 import LocationSearchInput from './LocationSearchInput.js';
 
 // Styles
@@ -56,7 +56,7 @@ class SearchDashboard extends Component {
                     >
                         <Grid item md={5} >
                             <div className={classes.mapContainer}>
-                                <MapContainer />
+                                <SearchMap centerAroundCurrentLocation />
                             </div>
                         </Grid>
                         <Grid item md={7} className={classes.rightPanel}>
