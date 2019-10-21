@@ -18,33 +18,21 @@ class SearchMap extends Component {
 		this.state = {
 			showingInfoWindow: false, 
 			activeMarker: {},          
-			selectedPlace: {}  ,
+			selectedPlace: {},
 			currentLocation: {
-				lat: lat,
+				lat: lng,
 				lng: lng
-			}    
+			}
 		};
 	}
 
-	componentDidMount() {
-		if (navigator && navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(pos => {
-				const coords = pos.coords;
-				this.props.onLocationChange({
-					location: {
-						lat: coords.latitude,
-						lng: coords.longitude
-					}
-				});
+	componentDidUpdate(prevProps) {
+		if (this.props.center !== this.state.currentLocation) {
+			this.setState({
+				currentLocation: this.props.center
 			});
 		}
-	} 
 
-	componentDidUpdate(prevProps) {
-		if (prevProps.center !== this.state.currentLocation) {
-			
-			this.setState({ currentLocation: this.props.center });
-		}
 	}
 
 	onMarkerClick = (props, marker, e) =>
@@ -64,16 +52,18 @@ class SearchMap extends Component {
 	};
 
 	render() {
+		console.log('render')
 		return (
 			<Map
 				google={this.props.google}
-				center={this.props.center}
+				center={this.state.currentLocation}
 				style={mapStyles}
+				initialCenter={this.props.center}
 			> 
 				<Marker
 					onClick={this.onMarkerClick}
 					name={'Schaumburg'}
-					position={this.state.currentLocation}
+					position={this.props.center}
 				/>
 				<InfoWindow
 					marker={this.state.activeMarker}
@@ -88,16 +78,6 @@ class SearchMap extends Component {
 		);
 	}
 }
-
-SearchMap.defaultProps = {
-	zoom: 14,
-	visible: true,
-	initialCenter: {
-		lat: 37.774929,
-		lng: -122.419416
-	},
-	centerAroundCurrentLocation: false,
-};
 
 export default GoogleApiWrapper({
   	apiKey: 'AIzaSyC-mITYSots24MEoNzoPew533UKmVOga8Y'

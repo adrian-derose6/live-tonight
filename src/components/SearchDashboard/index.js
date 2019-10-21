@@ -23,7 +23,22 @@ class SearchDashboard extends Component {
         if (prevProps.searchLocation !== this.props.searchLocation) {
             console.log(name, center);
         }
-    }
+	}
+	
+	componentDidMount() {
+		if (navigator && navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(pos => {
+				const coords = pos.coords;
+				this.onLocationChange({
+					location: {
+						lat: coords.latitude,
+						lng: coords.longitude
+					}
+				});
+			});
+		}
+	} 
+
 
     onLocationChange = (geocoderRequest) => {
         this.props.setSearchLocation(geocoderRequest);
@@ -56,7 +71,7 @@ class SearchDashboard extends Component {
                     >
                         <Grid item md={5} >
                             <div className={classes.mapContainer}>
-                                <SearchMap center={searchLocation.center} onLocationChange={(geo) => this.props.setSearchLocation(geo)}/>
+                                <SearchMap center={searchLocation.center} />
                             </div>
                         </Grid>
                         <Grid item md={7} className={classes.rightPanel}>
