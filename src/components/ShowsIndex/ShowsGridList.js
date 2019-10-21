@@ -11,23 +11,18 @@ import InfoIcon from '@material-ui/icons/Info';
 const styles = theme => ({
   root: {
     display: 'flex',
-    flexWrap: 'wrap',
-    minWidth: '100%',
-    maxWidth: '100%',
     height: '100%',
-    alignItems: 'flex-start',
-    justifyContent: 'space-around',
     backgroundColor: theme.palette.background.paper,
+    border: '1px solid blue'
   },
   gridList: {
-    maxWidth: '100%',
-    minWidth: '100%',
     height: '100%',
+    border: '1px red solid'
   },
   tile: {
     '&:hover': {
       cursor: 'pointer'
-    }
+    },
   },
   img: {
     transition: 'all .2s ease-in-out',
@@ -64,20 +59,11 @@ const tileData = [
 ]
 
 function ShowsGridList({ classes, showsList }) {
-	console.log(showsList)
 	return (
 		<div className={classes.root}>
-			<GridList cellHeight={240} className={classes.gridList}>
-				{ showsList.map(tile => (
-					<GridListTile className={classes.tile} key={tile.artistName || tile.eventName}>
-						<img src={tile.artistImg} alt={tile.artistName} className={classes.img} />
-						<GridListTileBar
-							title={<span style={{ fontFamily: "Sharp Sans No1 Semibold"}}>{tile.artistName || tile.eventName}</span>}
-							subtitle={<span style={{ fontFamily: "Sharp Sans No1 Medium"}}>{tile.venue}</span>}
-						/>
-					</GridListTile>
-				))}
-			</GridList>
+      <div className={classes.gridList}>
+
+      </div>
 		</div>
   	);
 }

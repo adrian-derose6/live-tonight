@@ -5,8 +5,8 @@ import React, { Component } from "react";
 import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
+import MusicNoteOutlined from '@material-ui/icons/MusicNoteOutlined';
 
-import LocationSearchInput from '../SearchDashboard/LocationSearchInput.js'
 
 // Material UI Custom Styles 
 const styles = theme => ({
@@ -29,10 +29,11 @@ const styles = theme => ({
     },
     title: {
         fontFamily: "Sharp Sans No1 Bold",
-        [theme.breakpoints.up('sm')]: {
-            display: 'block',
-        }
-    },
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignText: 'center',
+        fontSize: 30
+    }
 });
 
 
@@ -43,9 +44,8 @@ class TopAppBar extends Component {
             <div className={classes.root}>
                 <AppBar className={classes.appBar} position="static">
                     <Toolbar>
-                        <Typography className={classes.title} variant="h5" color="inherit" noWrap>
-                            Live Tonight
-                        </Typography>
+                        <MusicNoteOutlined style={{ fontSize: '3em' }} />
+                        <h2 className={classes.title}>Live Tonight</h2>
                         <div className={classes.grow} />
                     </Toolbar>
                 </AppBar>

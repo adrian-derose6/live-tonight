@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 // Material-UI Packages
 import { AppBar, Toolbar, IconButton, Typography, Button, Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import MusicNoteOutlined from '@material-ui/icons/MusicNoteOutlined';
+import People from '@material-ui/icons/People';
 
 // Child Components
 import ShowsIndex from '../ShowsIndex/index.js';
@@ -39,7 +41,6 @@ class SearchDashboard extends Component {
 		}
 	} 
 
-
     onLocationChange = (geocoderRequest) => {
         this.props.setSearchLocation(geocoderRequest);
     }
@@ -52,14 +53,19 @@ class SearchDashboard extends Component {
                 <AppBar className={classes.criteriaBar} position='relative' >
                     <Toolbar style={{ maxWidth: '100%', justifyContent: 'flex-start', alignItems: 'center'}}>
                         <LocationSearchInput onLocationChange={this.onLocationChange} />
-                        <Button className={classes.criteriaButton} size="small" disableRipple disableFocusRipple style={{ marginLeft: 30 }}>
+                        <Button className={classes.criteriaButton} style={{ height: 36 }} size="small" disableRipple disableFocusRipple style={{ marginLeft: 29 }}>
+                            <MusicNoteOutlined />
                             Genre
                         </Button>
-                        <Button className={classes.criteriaButton} size="small" disableRipple disableFocusRipple>
-                            Popularity
+                        <Button className={classes.criteriaButton} style={{ height: 36 }} size="small" disableRipple disableFocusRipple>
+                           <People style={{ marginRight: 5 }}/>
+                            Clout
                         </Button>
-                        <Button className={classes.criteriaButton} size="small" disableRipple disableFocusRipple>
+                        <Button className={classes.criteriaButton} style={{ height: 36 }} size="small" disableRipple disableFocusRipple>
                             Criteria 3
+                        </Button>
+                        <Button className={classes.saveSearchButton} style={{ height: 36 }} size='small' disableRipple disableFocusRipple>
+                            Save Search
                         </Button>
                     </Toolbar>
                 </AppBar>
@@ -69,13 +75,13 @@ class SearchDashboard extends Component {
                         zeroMinWidth
                         style={{ height: '100%', width: '100%' }}
                     >
-                        <Grid item md={5} >
+                        <Grid item lg={5} md={8} xs={0}>
                             <div className={classes.mapContainer}>
                                 <SearchMap center={searchLocation.center} />
                             </div>
                         </Grid>
-                        <Grid item md={7} className={classes.rightPanel}>
-
+                        <Grid item lg={7} md={4} xs={12} className={classes.rightPanel}>
+							<ShowsIndex location={searchLocation.name} />
                         </Grid>
                     </Grid>
                 </div>
@@ -106,12 +112,28 @@ const styles = theme => ({
         borderRadius: 0,
         fontFamily: "Sharp Sans No1 Semibold",
         textTransform: 'none',
-        textAlign: 'center',
+       
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'space-between',
         '&:hover': {
             color: 'white',
             backgroundColor: '#2B1935'
+        }
+    },
+    saveSearchButton: {
+        width: 109,
+        border: '2px #2B1935 solid',
+        color: 'white',
+        marginRight: 15,
+        borderRadius: 0,
+        fontFamily: "Sharp Sans No1 Semibold",
+        textTransform: 'none',
+        backgroundColor: '#2B1935',
+        justifyContent: 'center',
+        alignItems: 'space-between',
+        '&:hover': {
+            color: '#2B1935',
+            backgroundColor: 'white'
         }
     },
     grid: {
@@ -124,7 +146,8 @@ const styles = theme => ({
     rightPanel: {
         height: '100%',
         borderLeft: '1px lightgray solid',
-        boxShadow: '-2px 0px 3px 0px rgba(168,163,168,1)',
+		boxShadow: '-2px 2px 5px 0 rgba(0,0,0,.4)',
+		zIndex: 1000
     },
     mapContainer: {
         width: '100%', 
