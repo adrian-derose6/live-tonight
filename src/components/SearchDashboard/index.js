@@ -132,8 +132,7 @@ const styles = theme => ({
         justifyContent: 'center',
         alignItems: 'space-between',
         '&:hover': {
-            color: '#2B1935',
-            backgroundColor: 'white'
+            backgroundColor: '#2B1935',
         }
     },
     grid: {

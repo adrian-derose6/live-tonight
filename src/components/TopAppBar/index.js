@@ -5,7 +5,7 @@ import React, { Component } from "react";
 import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import MusicNoteOutlined from '@material-ui/icons/MusicNoteOutlined';
+import MusicNoteRounded from '@material-ui/icons/MusicNoteRounded';
 
 
 // Material UI Custom Styles 
@@ -15,7 +15,7 @@ const styles = theme => ({
     },
     appBar: {
         boxShadow: 'none',
-        backgroundColor: "#2B1935",
+        backgroundColor: '#2b1935',
         height: '79px',
         justifyContent: 'center',
         alignItems: 'center',
@@ -44,7 +44,7 @@ class TopAppBar extends Component {
             <div className={classes.root}>
                 <AppBar className={classes.appBar} position="static">
                     <Toolbar>
-                        <MusicNoteOutlined style={{ fontSize: '3em' }} />
+                        <MusicNoteRounded style={{ fontSize: '3em' }} />
                         <h2 className={classes.title}>Live Tonight</h2>
                         <div className={classes.grow} />
                     </Toolbar>

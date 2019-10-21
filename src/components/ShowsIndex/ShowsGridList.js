@@ -10,14 +10,19 @@ import InfoIcon from '@material-ui/icons/Info';
 
 const styles = theme => ({
   root: {
-    display: 'flex',
-    height: '100%',
+    maxHeight: '100%',
+    maxWidth: '100%',
+    width: '100%',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
     backgroundColor: theme.palette.background.paper,
-    border: '1px solid blue'
+    paddingLeft: 8,
+    paddingTop: 7
   },
   gridList: {
+    width: '100%',
     height: '100%',
-    border: '1px red solid'
+    overflow: 'visible'
   },
   tile: {
     '&:hover': {
@@ -60,12 +65,27 @@ const tileData = [
 
 function ShowsGridList({ classes, showsList }) {
 	return (
-		<div className={classes.root}>
-      <div className={classes.gridList}>
-
-      </div>
-		</div>
-  	);
+    <div className={classes.root}>
+      <GridList className={classes.gridList} cellHeight={220} spacing={6}>
+        {tileData.map(tile => {
+          return (
+            <GridListTile className={classes.tile} key={tile.artist}>
+              <img src={tile.img} alt={tile.title} />
+              <GridListTileBar
+                title={tile.artist}
+                subtitle={<span>{tile.venue}</span>}
+                actionIcon={
+                  <IconButton aria-label={`info about ${tile.artist}`} className={classes.icon}>
+                    <InfoIcon />
+                  </IconButton>
+                }
+              />
+            </GridListTile>
+          )
+        })}
+      </GridList>
+    </div>
+  );
 }
 
 ShowsGridList.propTypes = {

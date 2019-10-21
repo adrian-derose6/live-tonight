@@ -31,9 +31,7 @@ class ShowsIndex extends Component {
                     
                 </Grid>
                 <Grid item className={classes.listContainer}>
-                    <div className={classes.gridList}>
-
-                    </div>
+                    <ShowsGridList />
                 </Grid>
             </Grid>
         );
@@ -43,7 +41,9 @@ class ShowsIndex extends Component {
 
 const styles = (theme) => ({
     container: {
-        height: '100%'
+        height: '100%',
+        maxWidth: '100%',
+        overflow: 'scroll'
     },
     headerContainer: {
         minWidth: "100%",
@@ -65,11 +65,9 @@ const styles = (theme) => ({
     listContainer: {
         display: 'flex',
         width: '100%',
-        height: 500,
+        maxHeight: '100%',
+        height: 500
     },
-    gridList: {
-        height: '100%'
-    }
 });
 
 const mapStateToProps = (state) => {
