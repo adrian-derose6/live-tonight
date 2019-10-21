@@ -42,7 +42,8 @@ class SearchMap extends Component {
 
 	componentDidUpdate(prevProps) {
 		if (prevProps.center !== this.state.currentLocation) {
-			this.setState({currentLocation: prevProps.center});
+			
+			this.setState({ currentLocation: this.props.center });
 		}
 	}
 
@@ -66,7 +67,7 @@ class SearchMap extends Component {
 		return (
 			<Map
 				google={this.props.google}
-				center={this.state.currentLocation}
+				center={this.props.center}
 				style={mapStyles}
 			> 
 				<Marker

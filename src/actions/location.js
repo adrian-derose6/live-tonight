@@ -53,18 +53,18 @@ export function setSearchLocation(geocoderRequest) {
 				let locationData = {
 					name: preciseLocation[0].formatted_address,
 					center: {
-					lat: preciseLocation[0].geometry.location.lat(),
-					lng: preciseLocation[0].geometry.location.lng()
+                        lat: preciseLocation[0].geometry.location.lat(),
+                        lng: preciseLocation[0].geometry.location.lng()
 					},
 					viewport: {
-					ne: {
-						lat: preciseLocation[0].geometry.viewport.getNorthEast().lat(),
-						lng: preciseLocation[0].geometry.viewport.getNorthEast().lng()
-					},
-					sw: {
-						lat: preciseLocation[0].geometry.viewport.getSouthWest().lat(),
-						lng: preciseLocation[0].geometry.viewport.getSouthWest().lng()
-					}
+                        ne: {
+                            lat: preciseLocation[0].geometry.viewport.getNorthEast().lat(),
+                            lng: preciseLocation[0].geometry.viewport.getNorthEast().lng()
+                        },
+                        sw: {
+                            lat: preciseLocation[0].geometry.viewport.getSouthWest().lat(),
+                            lng: preciseLocation[0].geometry.viewport.getSouthWest().lng()
+                        }
 					}
 				}
 

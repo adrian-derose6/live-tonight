@@ -11,21 +11,17 @@ import ShowsIndex from '../ShowsIndex/index.js';
 import SearchMap from '../Map/index.js';
 import LocationSearchInput from './LocationSearchInput.js';
 
-// Styles
-import './styles.css';
-
 // Redux Actions
 import { setSearchLocation } from '../../actions/location.js';
 import { fetchShowsByCriteria } from '../../actions/shows.js';
 
 
 class SearchDashboard extends Component {
-
     componentDidUpdate(prevProps) {
+        const { center, name } = this.props.searchLocation;
+
         if (prevProps.searchLocation !== this.props.searchLocation) {
-            const showsSearchCriteria = {
-                geo: this.props.searchLocation.center
-            };
+            console.log(name, center);
         }
     }
 
@@ -40,7 +36,7 @@ class SearchDashboard extends Component {
             <div className={classes.root} >
                 <AppBar className={classes.criteriaBar} position='relative' >
                     <Toolbar style={{ maxWidth: '100%', justifyContent: 'flex-start', alignItems: 'center'}}>
-                        <LocationSearchInput setSearchLocation={this.handleAddressChange} />
+                        <LocationSearchInput onLocationChange={this.onLocationChange} />
                         <Button className={classes.criteriaButton} size="small" disableRipple disableFocusRipple style={{ marginLeft: 30 }}>
                             Genre
                         </Button>
