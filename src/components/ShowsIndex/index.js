@@ -43,7 +43,7 @@ const styles = (theme) => ({
     container: {
         height: '100%',
         maxWidth: '100%',
-        overflow: 'scroll'
+        overflowY: 'scroll'
     },
     headerContainer: {
         minWidth: "100%",

@@ -81,7 +81,7 @@ class SearchDashboard extends Component {
                             </div>
                         </Grid>
                         <Grid item lg={7} md={4} xs={12} className={classes.rightPanel}>
-							<ShowsIndex location={searchLocation.name} />
+                            <ShowsIndex location={searchLocation.name} />
                         </Grid>
                     </Grid>
                 </div>
@@ -135,17 +135,13 @@ const styles = theme => ({
             backgroundColor: '#2B1935',
         }
     },
-    grid: {
-        height: '100%',
-        width: '100%',
-    },
     leftPanel: {
        height: '100%',
     },
     rightPanel: {
-        height: '100%',
+        maxHeight: '100%',
         borderLeft: '1px lightgray solid',
-		boxShadow: '-2px 2px 5px 0 rgba(0,0,0,.4)',
+        boxShadow: '-2px 2px 5px 0 rgba(0,0,0,.4)',
 		zIndex: 1000
     },
     mapContainer: {

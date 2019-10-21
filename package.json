@@ -7,6 +7,7 @@
     "@material-ui/icons": "^3.0.2",
     "auto-suggest": "0.0.24",
     "autosuggest-highlight": "^3.1.1",
+    "flexboxgrid": "^6.3.1",
     "google-map-react": "^1.1.4",
     "google-maps-react": "^2.0.2",
     "lodash": "^4.17.11",

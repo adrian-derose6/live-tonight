@@ -3,37 +3,59 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 
 const styles = theme => ({
   root: {
-    maxHeight: '100%',
-    maxWidth: '100%',
     width: '100%',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    backgroundColor: theme.palette.background.paper,
-    paddingLeft: 8,
-    paddingTop: 7
+    margin: '0 auto',
+    paddingTop: 5,
+    paddingLeft: 5,
+    paddingRight: 5
+  },
+  gridRow: {
+    display: 'flex',
+    flexFlow: 'row wrap',
+    justifyContent: 'flex-start',
+    height: '100%'
+  },
+  gridItem: {
+    flexBasis: '50%',
+    height: '50%',
+    width: 259,
+    position: 'relative',
+    boxSizing: 'border-box',
+    padding: 4
   },
   gridList: {
-    width: '100%',
-    height: '100%',
-    overflow: 'visible'
+    minHeight: '100%',
+    minWidth: '100%'
   },
-  tile: {
+  tileCard: {
     '&:hover': {
       cursor: 'pointer'
     },
+    width: '100%',
+    height: '100%',
+    borderRadius: 0,
+    boxShadow:'0px 0px 5px -2px rgba(140,138,140,1)'
   },
   img: {
     transition: 'all .2s ease-in-out',
     '&:hover': {
       opacity: 0.9,
-    }
+    },
+    minHeight: '100%',
+    minWidth: '100%',
+    top: '50%',
+    left: '50%',
+    objectFit: 'cover'
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
@@ -60,30 +82,27 @@ const tileData = [
       img: 'https://i.scdn.co/image/58d9ba5012103acbc841734c01fd1d58be3eab12',
       artist: 'Pete Rock & C.L. Smooth',
       venue: 'Venue'
-    }
+    },
 ]
 
 function ShowsGridList({ classes, showsList }) {
 	return (
     <div className={classes.root}>
-      <GridList className={classes.gridList} cellHeight={220} spacing={6}>
-        {tileData.map(tile => {
+      <div className={classes.gridRow}>
+        {tileData.map((tile, index) => {
           return (
-            <GridListTile className={classes.tile} key={tile.artist}>
-              <img src={tile.img} alt={tile.title} />
-              <GridListTileBar
-                title={tile.artist}
-                subtitle={<span>{tile.venue}</span>}
-                actionIcon={
-                  <IconButton aria-label={`info about ${tile.artist}`} className={classes.icon}>
-                    <InfoIcon />
-                  </IconButton>
-                }
-              />
-            </GridListTile>
-          )
+            <div className={classes.gridItem}>
+              <Card className={classes.tileCard}>
+                <CardMedia
+                  component="img"
+                  image={tile.img}
+                  className={classes.img}
+                />
+              </Card>
+            </div>
+          );
         })}
-      </GridList>
+      </div>
     </div>
   );
 }
