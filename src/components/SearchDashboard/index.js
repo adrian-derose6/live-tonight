@@ -15,18 +15,22 @@ import LocationSearchInput from './LocationSearchInput.js';
 import './styles.css';
 
 // Redux Actions
+import { setSearchLocation } from '../../actions/location.js';
 import { fetchShowsByCriteria } from '../../actions/shows.js';
 
 
 class SearchDashboard extends Component {
+
     componentDidUpdate(prevProps) {
         if (prevProps.searchLocation !== this.props.searchLocation) {
             const showsSearchCriteria = {
                 geo: this.props.searchLocation.center
             };
-
-            this.props.fetchShowsByCriteria(showsSearchCriteria);
         }
+    }
+
+    onLocationChange = (geocoderRequest) => {
+        this.props.setSearchLocation(geocoderRequest);
     }
 
     render() {
@@ -36,7 +40,7 @@ class SearchDashboard extends Component {
             <div className={classes.root} >
                 <AppBar className={classes.criteriaBar} position='relative' >
                     <Toolbar style={{ maxWidth: '100%', justifyContent: 'flex-start', alignItems: 'center'}}>
-                        <LocationSearchInput />
+                        <LocationSearchInput setSearchLocation={this.handleAddressChange} />
                         <Button className={classes.criteriaButton} size="small" disableRipple disableFocusRipple style={{ marginLeft: 30 }}>
                             Genre
                         </Button>
@@ -56,7 +60,7 @@ class SearchDashboard extends Component {
                     >
                         <Grid item md={5} >
                             <div className={classes.mapContainer}>
-                                <SearchMap centerAroundCurrentLocation />
+                                <SearchMap center={searchLocation.center} onLocationChange={(geo) => this.props.setSearchLocation(geo)}/>
                             </div>
                         </Grid>
                         <Grid item md={7} className={classes.rightPanel}>
@@ -133,7 +137,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchShowsByCriteria: (criteria) => dispatch(fetchShowsByCriteria(criteria))
+        fetchShowsByCriteria: (criteria) => dispatch(fetchShowsByCriteria(criteria)),
+        setSearchLocation: (geocoderRequest) => dispatch(setSearchLocation(geocoderRequest))
     }
 }
 

@@ -64,22 +64,22 @@ const tileData = [
 ]
 
 function ShowsGridList({ classes, showsList }) {
-  console.log(showsList)
-  return (
-    <div className={classes.root}>
-      <GridList cellHeight={240} className={classes.gridList}>
-          { showsList.map(tile => (
-            <GridListTile className={classes.tile} key={tile.artistName || tile.eventName}>
-              <img src={tile.artistImg} alt={tile.artistName} className={classes.img} />
-              <GridListTileBar
-                title={<span style={{ fontFamily: "Sharp Sans No1 Semibold"}}>{tile.artistName || tile.eventName}</span>}
-                subtitle={<span style={{ fontFamily: "Sharp Sans No1 Medium"}}>{tile.venue}</span>}
-              />
-            </GridListTile>
-        ))}
-      </GridList>
-    </div>
-  );
+	console.log(showsList)
+	return (
+		<div className={classes.root}>
+			<GridList cellHeight={240} className={classes.gridList}>
+				{ showsList.map(tile => (
+					<GridListTile className={classes.tile} key={tile.artistName || tile.eventName}>
+						<img src={tile.artistImg} alt={tile.artistName} className={classes.img} />
+						<GridListTileBar
+							title={<span style={{ fontFamily: "Sharp Sans No1 Semibold"}}>{tile.artistName || tile.eventName}</span>}
+							subtitle={<span style={{ fontFamily: "Sharp Sans No1 Medium"}}>{tile.venue}</span>}
+						/>
+					</GridListTile>
+				))}
+			</GridList>
+		</div>
+  	);
 }
 
 ShowsGridList.propTypes = {
