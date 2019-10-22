@@ -92,7 +92,8 @@ const styles = theme => ({
         gridArea: 'bottom',
         gridTemplateRows: 'repeat(3, auto)',
         gridTemplateColumns: '1fr',
-        color: '#2B1935'
+        color: '#2B1935',
+        borderBottom: '4px #2B1935 solid'
     },
     tileBarTop: {
      
