@@ -23,7 +23,7 @@ class ShowsIndex extends Component {
             >
                 <Grid item className={classes.headerContainer}>
                     <div className={classes.headerInnerContainer}>
-                        <div><h3 style={{ color: "#2B1935", fontFamily: "Sharp Sans No1 Semibold"}}>Shows Tonight Near {`${(location === '') ? 'You': location}`}...</h3></div>
+                        <div><h3 style={{ color: "#2B1935", fontFamily: "Sharp Sans No1 Bold"}}>Shows Tonight Near {`${(location === '') ? 'You': location}`}...</h3></div>
                         <div>
                             <p style={{ fontSize: 15, color: "#2B1935", fontFamily: "Sharp Sans No1 Semibold"}}>Sort By:</p>
                         </div>

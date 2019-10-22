@@ -4,7 +4,9 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import Avatar from '@material-ui/core/Avatar';
 import { withStyles } from '@material-ui/core/styles';
+import friendAvatar from './friend_avatar.jpg';
 
 
 const ShowTile = ({ classes, image, artist, venue }) => {
@@ -20,9 +22,10 @@ const ShowTile = ({ classes, image, artist, venue }) => {
                         <span className={classes.tileBarVenue}>{venue}</span>
                     </div>
                     <div className={classes.tileBarMiddle}>
+
                     </div>
                     <div className={classes.tileBarBottom}>
-
+                        <Avatar className={classes.avatar} src={friendAvatar} sizes={"20"} />
                     </div>    
                 </div>
                 <CardMedia
@@ -108,8 +111,12 @@ const styles = theme => ({
     tileBarBottom: {
       
     },
+    avatar: {
+        height: 25,
+        width: 25
+    },
     tileBarHeading: {
-        fontSize: '1.2em',
+        fontSize: '1.1em',
         fontFamily: "Sharp Sans No1 Bold",
     },
     tileBarVenue: {
