@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -11,13 +13,15 @@ import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 
+import ShowTile from './ShowTile.js';
+
 const styles = theme => ({
   root: {
     width: '100%',
     margin: '0 auto',
     paddingTop: 5,
-    paddingLeft: 5,
-    paddingRight: 5
+    paddingLeft: 10,
+    paddingRight: 10
   },
   gridRow: {
     display: 'flex',
@@ -25,41 +29,64 @@ const styles = theme => ({
     justifyContent: 'flex-start',
     height: '100%'
   },
-  gridItem: {
-    flexBasis: '50%',
-    height: '50%',
-    width: 259,
-    position: 'relative',
-    boxSizing: 'border-box',
-    padding: 4
-  },
   gridList: {
     minHeight: '100%',
     minWidth: '100%'
   },
-  tileCard: {
-    '&:hover': {
-      cursor: 'pointer'
-    },
-    width: '100%',
-    height: '100%',
-    borderRadius: 0,
-    boxShadow:'0px 0px 5px -2px rgba(140,138,140,1)'
-  },
-  img: {
-    transition: 'all .2s ease-in-out',
-    '&:hover': {
-      opacity: 0.9,
-    },
-    minHeight: '100%',
-    minWidth: '100%',
-    top: '50%',
-    left: '50%',
-    objectFit: 'cover'
-  },
+
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
   },
+    /* Styles applied to the root element if `titlePosition="bottom"`. */
+    titlePositionBottom: {
+      bottom: 0,
+    },
+    /* Styles applied to the root element if `titlePosition="top"`. */
+    titlePositionTop: {
+      top: 0,
+    },
+    /* Styles applied to the root element if a `subtitle` is provided. */
+    rootSubtitle: {
+      height: 68,
+    },
+    /* Styles applied to the title and subtitle container element. */
+    titleWrap: {
+      flexGrow: 1,
+      marginLeft: 16,
+      marginRight: 16,
+      color: theme.palette.common.white,
+      overflow: 'hidden',
+    },
+    /* Styles applied to the container element if `actionPosition="left"`. */
+    titleWrapActionPosLeft: {
+      marginLeft: 0,
+    },
+    /* Styles applied to the container element if `actionPosition="right"`. */
+    titleWrapActionPosRight: {
+      marginRight: 0,
+    },
+    /* Styles applied to the title container element. */
+    title: {
+      fontSize: theme.typography.pxToRem(16),
+      lineHeight: '24px',
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      whiteSpace: 'nowrap',
+    },
+    /* Styles applied to the subtitle container element. */
+    subtitle: {
+      fontSize: theme.typography.pxToRem(12),
+      lineHeight: 1,
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      whiteSpace: 'nowrap',
+    },
+    /* Styles applied to the actionIcon if supplied. */
+    actionIcon: {},
+    /* Styles applied to the actionIcon if `actionPosition="left"`. */
+    actionIconActionPosLeft: {
+      order: -1,
+    },
 });
 
 const tileData = [
@@ -85,21 +112,13 @@ const tileData = [
     },
 ]
 
-function ShowsGridList({ classes, showsList }) {
+function ShowsGridList({ classes }) {
 	return (
     <div className={classes.root}>
       <div className={classes.gridRow}>
         {tileData.map((tile, index) => {
           return (
-            <div className={classes.gridItem}>
-              <Card className={classes.tileCard}>
-                <CardMedia
-                  component="img"
-                  image={tile.img}
-                  className={classes.img}
-                />
-              </Card>
-            </div>
+            <ShowTile image={tile.img} artist={tile.artist} venue={tile.venue} key={index} />
           );
         })}
       </div>
