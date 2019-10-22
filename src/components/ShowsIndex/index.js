@@ -7,28 +7,31 @@ import ShowsGridList from './ShowsGridList';
 import './ShowsIndex.css'
 
 class ShowsIndex extends Component {
+    renderLocation = (location) => {
+        return (location === '') ? 'near you' : `near ${location}`
+    }
 
     render() {
         const { classes, location, searchShows } = this.props;
+
         return (
             <Grid
                 container
                 className={classes.container}
                 direction="column"
-                justify="flex-start"
-                alignItems="center"
                 wrap="nowrap"
             >
-                <Grid item md={1} className={classes.headerContainer}>
+                <Grid item className={classes.headerContainer}>
                     <div className={classes.headerInnerContainer}>
-                        <div><h3 style={{ color: "#2B1935", fontFamily: "Sharp Sans No1 Bold"}}>Shows Tonight in {`${location}`}...</h3></div>
-                        <div><p style={{ color: "#2B1935", fontFamily: "Sharp Sans No1 Semibold"}}>Check different night</p></div>
+                        <div><h3 style={{ color: "#2B1935", fontFamily: "Sharp Sans No1 Bold"}}>Shows Tonight Near {`${(location === '') ? 'You': location}`}...</h3></div>
+                        <div>
+                            <p style={{ fontSize: 15, color: "#2B1935", fontFamily: "Sharp Sans No1 Semibold"}}>Sort By:</p>
+                        </div>
                     </div>
-                    <hr className="divider"/>
+                    
                 </Grid>
-                
-                <Grid item md={11} className={classes.listContainer}>
-                    <ShowsGridList showsList={searchShows} />
+                <Grid item className={classes.listContainer}>
+                    <ShowsGridList />
                 </Grid>
             </Grid>
         );
@@ -38,12 +41,9 @@ class ShowsIndex extends Component {
 
 const styles = (theme) => ({
     container: {
-        maxHeight: '100%',
-        minHeight: '100%',
-        width: '100%',
-    },
-    showsList: {
-        minWidth: '100%',
+        height: '100%',
+        maxWidth: '100%',
+        overflowY: 'scroll'
     },
     headerContainer: {
         minWidth: "100%",
@@ -51,8 +51,9 @@ const styles = (theme) => ({
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingLeft: '25px',
-        paddingRight: '25px',
+        paddingLeft: 20,
+        paddingRight: 20,
+        borderBottom: '1px lightgray solid'
     },
     headerInnerContainer: {
         minWidth: '100%',
@@ -60,15 +61,13 @@ const styles = (theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingLeft: '25px',
-        paddingRight: '25px',
     },
     listContainer: {
-        minWidth: '100%',
-        paddingLeft: '25px',
-        paddingRight: '25px',
-        overflow: 'auto'
-    }
+        display: 'flex',
+        width: '100%',
+        maxHeight: '100%',
+        height: 500
+    },
 });
 
 const mapStateToProps = (state) => {

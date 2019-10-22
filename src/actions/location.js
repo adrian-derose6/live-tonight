@@ -33,40 +33,45 @@ export function fetchGeocodeFailure(error) {
 
 export function setSearchLocation(geocoderRequest) {
     const google = window.google;
-    const geocoder = new google.maps.Geocoder();
+    const geocoder = new google.maps.Geocoder(); 
 
     return dispatch => {
+        if ('location' in geocoderRequest) {
+			dispatch(setSearchCenter(geocoderRequest.location))
+			return;
+        }
+
         dispatch(fetchGeocodeStart());
 
         geocoder.geocode(geocoderRequest, (results, status) => {
             console.log(results)
             if (status === 'OK') {
-              let preciseLocation = (results.length > 1) ? results.filter((result) => {
-                return (result.address_components.length === 4 || result.address_components.length === 5) && result.types.includes('postal_code')
-              }) : results;
+				let preciseLocation = (results.length > 1) ? results.filter((result) => {
+					return (result.address_components.length === 4 || result.address_components.length === 5) && result.types.includes('postal_code')
+				}) : results;
 
-              let locationData = {
-                name: preciseLocation[0].formatted_address,
-                center: {
-                  lat: preciseLocation[0].geometry.location.lat(),
-                  lng: preciseLocation[0].geometry.location.lng()
-                },
-                viewport: {
-                  ne: {
-                    lat: preciseLocation[0].geometry.viewport.getNorthEast().lat(),
-                    lng: preciseLocation[0].geometry.viewport.getNorthEast().lng()
-                  },
-                  sw: {
-                    lat: preciseLocation[0].geometry.viewport.getSouthWest().lat(),
-                    lng: preciseLocation[0].geometry.viewport.getSouthWest().lng()
-                  }
-                }
-              }
+				let locationData = {
+					name: preciseLocation[0].formatted_address,
+					center: {
+                        lat: preciseLocation[0].geometry.location.lat(),
+                        lng: preciseLocation[0].geometry.location.lng()
+					},
+					viewport: {
+                        ne: {
+                            lat: preciseLocation[0].geometry.viewport.getNorthEast().lat(),
+                            lng: preciseLocation[0].geometry.viewport.getNorthEast().lng()
+                        },
+                        sw: {
+                            lat: preciseLocation[0].geometry.viewport.getSouthWest().lat(),
+                            lng: preciseLocation[0].geometry.viewport.getSouthWest().lng()
+                        }
+					}
+				}
 
-              dispatch(fetchGeocodeSuccess(locationData));
+              	dispatch(fetchGeocodeSuccess(locationData));
             }
             else {
-              dispatch(fetchGeocodeFailure(status));
+                dispatch(fetchGeocodeFailure(status));
             }
         })
     }

@@ -15,7 +15,7 @@ hr {
     margin-inline-start: auto;
     margin-inline-end: auto;
     overflow: hidden;
-    background-color: #2B1935;
+    background-color: gray;
     opacity: 0.5;
     width: 100%;
 }

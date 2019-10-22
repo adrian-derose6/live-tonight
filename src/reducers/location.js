@@ -51,6 +51,7 @@ export default function location(state = initialState, action) {
                 ...state, 
                 searchLocation: {
                     ...state.searchLocation,
+                    name: '',
                     center: action.centerLatLng
                 }
             }

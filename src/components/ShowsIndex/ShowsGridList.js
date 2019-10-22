@@ -4,40 +4,89 @@ import { withStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 
+import ShowTile from './ShowTile.js';
+
 const styles = theme => ({
   root: {
+    width: '100%',
+    margin: '0 auto',
+    paddingTop: 5,
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+  gridRow: {
     display: 'flex',
-    flexWrap: 'wrap',
-    minWidth: '100%',
-    maxWidth: '100%',
-    height: '100%',
-    alignItems: 'flex-start',
-    justifyContent: 'space-around',
-    backgroundColor: theme.palette.background.paper,
+    flexFlow: 'row wrap',
+    justifyContent: 'flex-start',
+    height: '100%'
   },
   gridList: {
-    maxWidth: '100%',
-    minWidth: '100%',
-    height: '100%',
+    minHeight: '100%',
+    minWidth: '100%'
   },
-  tile: {
-    '&:hover': {
-      cursor: 'pointer'
-    }
-  },
-  img: {
-    transition: 'all .2s ease-in-out',
-    '&:hover': {
-      opacity: 0.9,
-    }
-  },
+
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
   },
+    /* Styles applied to the root element if `titlePosition="bottom"`. */
+    titlePositionBottom: {
+      bottom: 0,
+    },
+    /* Styles applied to the root element if `titlePosition="top"`. */
+    titlePositionTop: {
+      top: 0,
+    },
+    /* Styles applied to the root element if a `subtitle` is provided. */
+    rootSubtitle: {
+      height: 68,
+    },
+    /* Styles applied to the title and subtitle container element. */
+    titleWrap: {
+      flexGrow: 1,
+      marginLeft: 16,
+      marginRight: 16,
+      color: theme.palette.common.white,
+      overflow: 'hidden',
+    },
+    /* Styles applied to the container element if `actionPosition="left"`. */
+    titleWrapActionPosLeft: {
+      marginLeft: 0,
+    },
+    /* Styles applied to the container element if `actionPosition="right"`. */
+    titleWrapActionPosRight: {
+      marginRight: 0,
+    },
+    /* Styles applied to the title container element. */
+    title: {
+      fontSize: theme.typography.pxToRem(16),
+      lineHeight: '24px',
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      whiteSpace: 'nowrap',
+    },
+    /* Styles applied to the subtitle container element. */
+    subtitle: {
+      fontSize: theme.typography.pxToRem(12),
+      lineHeight: 1,
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      whiteSpace: 'nowrap',
+    },
+    /* Styles applied to the actionIcon if supplied. */
+    actionIcon: {},
+    /* Styles applied to the actionIcon if `actionPosition="left"`. */
+    actionIconActionPosLeft: {
+      order: -1,
+    },
 });
 
 const tileData = [
@@ -60,24 +109,19 @@ const tileData = [
       img: 'https://i.scdn.co/image/58d9ba5012103acbc841734c01fd1d58be3eab12',
       artist: 'Pete Rock & C.L. Smooth',
       venue: 'Venue'
-    }
+    },
 ]
 
-function ShowsGridList({ classes, showsList }) {
-  console.log(showsList)
-  return (
+function ShowsGridList({ classes }) {
+	return (
     <div className={classes.root}>
-      <GridList cellHeight={240} className={classes.gridList}>
-          { showsList.map(tile => (
-            <GridListTile className={classes.tile} key={tile.artistName || tile.eventName}>
-              <img src={tile.artistImg} alt={tile.artistName} className={classes.img} />
-              <GridListTileBar
-                title={<span style={{ fontFamily: "Sharp Sans No1 Semibold"}}>{tile.artistName || tile.eventName}</span>}
-                subtitle={<span style={{ fontFamily: "Sharp Sans No1 Medium"}}>{tile.venue}</span>}
-              />
-            </GridListTile>
-        ))}
-      </GridList>
+      <div className={classes.gridRow}>
+        {tileData.map((tile, index) => {
+          return (
+            <ShowTile image={tile.img} artist={tile.artist} venue={tile.venue} key={index} />
+          );
+        })}
+      </div>
     </div>
   );
 }
