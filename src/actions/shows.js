@@ -29,7 +29,7 @@ export function fetchShowsByCriteria(criteria = {}) {
         
         console.log(accessToken)
         dispatch(fetchShowsStart());
-        loadShowsJson(`https://api.songkick.com/api/3.0/events.json?apikey=OuFRwWs0gv753l2l&location=geo:${geo.lat},${geo.lng}`)
+        loadShowsJson(`https://api.songkick.com/api/3.0/events.json?apikey=OuFRwWs0gv753l2l&location=geo:${41.8781},${-87.6298}`)
             .then(showsData => reduceShowData(showsData.resultsPage))
             .then(reducedData => Promise.all(reducedData.map(async (show) => {
                 let artistImg = (show.artistName) ? await loadArtistImage(show.artistName, accessToken) : null;

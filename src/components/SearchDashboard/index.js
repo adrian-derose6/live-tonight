@@ -24,6 +24,8 @@ class SearchDashboard extends Component {
 
         if (prevProps.searchLocation !== this.props.searchLocation) {
             console.log(name, center);
+            let geo = center;
+            this.props.fetchShowsByCriteria({ geo });
         }
 	}
 	
@@ -81,7 +83,7 @@ class SearchDashboard extends Component {
                             </div>
                         </Grid>
                         <Grid item lg={7} md={4} xs={12} className={classes.rightPanel}>
-                            <ShowsIndex location={searchLocation.name} />
+                            <ShowsIndex location={searchLocation.name} showsList={this.props.searchShows} />
                         </Grid>
                     </Grid>
                 </div>
@@ -167,7 +169,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchShowsByCriteria: (criteria) => dispatch(fetchShowsByCriteria(criteria)),
-        setSearchLocation: (geocoderRequest) => dispatch(setSearchLocation(geocoderRequest))
+        setSearchLocation: (geocoderRequest) => dispatch(setSearchLocation(geocoderRequest)),
     }
 }
 

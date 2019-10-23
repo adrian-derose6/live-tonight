@@ -85,12 +85,12 @@ class SearchMap extends Component {
 				<Marker
 					onClick={this.onMarkerClick}
 					name={'Schaumburg'}
-					position={this.props.center}
+					position={this.props.center} 
 				/>
 				<InfoWindow
 					marker={this.state.activeMarker}
 					visible={this.state.showingInfoWindow}
-					onClose={this.onClose}
+					onClose={this.onClose} 
 				>
 					<div>
 						<h4>{this.state.selectedPlace.name}</h4>

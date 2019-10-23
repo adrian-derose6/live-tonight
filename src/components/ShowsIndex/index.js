@@ -12,7 +12,7 @@ class ShowsIndex extends Component {
     }
 
     render() {
-        const { classes, location, searchShows } = this.props;
+        const { classes, location, showsList } = this.props;
 
         return (
             <Grid
@@ -31,7 +31,7 @@ class ShowsIndex extends Component {
                     
                 </Grid>
                 <Grid item className={classes.listContainer}>
-                    <ShowsGridList />
+                    <ShowsGridList showsList={showsList}/>
                 </Grid>
             </Grid>
         );

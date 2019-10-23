@@ -38,13 +38,13 @@ const tileData = [
     },
 ]
 
-function ShowsGridList({ classes }) {
+function ShowsGridList({ classes, showsList }) {
 	return (
     <div className={classes.root}>
       <div className={classes.gridRow}>
-        {tileData.map((tile, index) => {
+        {showsList.map((tile, index) => {
           return (
-            <ShowTile image={tile.img} artist={tile.artist} venue={tile.venue} key={index} />
+            <ShowTile image={tile.artistImg} artist={tile.artistName} venue={tile.venue} key={index} />
           );
         })}
       </div>

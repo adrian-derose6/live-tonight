@@ -53,7 +53,7 @@ const styles = theme => ({
             flexBasis: '50%'
         },
         flexBasis: '50%',
-        height: '50%',
+        height: '60%',
         width: 259,
         position: 'relative',
         boxSizing: 'border-box',
@@ -73,11 +73,11 @@ const styles = theme => ({
     },
     img: {
         minHeight: '100%',
-        minWidth: '100%',
-        top: '50%',
-        left: '50%',
-        objectFit: 'cover',
-        zIndex: 1
+        minWidth: '100%', 
+        position: 'absolute',
+        bottom: 40,
+        zIndex: 0,
+        objectFit: 'cover'
       },
     tileBar: {
         position: 'absolute',
@@ -90,6 +90,7 @@ const styles = theme => ({
         backgroundColor: 'white',
         fontFamily: theme.typography.fontFamily,
         padding: 0,
+        zIndex: 1000,
         display: 'grid',
         padding: '11px 14px 13px',
         gridArea: 'bottom',
