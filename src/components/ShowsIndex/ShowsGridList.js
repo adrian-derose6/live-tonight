@@ -15,80 +15,6 @@ import InfoIcon from '@material-ui/icons/Info';
 
 import ShowTile from './ShowTile.js';
 
-const styles = theme => ({
-  root: {
-    width: '100%',
-    margin: '0 auto',
-    paddingTop: 5,
-    paddingLeft: 10,
-    paddingRight: 10
-  },
-  gridRow: {
-    display: 'flex',
-    flexFlow: 'row wrap',
-    justifyContent: 'flex-start',
-    height: '100%'
-  },
-  gridList: {
-    minHeight: '100%',
-    minWidth: '100%'
-  },
-
-  icon: {
-    color: 'rgba(255, 255, 255, 0.54)',
-  },
-    /* Styles applied to the root element if `titlePosition="bottom"`. */
-    titlePositionBottom: {
-      bottom: 0,
-    },
-    /* Styles applied to the root element if `titlePosition="top"`. */
-    titlePositionTop: {
-      top: 0,
-    },
-    /* Styles applied to the root element if a `subtitle` is provided. */
-    rootSubtitle: {
-      height: 68,
-    },
-    /* Styles applied to the title and subtitle container element. */
-    titleWrap: {
-      flexGrow: 1,
-      marginLeft: 16,
-      marginRight: 16,
-      color: theme.palette.common.white,
-      overflow: 'hidden',
-    },
-    /* Styles applied to the container element if `actionPosition="left"`. */
-    titleWrapActionPosLeft: {
-      marginLeft: 0,
-    },
-    /* Styles applied to the container element if `actionPosition="right"`. */
-    titleWrapActionPosRight: {
-      marginRight: 0,
-    },
-    /* Styles applied to the title container element. */
-    title: {
-      fontSize: theme.typography.pxToRem(16),
-      lineHeight: '24px',
-      textOverflow: 'ellipsis',
-      overflow: 'hidden',
-      whiteSpace: 'nowrap',
-    },
-    /* Styles applied to the subtitle container element. */
-    subtitle: {
-      fontSize: theme.typography.pxToRem(12),
-      lineHeight: 1,
-      textOverflow: 'ellipsis',
-      overflow: 'hidden',
-      whiteSpace: 'nowrap',
-    },
-    /* Styles applied to the actionIcon if supplied. */
-    actionIcon: {},
-    /* Styles applied to the actionIcon if `actionPosition="left"`. */
-    actionIconActionPosLeft: {
-      order: -1,
-    },
-});
-
 const tileData = [
     {
       img: 'https://dk2600.files.wordpress.com/2016/12/mass-appeal-nas-it-aint-hard-to-tell.jpg?w=1000',
@@ -125,6 +51,30 @@ function ShowsGridList({ classes }) {
     </div>
   );
 }
+
+const styles = theme => ({
+  root: {
+    width: '100%',
+    margin: '0 auto',
+    paddingTop: 5,
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+  gridRow: {
+    display: 'flex',
+    flexFlow: 'row wrap',
+    justifyContent: 'flex-start',
+    height: '100%'
+  },
+  gridList: {
+    minHeight: '100%',
+    minWidth: '100%'
+  },
+
+  icon: {
+    color: 'rgba(255, 255, 255, 0.54)',
+  },
+});
 
 ShowsGridList.propTypes = {
   classes: PropTypes.object.isRequired,

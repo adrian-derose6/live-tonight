@@ -59,6 +59,8 @@ class SearchMap extends Component {
 				center={this.state.currentLocation}
 				style={mapStyles}
 				initialCenter={this.props.center}
+				fullscreenControl={false}
+				streetViewControl={false}	
 			> 
 				<Marker
 					onClick={this.onMarkerClick}
