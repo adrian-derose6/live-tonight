@@ -69,7 +69,7 @@ class SearchDashboard extends Component {
                         </Button>
                     </Toolbar>
                 </AppBar>
-                <div style={{ height: windowHeight - 134 }}>
+                <div style={{ height: 'calc(100vh - 134px)' }}>
                     <Grid
                         container
                         zeroMinWidth
@@ -77,7 +77,7 @@ class SearchDashboard extends Component {
                     >
                         <Grid item lg={5} md={8} xs={0}>
                             <div className={classes.mapContainer}>
-                                <SearchMap center={searchLocation.center} />
+                                <SearchMap center={searchLocation.center} bounds={searchLocation.viewport}/>
                             </div>
                         </Grid>
                         <Grid item lg={7} md={4} xs={12} className={classes.rightPanel}>

@@ -56,16 +56,16 @@ export function setSearchLocation(geocoderRequest) {
                         lat: preciseLocation[0].geometry.location.lat(),
                         lng: preciseLocation[0].geometry.location.lng()
 					},
-					viewport: {
-                        ne: {
+					viewport: [
+                        {
                             lat: preciseLocation[0].geometry.viewport.getNorthEast().lat(),
                             lng: preciseLocation[0].geometry.viewport.getNorthEast().lng()
                         },
-                        sw: {
+                        {
                             lat: preciseLocation[0].geometry.viewport.getSouthWest().lat(),
                             lng: preciseLocation[0].geometry.viewport.getSouthWest().lng()
                         }
-					}
+                    ]
 				}
 
               	dispatch(fetchGeocodeSuccess(locationData));
