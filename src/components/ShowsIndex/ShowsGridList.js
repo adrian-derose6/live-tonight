@@ -44,7 +44,7 @@ function ShowsGridList({ classes, showsList }) {
       <div className={classes.gridRow}>
         {showsList.map((tile, index) => {
           return (
-            <ShowTile image={tile.artistImg} artist={tile.artistName} venue={tile.venue} key={index} />
+            <ShowTile image={tile.artistImg} artist={tile.artistName} venue={tile.venue.name} key={index} />
           );
         })}
       </div>

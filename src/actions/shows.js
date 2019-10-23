@@ -29,8 +29,8 @@ export function fetchShowsByCriteria(criteria = {}) {
         
         console.log(accessToken)
         dispatch(fetchShowsStart());
-        loadShowsJson(`https://api.songkick.com/api/3.0/events.json?apikey=OuFRwWs0gv753l2l&location=geo:${41.8781},${-87.6298}`)
-            .then(showsData => reduceShowData(showsData.resultsPage))
+        loadShowsJson(`https://api.seatgeek.com/2/events?lat=41.8781&lon=-87.6298&type=concert&genres.slug=rap&client_id=MTY2OTY2NDh8MTU3MTgwOTA1Ny41`)
+            .then(showsData => reduceShowData(showsData.events))
             .then(reducedData => Promise.all(reducedData.map(async (show) => {
                 let artistImg = (show.artistName) ? await loadArtistImage(show.artistName, accessToken) : null;
                 return { ...show, artistImg };
@@ -48,22 +48,38 @@ function loadShowsJson(url) {
 }
 
 function reduceShowData(showsData) {
-    const { event } = showsData.results;
+    console.log(showsData)
+    return showsData.map((show) => {
+        const eventName= show.short_title;
+        const artistName = show.performers[0].short_name;
+        const venueName = show.venue.name;
+        const address = show.venue.address;
+        const city = show.venue.city;
+        const postalCode = show.venue.postal_code;
+        const state = show.venue.state;
+        const country = show.venue.country;
+        const location = { lat: show.venue.location.lat, lng: show.venue.location.lon }
+        const displayLocation = show.venue.display_location;
+        const dateTime = show.venue.datetime_local;
 
-    return event.map((show) => {
-        const artistName = (show.performance.length >= 1) ? show.performance[0].displayName : null;
         return {
-            eventName: show.displayName,
+            eventName: eventName,
             artistName: artistName,
             artistImg: null,
-            venue: show.venue.displayName,
-            location: { lat: show.location.lat, lng: show.location.lng },
-            city: show.location.city,
-            date: show.start.date,
-            time: show.start.time,
+            venue: {
+                name: venueName,
+                address: address,
+                city: city,
+                postalCode: postalCode,
+                state: state,
+                country: country,
+                location: location,
+                displayLocation: displayLocation,
+            },
+            dateTime: dateTime,
             price: null
-        }
-    });
+        } 
+    }); 
 }
 
 function loadSpotifyAccessToken() {
