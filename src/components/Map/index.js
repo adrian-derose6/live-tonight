@@ -81,6 +81,7 @@ class SearchMap extends Component {
 				fullscreenControl={false}
 				streetViewControl={false}
 				bounds={newBounds}
+				zoom={14}
 			> 
 				<Marker
 					onClick={this.onMarkerClick}

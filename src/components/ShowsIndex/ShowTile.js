@@ -15,6 +15,7 @@ const ShowTile = ({ classes, image, artist, venue }) => {
             <Card className={classes.tileCard}>
                 
                 <div className={classes.topContainer}>
+
                 </div>
                 <div className={classes.tileBar}>
                     <div className={classes.tileBarTop}>
@@ -33,6 +34,7 @@ const ShowTile = ({ classes, image, artist, venue }) => {
                     image={image}
                     className={classes.img}
                 />
+
             </Card>
         </div>
     )
@@ -53,7 +55,7 @@ const styles = theme => ({
             flexBasis: '50%'
         },
         flexBasis: '50%',
-        height: '60%',
+        height: '70%',
         width: 259,
         position: 'relative',
         boxSizing: 'border-box',
@@ -71,13 +73,25 @@ const styles = theme => ({
         display: 'inline-block',
         position: 'relative'
     },
+    imageContainer: {
+        minWidth: '100%',
+        maxWidth: '100%',
+        minHeight: '100%',
+        maxHeight: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        border: '1px solid red',
+        position: 'absolute',
+        backgroundColor: 'black'
+    },
     img: {
         minHeight: '100%',
-        minWidth: '100%', 
-        position: 'absolute',
-        bottom: 40,
-        zIndex: 0,
-        objectFit: 'cover'
+        minWidth: '100%',
+        top: '50%',
+        left: '50%',
+        objectFit: 'cover',
+        zIndex: 1
       },
     tileBar: {
         position: 'absolute',
@@ -85,7 +99,7 @@ const styles = theme => ({
         left: 0,
         right: 0,
         bottom: 0,
-        minHeight: '30%',
+        minHeight: '20%',
         maxWidth: '100%',
         backgroundColor: 'white',
         fontFamily: theme.typography.fontFamily,
@@ -128,13 +142,15 @@ const styles = theme => ({
         left: 0,
         right: 0,
         top: 0,
+        minHeight: '70%',
         maxHeight: '70%',
         maxWidth: '100%',
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'center',
         flexDirection: 'column',
         fontFamily: theme.typography.fontFamily,
-        padding: 0
+        padding: 0,
     },
 })
 

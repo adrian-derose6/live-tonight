@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 // Material-UI Packages
 import { AppBar, Toolbar, IconButton, Typography, Button, Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import MusicNoteOutlined from '@material-ui/icons/MusicNoteOutlined';
+import MusicNoteRounded from '@material-ui/icons/MusicNoteRounded';
 import People from '@material-ui/icons/People';
 
 // Child Components
@@ -48,7 +48,7 @@ class SearchDashboard extends Component {
     }
 
     render() {
-        const { classes, searchLocation, windowHeight } = this.props;
+        const { classes, searchLocation } = this.props;
 
         return (
             <div className={classes.root} >
@@ -56,7 +56,7 @@ class SearchDashboard extends Component {
                     <Toolbar style={{ maxWidth: '100%', justifyContent: 'flex-start', alignItems: 'center'}}>
                         <LocationSearchInput onLocationChange={this.onLocationChange} />
                         <Button className={classes.criteriaButton} style={{ height: 36 }} size="small" disableRipple disableFocusRipple style={{ marginLeft: 29 }}>
-                            <MusicNoteOutlined />
+                            <MusicNoteRounded />
                             Genre
                         </Button>
                         <Button className={classes.criteriaButton} style={{ height: 36 }} size="small" disableRipple disableFocusRipple>
