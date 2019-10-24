@@ -79,7 +79,7 @@ class SearchDashboard extends Component {
                     >
                         <Grid item lg={5} md={8} xs={0}>
                             <div className={classes.mapContainer}>
-                                <SearchMap center={searchLocation.center} bounds={searchLocation.viewport}/>
+                                <SearchMap center={searchLocation.center} bounds={searchLocation.viewport} polygonCoords={searchLocation.polygonCoords} />
                             </div>
                         </Grid>
                         <Grid item lg={7} md={4} xs={12} className={classes.rightPanel}>

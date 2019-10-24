@@ -3,12 +3,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // 'google-maps-react' Packages
-import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker, InfoWindow, Polygon } from 'google-maps-react';
 
 
 const mapStyles = {
-	width: '100%',
-	height: '100%'
+	width: '100%', 
+	height: '100%', 
+	position: 'relative'
 }
 
 class SearchMap extends Component {
@@ -24,7 +25,8 @@ class SearchMap extends Component {
 				lat: lng,
 				lng: lng
 			},
-			bounds: bounds
+			bounds: bounds,
+			polygonCoords: []
 		};
 	}
 
@@ -39,6 +41,10 @@ class SearchMap extends Component {
 			this.setState({
 				bounds: this.props.bounds
 			});
+		}
+
+		if (prevProps.polygonCoords !== this.state.polygonCoords) {
+			this.setState({ polygonCoords: this.props.polygonCoords })
 		}
 	}
 
@@ -71,7 +77,6 @@ class SearchMap extends Component {
 
 	render() {
 		let newBounds = this.calculateBounds();
-		
 		return (
 			<Map
 				google={this.props.google}
@@ -83,6 +88,12 @@ class SearchMap extends Component {
 				bounds={newBounds}
 				zoom={14}
 			> 
+				<Polygon
+					paths={this.props.polygonCoords}
+					strokeColor='#2B1935'
+					fillColor="#2B1935"
+					fillOpacity={0.1}
+				/>
 				<Marker
 					onClick={this.onMarkerClick}
 					name={'Schaumburg'}

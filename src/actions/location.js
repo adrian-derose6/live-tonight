@@ -84,5 +84,10 @@ export function setSearchLocation(geocoderRequest) {
 function getPolygonCoordinates(address) {
     return fetch(`https://nominatim.openstreetmap.org/search.php?q=${address}&polygon_geojson=1&format=json`)
            .then(geoJSON => geoJSON.json())
-           .then(geoResults => geoResults[0].geojson.coordinates[0])
+           .then(geoResults => geoResults[0].geojson.coordinates[0].map(coord => {
+               return {
+                   lat: coord[1],
+                   lng: coord[0]
+               }
+           }))
 }
