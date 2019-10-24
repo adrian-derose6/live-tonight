@@ -43,12 +43,15 @@ export function setSearchLocation(geocoderRequest) {
 
         dispatch(fetchGeocodeStart());
 
-        geocoder.geocode(geocoderRequest, (results, status) => {
+        geocoder.geocode(geocoderRequest, async (results, status) => {
             console.log(results)
             if (status === 'OK') {
 				let preciseLocation = (results.length > 1) ? results.filter((result) => {
 					return (result.address_components.length === 4 || result.address_components.length === 5) && result.types.includes('postal_code')
-				}) : results;
+                }) : results;
+                
+                const polygonCoordinates = await getPolygonCoordinates(geocoderRequest.address);
+                
 
 				let locationData = {
 					name: preciseLocation[0].formatted_address,
@@ -65,7 +68,8 @@ export function setSearchLocation(geocoderRequest) {
                             lat: preciseLocation[0].geometry.viewport.getSouthWest().lat(),
                             lng: preciseLocation[0].geometry.viewport.getSouthWest().lng()
                         }
-                    ]
+                    ],
+                    polygonCoords: polygonCoordinates
 				}
 
               	dispatch(fetchGeocodeSuccess(locationData));
@@ -75,4 +79,10 @@ export function setSearchLocation(geocoderRequest) {
             }
         })
     }
+}
+
+function getPolygonCoordinates(address) {
+    return fetch(`https://nominatim.openstreetmap.org/search.php?q=${address}&polygon_geojson=1&format=json`)
+           .then(geoJSON => geoJSON.json())
+           .then(geoResults => geoResults[0].geojson.coordinates[0])
 }

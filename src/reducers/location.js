@@ -23,7 +23,8 @@ const initialState = {
                 lat: 41.6443349,
                 lng: -87.94026689999998
             }
-        ]   
+        ],
+        polygonCoords: [] 
     }
 }
 

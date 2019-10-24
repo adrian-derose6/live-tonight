@@ -89,7 +89,6 @@ function loadSpotifyAccessToken() {
             .catch(err => console.log(err))
 }
 
-
 function loadArtistImage(artistName, accessToken) {
     return fetch(`https://api.spotify.com/v1/search?q=${artistName}&type=artist&market=US&limit=10&offset=0`, {
                 method: 'GET',
