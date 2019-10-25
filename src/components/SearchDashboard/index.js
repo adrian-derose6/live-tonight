@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // Material-UI Packages
-import { AppBar, Toolbar, IconButton, Typography, Button, Grid } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, Button, Grid, Popover} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import MusicNoteRounded from '@material-ui/icons/MusicNoteRounded';
 import People from '@material-ui/icons/People';
+
 
 // Child Components
 import ShowsIndex from '../ShowsIndex/index.js';
@@ -19,6 +20,13 @@ import { fetchShowsByCriteria } from '../../actions/shows.js';
 
 
 class SearchDashboard extends Component {
+    constructor(props) {
+        super(props);
+        this.genreButton = React.createRef();
+        this.state = {
+            genrePopover: false
+        }
+    }
     componentDidUpdate(prevProps) {
         const { center, name } = this.props.searchLocation;
 
@@ -38,7 +46,11 @@ class SearchDashboard extends Component {
 						lng: coords.longitude
 					}
 				});
-			});
+            },  err => console.log(err),
+                {
+                    enableHighAccuracy: true
+                }
+            );
 		}
 	} 
 
@@ -48,35 +60,53 @@ class SearchDashboard extends Component {
 
     render() {
         const { classes, searchLocation } = this.props;
-
+        const node = this.genreButton.current;
+        
         return (
             <div className={classes.root} >
                 <AppBar className={classes.criteriaBar} position='relative' >
                     <Toolbar style={{ maxWidth: '100%', justifyContent: 'flex-start', alignItems: 'center'}}>
                         <LocationSearchInput onLocationChange={this.onLocationChange} />
-                        <Button className={classes.criteriaButton} style={{ height: 36 }} size="small" disableRipple disableFocusRipple style={{ marginLeft: 29 }}>
-                            <MusicNoteRounded />
-                            Genre
-                        </Button>
-                        <Button className={classes.criteriaButton} style={{ height: 36 }} size="small" disableRipple disableFocusRipple>
-                           <People style={{ marginRight: 5 }}/>
-                            Clout
-                        </Button>
-                        <Button className={classes.criteriaButton} style={{ height: 36 }} size="small" disableRipple disableFocusRipple>
-                            Criteria 3
-                        </Button>
-                        <Button className={classes.saveSearchButton} style={{ height: 36 }} size='small' disableRipple disableFocusRipple>
-                            Save Search
-                        </Button>
                     </Toolbar>
+                    <Popover
+                        open={this.state.genrePopover}
+
+                        anchorEl={node}
+                        className={classes.popover}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'left',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                    >
+                        This is the content of the popover
+                    </Popover>
+                    <div ref={this.genreButton} styles={{display: 'flex'}}>
+                        <Button onClick={() => this.setState({ genrePopover: true })} className={classes.criteriaButton} style={{ marginLeft: 3 }} size="small" disableRipple disableFocusRipple >
+                            <MusicNoteRounded />
+                                    Genre
+                        </Button>
+                    </div>
+                    <Button className={classes.criteriaButton} style={{ height: 36 }} size="small" disableRipple disableFocusRipple>
+                        <People style={{ marginRight: 5 }}/>
+                        Clout
+                    </Button>
+                    <Button className={classes.criteriaButton} style={{ height: 36 }} size="small" disableRipple disableFocusRipple>
+                        Criteria 3
+                    </Button>
+                    <Button className={classes.saveSearchButton} style={{ height: 36 }} size='small' disableRipple disableFocusRipple>
+                        Save Search
+                    </Button>
                 </AppBar>
                 <div style={{ height: 'calc(100vh - 134px)' }}>
                     <Grid
                         container
-                        zeroMinWidth
                         style={{ height: '100%', width: '100%' }}
                     >
-                        <Grid item lg={5} md={8} xs={0}>
+                        <Grid item lg={5} md={8} >
                             <div className={classes.mapContainer}>
                                 <SearchMap center={searchLocation.center} bounds={searchLocation.viewport} polygonCoords={searchLocation.polygonCoords} />
                             </div>
@@ -96,24 +126,31 @@ const styles = theme => ({
     root: {
        flexGrow: 1
     },
+    popover: {
+        height: 100,
+        width: 100,
+        border: '1px solid red',
+        zIndex: 3000
+    },
     criteriaBar: {
         maxWidth: '100%',
         height: '55px',
         backgroundColor: 'white',
         boxShadow: 'none',
         borderBottom: '1px lightgray solid',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        flexDirection: 'row'
     },
     criteriaButton: {
         width: 109,
+        height: 36,
         border: '2px #2B1935 solid',
         color: '#2B1935',
         marginRight: 15,
         borderRadius: 0,
         fontFamily: "Sharp Sans No1 Semibold",
         textTransform: 'none',
-       
         justifyContent: 'center',
         alignItems: 'space-between',
         '&:hover': {

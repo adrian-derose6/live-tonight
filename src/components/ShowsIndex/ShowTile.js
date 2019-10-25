@@ -26,7 +26,7 @@ const ShowTile = ({ classes, image, artist, venue }) => {
 
                     </div>
                     <div className={classes.tileBarBottom}>
-                        <Avatar className={classes.avatar} src={friendAvatar} sizes={"20"} />
+                        <Avatar className={classes.avatar} src={friendAvatar} size={"20"} />
                     </div>    
                 </div>
                 <CardMedia

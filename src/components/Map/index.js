@@ -68,25 +68,25 @@ class SearchMap extends Component {
 		const { bounds } = this.state;
 		let latLngBounds = new this.props.google.maps.LatLngBounds();
 
-		for (var i = 0; i < bounds.length; i++) {
-			latLngBounds.extend(bounds[i])
-		}
+		bounds.forEach(point => {
+			latLngBounds.extend(point)
+		})
 
 		return latLngBounds;
 	}
 
 	render() {
-		let newBounds = this.calculateBounds();
+		const bounds = this.calculateBounds();
+
 		return (
 			<Map
+				centerAroundCurrentLocation
 				google={this.props.google}
-				center={this.state.currentLocation}
+				bounds={bounds}
 				style={mapStyles}
-				initialCenter={this.props.center}
 				fullscreenControl={false}
 				streetViewControl={false}
-				bounds={newBounds}
-				zoom={14}
+				center={this.state.center}
 			> 
 				<Polygon
 					paths={this.props.polygonCoords}

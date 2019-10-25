@@ -53,7 +53,8 @@ export default function location(state = initialState, action) {
                 searchLocation: {
                     ...state.searchLocation,
                     name: '',
-                    center: action.centerLatLng
+                    center: action.centerLatLng,
+                    viewport: []
                 }
             }
         default:

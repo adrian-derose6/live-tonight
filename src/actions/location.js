@@ -22,7 +22,6 @@ export function fetchGeocodeSuccess(locationData) {
 
 export const FETCH_GEOCODE_FAILURE = 'FETCH_GEOCODE_FAILURE';
 export function fetchGeocodeFailure(error) {
-    console.log(error)
     return {
         type: FETCH_GEOCODE_FAILURE,
         data: {
@@ -34,23 +33,21 @@ export function fetchGeocodeFailure(error) {
 export function setSearchLocation(geocoderRequest) {
     const google = window.google;
     const geocoder = new google.maps.Geocoder(); 
+    let polygonCoords = [];
 
     return dispatch => {
-        if ('location' in geocoderRequest) {
-			dispatch(setSearchCenter(geocoderRequest.location))
-			return;
-        }
 
         dispatch(fetchGeocodeStart());
 
         geocoder.geocode(geocoderRequest, async (results, status) => {
-            console.log(results)
             if (status === 'OK') {
 				let preciseLocation = (results.length > 1) ? results.filter((result) => {
 					return (result.address_components.length === 4 || result.address_components.length === 5) && result.types.includes('postal_code')
                 }) : results;
                 
-                const polygonCoordinates = await getPolygonCoordinates(geocoderRequest.address);
+                if (!geocoderRequest.location) {
+                     polygonCoords = await getPolygonCoordinates(geocoderRequest.address)
+                }
                 
 
 				let locationData = {
@@ -69,7 +66,7 @@ export function setSearchLocation(geocoderRequest) {
                             lng: preciseLocation[0].geometry.viewport.getSouthWest().lng()
                         }
                     ],
-                    polygonCoords: polygonCoordinates
+                    polygonCoords: polygonCoords
 				}
 
               	dispatch(fetchGeocodeSuccess(locationData));

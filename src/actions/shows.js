@@ -47,7 +47,6 @@ function loadShowsJson(url) {
 }
 
 function reduceShowData(showsData) {
-    console.log(showsData)
     return showsData.map((show) => {
         const eventName= show.short_title;
         const artistName = show.performers[0].short_name;
@@ -100,7 +99,6 @@ function loadArtistImage(artistName, accessToken) {
             .then(res => res.json())
             .then(artistsData => {
                 const { items } = artistsData.artists;
-                console.log(artistName, items)
                 if (items.length > 0) {
                     const artistMatched = items.filter((item) => {
                         return (item.name) ? item.name.toLowerCase() === artistName.toLowerCase() : null
