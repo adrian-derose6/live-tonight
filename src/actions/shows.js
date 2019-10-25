@@ -24,12 +24,11 @@ export function fetchShowsFailure(error) {
 export function fetchShowsByCriteria(criteria = {}) {
 
     return async (dispatch) => {
-        const { geo } = criteria;
+        const { lat, lng } = criteria.searchLocation;
         const accessToken = await loadSpotifyAccessToken();
-        
-        console.log(accessToken)
+
         dispatch(fetchShowsStart());
-        loadShowsJson(`https://api.seatgeek.com/2/events?per_page=30&lat=41.8781&lon=-87.6298&type=concert&genres.slug=pop&client_id=MTY2OTY2NDh8MTU3MTgwOTA1Ny41`)
+        loadShowsJson(`https://api.seatgeek.com/2/events?per_page=30&lat=${lat}&lon=${lng}&type=concert&genres.slug=pop&client_id=MTY2OTY2NDh8MTU3MTgwOTA1Ny41`)
             .then(showsData => reduceShowData(showsData.events))
             .then(reducedData => Promise.all(reducedData.map(async (show) => {
                 let artistImg = (show.artistName) ? await loadArtistImage(show.artistName, accessToken) : null;

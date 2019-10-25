@@ -92,7 +92,7 @@ class SearchMap extends Component {
 					paths={this.props.polygonCoords}
 					strokeColor='#2B1935'
 					fillColor="#2B1935"
-					fillOpacity={0.1}
+					fillOpacity={0}
 				/>
 				<Marker
 					onClick={this.onMarkerClick}

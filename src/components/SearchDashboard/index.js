@@ -23,9 +23,8 @@ class SearchDashboard extends Component {
         const { center, name } = this.props.searchLocation;
 
         if (prevProps.searchLocation !== this.props.searchLocation) {
-            console.log(name, center);
-            let geo = center;
-            this.props.fetchShowsByCriteria({ geo });
+            let searchLocation = center;
+            this.props.fetchShowsByCriteria({ searchLocation });
         }
 	}
 	
