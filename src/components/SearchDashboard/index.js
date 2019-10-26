@@ -24,15 +24,19 @@ class SearchDashboard extends Component {
         super(props);
         this.genreButton = React.createRef();
         this.state = {
-            genrePopover: false
+            genrePopover: false,
         }
     }
     componentDidUpdate(prevProps) {
         const { center, name } = this.props.searchLocation;
+        const { range, genre } = this.props.searchCriteria;
 
-        if (prevProps.searchLocation !== this.props.searchLocation) {
-            let searchLocation = center;
-            this.props.fetchShowsByCriteria({ searchLocation });
+        if (prevProps.searchLocation !== this.props.searchLocation || prevProps.searchCriteria !== this.props.searchCriteria) {
+            this.props.fetchShowsByCriteria({ 
+                searchLocation: center, 
+                range: range,
+                genre: genre
+            });
         }
 	}
 	
@@ -70,7 +74,6 @@ class SearchDashboard extends Component {
                     </Toolbar>
                     <Popover
                         open={this.state.genrePopover}
-
                         anchorEl={node}
                         className={classes.popover}
                         anchorOrigin={{
@@ -198,7 +201,8 @@ const styles = theme => ({
 const mapStateToProps = (state) => {
     return {
       searchShows: state.shows.searchShows,
-      searchLocation: state.location.searchLocation
+      searchLocation: state.location.searchLocation,
+      searchCriteria: state.shows.searchCriteria
     }
 }
 

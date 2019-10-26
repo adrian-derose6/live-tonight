@@ -80,7 +80,7 @@ class SearchMap extends Component {
 			<Polygon
 				paths={paths}
 				strokeColor='#2B1935'
-				strokeWeight={1.5}
+				strokeWeight={1.7}
 				fillColor="lightgray"
 				fillOpacity={0.2}
 			/>
