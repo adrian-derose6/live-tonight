@@ -75,18 +75,33 @@ class SearchMap extends Component {
 		return latLngBounds;
 	}
 
+	renderSinglePolygon = (paths) => {
+		return (
+			<Polygon
+				paths={paths}
+				strokeColor='#2B1935'
+				strokeWeight={1.5}
+				fillColor="lightgray"
+				fillOpacity={0.2}
+			/>
+		)
+	}
+
 	renderPolygons = () => {
-		return this.props.polygonCoords.map(group => {
-			return (
-				<Polygon
-					paths={group}
-					strokeColor='#2B1935'
-					strokeWeight={1.5}
-					fillColor="lightgray"
-					fillOpacity={0.2}
-				/>
-			)
-		});
+		const { type, coordinates } = this.props.polygonData;
+
+		if (type === 'Polygon') {
+			return coordinates.map(group => {
+				return this.renderSinglePolygon(group)
+			});
+		}
+		else if (type === 'MultiPolygon') {
+			return coordinates.map(group => {
+				return group.map(subgroup => {
+					return this.renderSinglePolygon(subgroup)
+				})
+			})
+		}
 	}
 
 	render() {

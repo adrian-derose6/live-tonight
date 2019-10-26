@@ -24,7 +24,10 @@ const initialState = {
                 lng: -87.94026689999998
             }
         ],
-        polygonCoords: []
+        polygonData: {
+            type: '',
+            coordinates: []
+        }
     }
 }
 

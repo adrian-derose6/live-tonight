@@ -49,7 +49,7 @@ export function setSearchLocation(geocoderRequest) {
                     lng: preciseLocation[0].geometry.location.lng()
                 }
 
-                let polygonCoords = (!geocoderRequest.location) ? await getPolygonCoordinates(geocoderRequest.address) : [];
+                let polygonData = (!geocoderRequest.location) ? await getPolygonCoordinates(geocoderRequest.address) : [];
 
 				let locationData = {
 					name: preciseLocation[0].formatted_address,
@@ -64,7 +64,7 @@ export function setSearchLocation(geocoderRequest) {
                             lng: preciseLocation[0].geometry.viewport.getSouthWest().lng()
                         }
                     ],
-                    polygonCoords: polygonCoords || []
+                    polygonData: polygonData || {}
 				}
 
               	dispatch(fetchGeocodeSuccess(locationData));
@@ -79,11 +79,16 @@ export function setSearchLocation(geocoderRequest) {
 async function getPolygonCoordinates(address) {
     const rawMapData = await fetch(`https://nominatim.openstreetmap.org/search?q=${address}&polygon_geojson=1&format=json`)
     const locationData = await rawMapData.json();
+    let storeData = {
+        coordinates: [],
+        type: ''
+    };
+
     if (locationData.length > 0) {
         const geoJSON = locationData[0].geojson;
-        console.log(geoJSON);
+
         if (geoJSON.type === "Polygon") {
-            return geoJSON.coordinates.map(group => {
+            storeData.coordinates = geoJSON.coordinates.map(group => {
                 return group.map(coord => {
                     return {
                         lat: coord[1],
@@ -91,22 +96,26 @@ async function getPolygonCoordinates(address) {
                     }
                 });
             })
+
+            storeData.type = geoJSON.type;
         }
         else if (geoJSON.type === 'MultiPolygon') {
-            return geoJSON.coordinates.map(group => {
-                let flattened = flatten(group)    
-                return flattened.map(coord => {
-                    return {
-                        lat: coord[1],
-                        lng: coord[0]
-                    }
-                })
+            storeData.coordinates = geoJSON.coordinates.map(group => {    
+                return group.map(subgroup => {
+                    return subgroup.map(coord => {
+                        return {
+                            lat: coord[1],
+                            lng: coord[0]
+                        }
+                    });
+                });
 
-            })
+            });
+
+            storeData.type = geoJSON.type;
         }
     }
-    else { return []; }
-    
+    return storeData;
 }
 
 function flatten(arr) {
