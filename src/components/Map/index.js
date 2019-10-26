@@ -75,6 +75,20 @@ class SearchMap extends Component {
 		return latLngBounds;
 	}
 
+	renderPolygons = () => {
+		return this.props.polygonCoords.map(group => {
+			return (
+				<Polygon
+					paths={group}
+					strokeColor='#2B1935'
+					strokeWeight={1.5}
+					fillColor="lightgray"
+					fillOpacity={0.2}
+				/>
+			)
+		});
+	}
+
 	render() {
 		const bounds = this.calculateBounds();
 
@@ -88,12 +102,7 @@ class SearchMap extends Component {
 				streetViewControl={false}
 				center={this.state.center}
 			> 
-				<Polygon
-					paths={this.props.polygonCoords}
-					strokeColor='#2B1935'
-					fillColor="#2B1935"
-					fillOpacity={0}
-				/>
+				{this.renderPolygons()}
 				<Marker
 					onClick={this.onMarkerClick}
 					name={'Schaumburg'}

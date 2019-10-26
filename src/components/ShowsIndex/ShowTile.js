@@ -55,11 +55,11 @@ const styles = theme => ({
             flexBasis: '50%'
         },
         flexBasis: '50%',
-        height: '70%',
+        height: '65%',
         width: 259,
         position: 'relative',
         boxSizing: 'border-box',
-        padding: 4
+        padding: 5
     },
     tileCard: {
         '&:hover': {
@@ -88,10 +88,9 @@ const styles = theme => ({
     img: {
         minHeight: '100%',
         minWidth: '100%',
-        top: '50%',
-        left: '50%',
+
         objectFit: 'cover',
-        zIndex: 1
+        zIndex: 1,
       },
     tileBar: {
         position: 'absolute',

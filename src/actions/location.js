@@ -33,7 +33,6 @@ export function fetchGeocodeFailure(error) {
 export function setSearchLocation(geocoderRequest) {
     const google = window.google;
     const geocoder = new google.maps.Geocoder(); 
-    let polygonCoords = [];
 
     return dispatch => {
 
@@ -45,17 +44,16 @@ export function setSearchLocation(geocoderRequest) {
 					return (result.address_components.length === 4 || result.address_components.length === 5) && result.types.includes('postal_code')
                 }) : results;
                 
-                if (!geocoderRequest.location) {
-                     polygonCoords = await getPolygonCoordinates(geocoderRequest.address)
+                const center = {
+                    lat: preciseLocation[0].geometry.location.lat(),
+                    lng: preciseLocation[0].geometry.location.lng()
                 }
-                
+
+                let polygonCoords = (!geocoderRequest.location) ? await getPolygonCoordinates(geocoderRequest.address) : [];
 
 				let locationData = {
 					name: preciseLocation[0].formatted_address,
-					center: {
-                        lat: preciseLocation[0].geometry.location.lat(),
-                        lng: preciseLocation[0].geometry.location.lng()
-					},
+					center: center,
 					viewport: [
                         {
                             lat: preciseLocation[0].geometry.viewport.getNorthEast().lat(),
@@ -66,7 +64,7 @@ export function setSearchLocation(geocoderRequest) {
                             lng: preciseLocation[0].geometry.viewport.getSouthWest().lng()
                         }
                     ],
-                    polygonCoords: polygonCoords
+                    polygonCoords: polygonCoords || []
 				}
 
               	dispatch(fetchGeocodeSuccess(locationData));
@@ -78,13 +76,41 @@ export function setSearchLocation(geocoderRequest) {
     }
 }
 
-function getPolygonCoordinates(address) {
-    return fetch(`https://nominatim.openstreetmap.org/search.php?q=${address}&polygon_geojson=1&format=json`)
-           .then(geoJSON => geoJSON.json())
-           .then(geoResults => geoResults[0].geojson.coordinates[0].map(coord => {
-               return {
-                   lat: coord[1],
-                   lng: coord[0]
-               }
-           }))
+async function getPolygonCoordinates(address) {
+    const rawMapData = await fetch(`https://nominatim.openstreetmap.org/search?q=${address}&polygon_geojson=1&format=json`)
+    const locationData = await rawMapData.json();
+    if (locationData.length > 0) {
+        const geoJSON = locationData[0].geojson;
+        console.log(geoJSON);
+        if (geoJSON.type === "Polygon") {
+            return geoJSON.coordinates.map(group => {
+                return group.map(coord => {
+                    return {
+                        lat: coord[1],
+                        lng: coord[0]
+                    }
+                });
+            })
+        }
+        else if (geoJSON.type === 'MultiPolygon') {
+            return geoJSON.coordinates.map(group => {
+                let flattened = flatten(group)    
+                return flattened.map(coord => {
+                    return {
+                        lat: coord[1],
+                        lng: coord[0]
+                    }
+                })
+
+            })
+        }
+    }
+    else { return []; }
+    
+}
+
+function flatten(arr) {
+    return arr.reduce(function (flat, toFlatten) {
+      return flat.concat(toFlatten);
+    }, []);
 }
