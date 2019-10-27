@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // Material-UI Packages
-import { AppBar, Toolbar, IconButton, Typography, Button, Grid, Popover} from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, Button, Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import MusicNoteRounded from '@material-ui/icons/MusicNoteRounded';
 import People from '@material-ui/icons/People';
 
+import { Manager, Reference, Popper } from 'react-popper';
 
 // Child Components
 import ShowsIndex from '../ShowsIndex/index.js';
@@ -16,8 +17,7 @@ import LocationSearchInput from './LocationSearchInput.js';
 
 // Redux Actions
 import { setSearchLocation } from '../../actions/location.js';
-import { fetchShowsByCriteria } from '../../actions/shows.js';
-
+import { fetchShowsByCriteria, setGenre, setRange } from '../../actions/shows.js';
 
 class SearchDashboard extends Component {
     constructor(props) {
@@ -27,8 +27,9 @@ class SearchDashboard extends Component {
             genrePopover: false,
         }
     }
+
     componentDidUpdate(prevProps) {
-        const { center, name } = this.props.searchLocation;
+        const { center } = this.props.searchLocation;
         const { range, genre } = this.props.searchCriteria;
 
         if (prevProps.searchLocation !== this.props.searchLocation || prevProps.searchCriteria !== this.props.searchCriteria) {
@@ -72,35 +73,20 @@ class SearchDashboard extends Component {
                     <Toolbar style={{ maxWidth: '100%', justifyContent: 'flex-start', alignItems: 'center'}}>
                         <LocationSearchInput onLocationChange={this.onLocationChange} />
                     </Toolbar>
-                    <Popover
-                        open={this.state.genrePopover}
-                        anchorEl={node}
-                        className={classes.popover}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'left',
-                        }}
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'left',
-                        }}
-                    >
-                        This is the content of the popover
-                    </Popover>
                     <div ref={this.genreButton} styles={{display: 'flex'}}>
                         <Button onClick={() => this.setState({ genrePopover: true })} className={classes.criteriaButton} style={{ marginLeft: 3 }} size="small" disableRipple disableFocusRipple >
                             <MusicNoteRounded />
-                                    Genre
+                            Genre
                         </Button>
                     </div>
-                    <Button className={classes.criteriaButton} style={{ height: 36 }} size="small" disableRipple disableFocusRipple>
+                    <Button className={classes.criteriaButton} size="small" disableRipple disableFocusRipple >
                         <People style={{ marginRight: 5 }}/>
                         Clout
                     </Button>
-                    <Button className={classes.criteriaButton} style={{ height: 36 }} size="small" disableRipple disableFocusRipple>
-                        Criteria 3
+                    <Button className={classes.criteriaButton} size="small" disableRipple disableFocusRipple >
+                        Distance
                     </Button>
-                    <Button className={classes.saveSearchButton} style={{ height: 36 }} size='small' disableRipple disableFocusRipple>
+                    <Button className={classes.saveSearchButton} size='small' disableRipple disableFocusRipple >
                         Save Search
                     </Button>
                 </AppBar>

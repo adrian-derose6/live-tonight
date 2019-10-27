@@ -38,7 +38,7 @@ function fetchShowsFailure(error) {
 }
 
 export function fetchShowsByCriteria(criteria = {}) {
-    console.log(criteria)
+
     return async (dispatch) => {
         const accessToken = await loadSpotifyAccessToken();
 
@@ -50,6 +50,7 @@ export function fetchShowsByCriteria(criteria = {}) {
             let artistImg = (show.artistName) ? await loadArtistImage(show.artistName, accessToken) : null;
             return { ...show, artistImg };
         }));
+        
         dispatch(fetchShowsSuccess(storeDataWithImg));
     }
 }

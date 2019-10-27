@@ -69,7 +69,6 @@ const styles = theme => ({
         height: '100%',
         borderRadius: 0,
         boxShadow:'0px 0px 5px -2px rgba(140,138,140,1)',
-        padding: 1,
         display: 'inline-block',
         position: 'relative'
     },
@@ -88,7 +87,6 @@ const styles = theme => ({
     img: {
         minHeight: '100%',
         minWidth: '100%',
-
         objectFit: 'cover',
         zIndex: 1,
       },
