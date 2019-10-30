@@ -3,18 +3,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // 'google-maps-react' Packages
-import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker, InfoWindow, Polygon } from 'google-maps-react';
 
 
 const mapStyles = {
-	width: '100%',
-	height: '100%'
+	width: '100%', 
+	height: '100%', 
+	position: 'relative'
 }
 
 class SearchMap extends Component {
 	constructor(props) {
 		super(props);
 		const { lat, lng } = this.props.center;
+		const bounds = this.props.bounds;
 		this.state = {
 			showingInfoWindow: false, 
 			activeMarker: {},          
@@ -22,7 +24,9 @@ class SearchMap extends Component {
 			currentLocation: {
 				lat: lng,
 				lng: lng
-			}
+			},
+			bounds: bounds,
+			polygonCoords: []
 		};
 	}
 
@@ -33,6 +37,15 @@ class SearchMap extends Component {
 			});
 		}
 
+		if (prevProps.bounds !== this.props.bounds) {
+			this.setState({
+				bounds: this.props.bounds
+			});
+		}
+
+		if (prevProps.polygonCoords !== this.state.polygonCoords) {
+			this.setState({ polygonCoords: this.props.polygonCoords })
+		}
 	}
 
 	onMarkerClick = (props, marker, e) =>
@@ -51,24 +64,69 @@ class SearchMap extends Component {
 		}
 	};
 
+	calculateBounds = () => {
+		const { bounds } = this.state;
+		let latLngBounds = new this.props.google.maps.LatLngBounds();
+
+		bounds.forEach(point => {
+			latLngBounds.extend(point)
+		})
+
+		return latLngBounds;
+	}
+
+	renderSinglePolygon = (paths) => {
+		return (
+			<Polygon
+				paths={paths}
+				strokeColor='#2B1935'
+				strokeWeight={1.7}
+				fillColor="lightgray"
+				fillOpacity={0.2}
+			/>
+		)
+	}
+
+	renderPolygons = () => {
+		const { type, coordinates } = this.props.polygonData;
+
+		if (type === 'Polygon') {
+			return coordinates.map(group => {
+				return this.renderSinglePolygon(group)
+			});
+		}
+		else if (type === 'MultiPolygon') {
+			return coordinates.map(group => {
+				return group.map(subgroup => {
+					return this.renderSinglePolygon(subgroup)
+				})
+			})
+		}
+	}
+
 	render() {
-		console.log('render')
+		const bounds = this.calculateBounds();
+
 		return (
 			<Map
+				centerAroundCurrentLocation
 				google={this.props.google}
-				center={this.state.currentLocation}
+				bounds={bounds}
 				style={mapStyles}
-				initialCenter={this.props.center}
+				fullscreenControl={false}
+				streetViewControl={false}
+				center={this.state.center}
 			> 
+				{this.renderPolygons()}
 				<Marker
 					onClick={this.onMarkerClick}
 					name={'Schaumburg'}
-					position={this.props.center}
+					position={this.props.center} 
 				/>
 				<InfoWindow
 					marker={this.state.activeMarker}
 					visible={this.state.showingInfoWindow}
-					onClose={this.onClose}
+					onClose={this.onClose} 
 				>
 					<div>
 						<h4>{this.state.selectedPlace.name}</h4>

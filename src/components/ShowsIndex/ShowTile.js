@@ -15,6 +15,7 @@ const ShowTile = ({ classes, image, artist, venue }) => {
             <Card className={classes.tileCard}>
                 
                 <div className={classes.topContainer}>
+
                 </div>
                 <div className={classes.tileBar}>
                     <div className={classes.tileBarTop}>
@@ -25,7 +26,7 @@ const ShowTile = ({ classes, image, artist, venue }) => {
 
                     </div>
                     <div className={classes.tileBarBottom}>
-                        <Avatar className={classes.avatar} src={friendAvatar} sizes={"20"} />
+                        <Avatar className={classes.avatar} src={friendAvatar} size={"20"} />
                     </div>    
                 </div>
                 <CardMedia
@@ -33,6 +34,7 @@ const ShowTile = ({ classes, image, artist, venue }) => {
                     image={image}
                     className={classes.img}
                 />
+
             </Card>
         </div>
     )
@@ -53,11 +55,11 @@ const styles = theme => ({
             flexBasis: '50%'
         },
         flexBasis: '50%',
-        height: '50%',
+        height: '65%',
         width: 259,
         position: 'relative',
         boxSizing: 'border-box',
-        padding: 4
+        padding: 5
     },
     tileCard: {
         '&:hover': {
@@ -67,17 +69,26 @@ const styles = theme => ({
         height: '100%',
         borderRadius: 0,
         boxShadow:'0px 0px 5px -2px rgba(140,138,140,1)',
-        padding: 1,
         display: 'inline-block',
         position: 'relative'
+    },
+    imageContainer: {
+        minWidth: '100%',
+        maxWidth: '100%',
+        minHeight: '100%',
+        maxHeight: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        border: '1px solid red',
+        position: 'absolute',
+        backgroundColor: 'black'
     },
     img: {
         minHeight: '100%',
         minWidth: '100%',
-        top: '50%',
-        left: '50%',
         objectFit: 'cover',
-        zIndex: 1
+        zIndex: 1,
       },
     tileBar: {
         position: 'absolute',
@@ -85,11 +96,12 @@ const styles = theme => ({
         left: 0,
         right: 0,
         bottom: 0,
-        minHeight: '30%',
+        minHeight: '20%',
         maxWidth: '100%',
         backgroundColor: 'white',
         fontFamily: theme.typography.fontFamily,
         padding: 0,
+        zIndex: 1000,
         display: 'grid',
         padding: '11px 14px 13px',
         gridArea: 'bottom',
@@ -127,13 +139,15 @@ const styles = theme => ({
         left: 0,
         right: 0,
         top: 0,
+        minHeight: '70%',
         maxHeight: '70%',
         maxWidth: '100%',
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'center',
         flexDirection: 'column',
         fontFamily: theme.typography.fontFamily,
-        padding: 0
+        padding: 0,
     },
 })
 

@@ -5,8 +5,10 @@ import { connect } from 'react-redux';
 // Material-UI Packages
 import { AppBar, Toolbar, IconButton, Typography, Button, Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import MusicNoteOutlined from '@material-ui/icons/MusicNoteOutlined';
+import MusicNoteRounded from '@material-ui/icons/MusicNoteRounded';
 import People from '@material-ui/icons/People';
+
+import { Manager, Reference, Popper } from 'react-popper';
 
 // Child Components
 import ShowsIndex from '../ShowsIndex/index.js';
@@ -15,15 +17,27 @@ import LocationSearchInput from './LocationSearchInput.js';
 
 // Redux Actions
 import { setSearchLocation } from '../../actions/location.js';
-import { fetchShowsByCriteria } from '../../actions/shows.js';
-
+import { fetchShowsByCriteria, setGenre, setRange } from '../../actions/shows.js';
 
 class SearchDashboard extends Component {
-    componentDidUpdate(prevProps) {
-        const { center, name } = this.props.searchLocation;
+    constructor(props) {
+        super(props);
+        this.genreButton = React.createRef();
+        this.state = {
+            genrePopover: false,
+        }
+    }
 
-        if (prevProps.searchLocation !== this.props.searchLocation) {
-            console.log(name, center);
+    componentDidUpdate(prevProps) {
+        const { center } = this.props.searchLocation;
+        const { range, genre } = this.props.searchCriteria;
+
+        if (prevProps.searchLocation !== this.props.searchLocation || prevProps.searchCriteria !== this.props.searchCriteria) {
+            this.props.fetchShowsByCriteria({ 
+                searchLocation: center, 
+                range: range,
+                genre: genre
+            });
         }
 	}
 	
@@ -37,7 +51,11 @@ class SearchDashboard extends Component {
 						lng: coords.longitude
 					}
 				});
-			});
+            },  err => console.log(err),
+                {
+                    enableHighAccuracy: true
+                }
+            );
 		}
 	} 
 
@@ -46,42 +64,44 @@ class SearchDashboard extends Component {
     }
 
     render() {
-        const { classes, searchLocation, windowHeight } = this.props;
-
+        const { classes, searchLocation } = this.props;
+        const node = this.genreButton.current;
+        
         return (
             <div className={classes.root} >
                 <AppBar className={classes.criteriaBar} position='relative' >
                     <Toolbar style={{ maxWidth: '100%', justifyContent: 'flex-start', alignItems: 'center'}}>
                         <LocationSearchInput onLocationChange={this.onLocationChange} />
-                        <Button className={classes.criteriaButton} style={{ height: 36 }} size="small" disableRipple disableFocusRipple style={{ marginLeft: 29 }}>
-                            <MusicNoteOutlined />
+                    </Toolbar>
+                    <div ref={this.genreButton} styles={{display: 'flex'}}>
+                        <Button onClick={() => this.setState({ genrePopover: true })} className={classes.criteriaButton} style={{ marginLeft: 3 }} size="small" disableRipple disableFocusRipple >
+                            <MusicNoteRounded />
                             Genre
                         </Button>
-                        <Button className={classes.criteriaButton} style={{ height: 36 }} size="small" disableRipple disableFocusRipple>
-                           <People style={{ marginRight: 5 }}/>
-                            Clout
-                        </Button>
-                        <Button className={classes.criteriaButton} style={{ height: 36 }} size="small" disableRipple disableFocusRipple>
-                            Criteria 3
-                        </Button>
-                        <Button className={classes.saveSearchButton} style={{ height: 36 }} size='small' disableRipple disableFocusRipple>
-                            Save Search
-                        </Button>
-                    </Toolbar>
+                    </div>
+                    <Button className={classes.criteriaButton} size="small" disableRipple disableFocusRipple >
+                        <People style={{ marginRight: 5 }}/>
+                        Clout
+                    </Button>
+                    <Button className={classes.criteriaButton} size="small" disableRipple disableFocusRipple >
+                        Distance
+                    </Button>
+                    <Button className={classes.saveSearchButton} size='small' disableRipple disableFocusRipple >
+                        Save Search
+                    </Button>
                 </AppBar>
-                <div style={{ height: windowHeight - 134 }}>
+                <div style={{ height: 'calc(100vh - 134px)' }}>
                     <Grid
                         container
-                        zeroMinWidth
                         style={{ height: '100%', width: '100%' }}
                     >
-                        <Grid item lg={5} md={8} xs={0}>
+                        <Grid item lg={5} md={8} >
                             <div className={classes.mapContainer}>
-                                <SearchMap center={searchLocation.center} />
+                                <SearchMap center={searchLocation.center} bounds={searchLocation.viewport} polygonData={searchLocation.polygonData} />
                             </div>
                         </Grid>
                         <Grid item lg={7} md={4} xs={12} className={classes.rightPanel}>
-                            <ShowsIndex location={searchLocation.name} />
+                            <ShowsIndex location={searchLocation.name} showsList={this.props.searchShows} />
                         </Grid>
                     </Grid>
                 </div>
@@ -95,24 +115,31 @@ const styles = theme => ({
     root: {
        flexGrow: 1
     },
+    popover: {
+        height: 100,
+        width: 100,
+        border: '1px solid red',
+        zIndex: 3000
+    },
     criteriaBar: {
         maxWidth: '100%',
         height: '55px',
         backgroundColor: 'white',
         boxShadow: 'none',
         borderBottom: '1px lightgray solid',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        flexDirection: 'row'
     },
     criteriaButton: {
         width: 109,
+        height: 36,
         border: '2px #2B1935 solid',
         color: '#2B1935',
         marginRight: 15,
         borderRadius: 0,
         fontFamily: "Sharp Sans No1 Semibold",
         textTransform: 'none',
-       
         justifyContent: 'center',
         alignItems: 'space-between',
         '&:hover': {
@@ -160,14 +187,15 @@ const styles = theme => ({
 const mapStateToProps = (state) => {
     return {
       searchShows: state.shows.searchShows,
-      searchLocation: state.location.searchLocation
+      searchLocation: state.location.searchLocation,
+      searchCriteria: state.shows.searchCriteria
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchShowsByCriteria: (criteria) => dispatch(fetchShowsByCriteria(criteria)),
-        setSearchLocation: (geocoderRequest) => dispatch(setSearchLocation(geocoderRequest))
+        setSearchLocation: (geocoderRequest) => dispatch(setSearchLocation(geocoderRequest)),
     }
 }
 

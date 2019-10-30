@@ -14,15 +14,19 @@ const initialState = {
             lat: 41.8781,
             lng: -87.6298
         },
-        viewport: {
-            ne: {
+        viewport: [
+            {
                 lat: 42.023131,
                 lng: -87.523661
             },
-            sw: {
+            {
                 lat: 41.6443349,
                 lng: -87.94026689999998
             }
+        ],
+        polygonData: {
+            type: '',
+            coordinates: []
         }
     }
 }
@@ -52,7 +56,8 @@ export default function location(state = initialState, action) {
                 searchLocation: {
                     ...state.searchLocation,
                     name: '',
-                    center: action.centerLatLng
+                    center: action.centerLatLng,
+                    viewport: []
                 }
             }
         default:
